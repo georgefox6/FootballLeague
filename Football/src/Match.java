@@ -104,7 +104,7 @@ public class Match {
                 ", result='" + result + '\'' +
                 '}';
     }
-
+/*
     //Function to randomly generate num matches
     public static ArrayList<Match> genMatch(int num){
         ArrayList<Match> matches = new ArrayList<Match>();
@@ -116,10 +116,10 @@ public class Match {
         }
         return matches;
     }
-
+*/
     public static void main(String[] args) {
-        ArrayList<Match> week1 = genMatch(4);
-        System.out.println(week1.get(0).toString());
-        System.out.println(week1.get(1).toString());
+//        ArrayList<Match> week1 = genMatch(4);
+//        System.out.println(week1.get(0).toString());
+//        System.out.println(week1.get(1).toString());
     }
 }

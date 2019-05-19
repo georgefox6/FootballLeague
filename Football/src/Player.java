@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 public class Player {
@@ -6,17 +7,43 @@ public class Player {
     String forename;
     String surname;
     Boolean injuryStatus;
-    static int codeIteration = 0;
+    String teamCode;
+    static int codeIteration;
+
+    static {
+        codeIteration = Database.countPlayers();
+    }
+
 
     //Constructors
-    Player(){};
+    Player(){}
 
+    //Constructor without team teamCode
     Player(String forename, String surname, Boolean injuryStatus){
         this.playerCode = String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1);
         this.forename = forename;
         this.surname = surname;
         this.injuryStatus = injuryStatus;
+        this.teamCode = null;
+    }
+
+    //Constructor with teamCode
+    Player(String forename, String surname, Boolean injuryStatus, String teamCode){
+        this.playerCode = String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1);
+        this.forename = forename;
+        this.surname = surname;
+        this.injuryStatus = injuryStatus;
+        this.teamCode = teamCode;
         codeIteration++;
+    }
+
+    //Constructor with playerCode for creation of player object from DB so player code remains consistent
+    Player(String playerCode, String forename, String surname, Boolean injuryStatus, String teamCode){
+        this.playerCode = playerCode;
+        this.forename = forename;
+        this.surname = surname;
+        this.injuryStatus = injuryStatus;
+        this.teamCode = teamCode;
     }
 
     //To String method
@@ -24,18 +51,23 @@ public class Player {
         return "Player Code : " + playerCode + " Name : " + forename + " " + surname +  " Injured? " + injuryStatus;
     }
 
+
     //Setters
-    public void setPlayerCode(String playerCode){
-        this.playerCode = playerCode;
-    }
     public void setForename(String forename){
         this.forename = forename;
+        Database.updatePlayer(this);
     }
     public void setSurname(String surname){
         this.surname = surname;
+        Database.updatePlayer(this);
     }
     public void setInjuryStatus(Boolean injuryStatus){
         this.injuryStatus = injuryStatus;
+        Database.updatePlayer(this);
+    }
+    public void setTeamCode(String teamCode){
+        this.teamCode = teamCode;
+        Database.updatePlayer(this);
     }
 
     //Getters
@@ -50,6 +82,10 @@ public class Player {
     }
     public Boolean getInjuryStatus() {
         return injuryStatus;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
     }
 
     public String getFullName() {
@@ -88,9 +124,9 @@ public class Player {
     }
 
     //Main method
-    public static void main(String[] args){
-        for(int i=0;i<9;i++) {
-            System.out.println(genPlayer(10).get(i).getPlayerCode());
-        }
+    public static void main(String[] args) {
+        Player Billy =  Database.readPlayer("001GFO");
+        System.out.println(Billy.getPlayerCode());
+        Billy.setSurname("FOX");
     }
 }
