@@ -12,6 +12,10 @@ public class Database {
         System.out.println("Connection to the db was successful!");
     }
 
+    ///////////////////////////////////////////////////
+    //              DATABASE MANAGEMENT              //
+    ///////////////////////////////////////////////////
+
     public static void close(){
         System.out.println("DB is being closed by close()");
         if (rs != null) {
@@ -31,16 +35,19 @@ public class Database {
         }
     }
 
+    ///////////////////////////////////////////////////
+    //               PLAYER MANAGEMENT               //
+    ///////////////////////////////////////////////////
+
+    //Method used to read the player from the DB and return a player object
     public static Player readPlayer(String playerCode){
         Player player = new Player();
         try {
             connect();
             System.out.println("Creating statement - Read Player");
             Statement stmt = conn.createStatement();
-            System.out.println("Player code: " + playerCode);
             String sql = "SELECT * FROM player WHERE playerCode='" + playerCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println(rs.next());
 //            if (rs.next()){
                 String forename = rs.getString("forename");
                 String surname = rs.getString("surname");
@@ -54,33 +61,7 @@ public class Database {
         } finally {
             close();
         }
-        System.out.println(player.toString());
         return player;
-    }
-
-    //Returns an ArrayList of players that belong to the team entered
-    public static ArrayList<Player> readPlayersTeam(String teamCode){
-        ArrayList<Player> players = new ArrayList<>();
-        try {
-            connect();
-            System.out.println("Creating statement - Read Players Team");
-            Statement stmt = conn.createStatement();
-            String sql = "SELECT playerCode FROM player WHERE teamCode='" + teamCode + "';";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                String playerCode = rs.getString("playerCode");
-                String forename = rs.getString("forename");
-                String surname = rs.getString("surname");
-                String injuryStatusStr = rs.getString("injuryStatus");
-                Boolean injuryStatus = (injuryStatusStr.equals("true"));
-                players.add(new Player(playerCode, forename, surname, injuryStatus, teamCode));
-            }
-        } catch (SQLException ex){
-            System.out.println(ex);
-        } finally {
-            close();
-        }
-        return players;
     }
 
     public static void writePlayer(Player player){
@@ -112,6 +93,56 @@ public class Database {
         }
     }
 
+    //Returns an ArrayList of players that belong to the team entered
+    public static ArrayList<Player> readPlayersTeam(String teamCode){
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            connect();
+            System.out.println("Creating statement - Read Players Team");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT playerCode FROM player WHERE teamCode='" + teamCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(sql);
+            while (rs.next()) {
+                String playerCode = rs.getString("playerCode");
+                players.add(readPlayer(playerCode));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return players;
+    }
+
+    ///////////////////////////////////////////////////
+    //                TEAM MANAGEMENT                //
+    ///////////////////////////////////////////////////
+
+    public static Team readTeam(String teamCode){
+        Team team = new Team();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Team");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM teams WHERE teamCode='" + teamCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String teamName = rs.getString("teamName");
+                String venueName = rs.getString("Venue");
+                Venue venue = new Venue(venueName, 60000);
+                team = new Team(teamCode, teamName, venue);
+                //TODO add venue to team object
+                team = new Team(teamCode, teamName, venue);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return team;
+    }
+
     public static void writeTeam(Team team){
         try {
             connect();
@@ -126,28 +157,31 @@ public class Database {
         }
     }
 
-    //TODO readPlayer() inside Team constructor for readTeam
-    public static Team readTeam(String teamCode){
-        Team team = new Team();
-        try {
+    public static void updateTeam(Team team){
+        try{
             connect();
-            System.out.println("Creating Statement");
+            System.out.println("Creating statement - Update Team");
             Statement stmt = conn.createStatement();
-            String sql = " SELECT * FROM teams WHERE teamCode='" + teamCode + "';";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                String teamName = rs.getString("teamName");
-                String players = rs.getString("players");
-                String venue = rs.getString("Venue");
-            }
-        } catch(SQLException ex){
+            String sql = "UPDATE teams SET teamName='" + team.getName() + "', Venue='" + team.getVenue().getName() + "' WHERE teamCode='" + team.getTeamCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
             System.out.println(ex);
-        } finally {
+        }finally{
             close();
         }
-        //TODO build team object
-        return team;
     }
+
+    ///////////////////////////////////////////////////
+    //               VENUE MANAGEMENT                //
+    ///////////////////////////////////////////////////
+
+    //TODO readVenue
+    //TODO writeVenue
+    //TODO updateVenue
+
+    ///////////////////////////////////////////////////
+    //                MISC MANAGEMENT                //
+    ///////////////////////////////////////////////////
 
     public static int countPlayers(){
         int count = 0;
@@ -156,6 +190,25 @@ public class Database {
             System.out.println("Creating Statement - Count Players");
             Statement stmt = conn.createStatement();
             String sql = "SELECT playerCode FROM player;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                count++;
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return count;
+    }
+
+    public static int countTeams(){
+        int count = 0;
+        try {
+            connect();
+            System.out.println("Creating Statement - Count Teams");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT teamCode FROM teams;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 count++;
@@ -188,8 +241,27 @@ public class Database {
     }
 
     public static void main(String[] args){
-        writePlayer(Player.genPlayer(1).get(0));
-        writePlayer(Player.genPlayer(1).get(0));
-        writeTeam(Team.genTeam(1).get(0));
+//        Venue ot = new Venue("Old Trafford", 65000);
+//        Team team = new Team("Manchester United", ot);
+//        writeTeam(team);
+//        System.out.println(readTeam("000Man"));
+ //       Player player = new Player("Kay", "Sutcliffe", false, "000Man");
+ //       writePlayer(player);
+ //       System.out.println(player);
+ //       player.setSurname("Fox");
+ //       updatePlayer(player);
+ //       System.out.println(player.getSurname());
+
+//        ArrayList<Player> players = readPlayersTeam("000Man");
+//        for( int i = 0; i < players.size(); i++){
+//            System.out.println(players.get(i).getForename());
+//        }
+
+//        System.out.println(readTeam("000Man").getName());
+
+        Team ev = readTeam("007EVE");
+        ev.setName("Newcastle");
+        updateTeam(ev);
+
     }
 }

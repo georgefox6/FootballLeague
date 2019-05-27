@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class Team {
@@ -7,16 +6,26 @@ public class Team {
     String teamCode;
     String name;
     Venue venue;
-    static int codeIteration = 0;
+    static int codeIteration;
+
+    static {
+        codeIteration = Database.countTeams();
+    }
 
     //Constructors
     Team(){}
 
     Team(String name, Venue venue){
-        this.teamCode = String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2);
+        this.teamCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.venue = venue;
         codeIteration++;
+    }
+
+    Team(String teamCode, String name, Venue venue){
+        this.teamCode = teamCode.toUpperCase();
+        this.name = name;
+        this.venue = venue;
     }
 
     //Getters
@@ -76,7 +85,7 @@ public class Team {
 
     //toString method
     public String toString(){
-        return "Team code : " + teamCode + " Team name : " + name + " Players : "; //+ this.listPlayers();
+        return "Team code : " + teamCode + " Team name : " + name + " Venue : " + this.getVenue().getName();
     }
 
     //Function to randomly generate num teams

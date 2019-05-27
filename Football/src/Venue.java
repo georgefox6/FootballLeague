@@ -1,5 +1,7 @@
 public class Venue {
     //Venue variables
+    //TODO ADD venue code constructor and generator
+    String venueCode;
     String name;
     int capacity;
 

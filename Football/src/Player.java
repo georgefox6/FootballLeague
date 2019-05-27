@@ -1,4 +1,3 @@
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 public class Player {
@@ -18,18 +17,18 @@ public class Player {
     //Constructors
     Player(){}
 
-    //Constructor without team teamCode
+    //Constructor without team teamCode and generated player code
     Player(String forename, String surname, Boolean injuryStatus){
-        this.playerCode = String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1);
+        this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;
         this.injuryStatus = injuryStatus;
         this.teamCode = null;
     }
 
-    //Constructor with teamCode
+    //Constructor with teamCode and generated player code
     Player(String forename, String surname, Boolean injuryStatus, String teamCode){
-        this.playerCode = String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1);
+        this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;
         this.injuryStatus = injuryStatus;
@@ -39,7 +38,7 @@ public class Player {
 
     //Constructor with playerCode for creation of player object from DB so player code remains consistent
     Player(String playerCode, String forename, String surname, Boolean injuryStatus, String teamCode){
-        this.playerCode = playerCode;
+        this.playerCode = playerCode.toUpperCase();
         this.forename = forename;
         this.surname = surname;
         this.injuryStatus = injuryStatus;

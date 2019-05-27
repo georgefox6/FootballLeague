@@ -1,0 +1,10 @@
+Installation guide
+
+When using an IDE:
+1) download the project.
+2) Follow this installation guide to get the SQLite JBDC driver to allow you to connect to the DB http://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
+3) Download SQLite DB browser from the following link http://www.sqlitetutorial.net/download-install-sqlite/
+4) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
+5) update the String url in the Database.java file to the file path of your DB file
+6) Run the Gui.java file
+7) Cross your fingers
