@@ -1,0 +1,9 @@
+.table-properties {
+	cellpadding:"10";
+	align:"center";
+	background-color: "red";
+}
+
+.tr-properties {
+	align:"center";
+}
