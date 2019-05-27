@@ -7,4 +7,4 @@ When using an IDE:
 4) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
 5) update the String url in the Database.java file to the file path of your DB file
 6) Run the Gui.java file
-7) Cross your fingers
+7) Cross your fingers 
