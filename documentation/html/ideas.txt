@@ -1,0 +1,14 @@
+NB: UPERCASE are probably a priority
+NB: Numbering is an informal relative priority ranking within type. e.g. could be that Add2 is more important that Continuous1 - Not a strict/well defined metric
+
+CHECK: Which is correct name for a class property? "property" or "variable"
+
+check: Classes->Properties->Database are these properties actually properties of the class or are they just things in a method? - MAY BE ABLE TO ANSWER THIS MYSELF BY LOOKING
+Add: An explanation of repeated abbreviations. e.g. L and T appended to property names that are Jlabel and JTextField classes respectively
+Add: Classes->Properties A column "Description" containing a short description of the property
+Add: Classes->Properties A column "Default" containing the default value of the property
+Add: Classes A section "Imports" detailing imported things. NB probs not the name imports - use the java relevant name
+Add: Classes->Properties A column "Description" containing a short description of the property
+PIE IN THE SKY: Make some python things that can insert new things to the html e.g. add_new_property that takes the row entries as arguments and inkects them into the relevent html page
+Continuous1: Add internel html links
+Continuous2: Add external html links
