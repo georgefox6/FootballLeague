@@ -12,48 +12,6 @@ public class Gui{
         frame.setVisible(true);
         frame.getContentPane().add(BorderLayout.NORTH, panel);
     }
-    //TODO add teamCode field to create player so you can choose which team they play for
-    public static JPanel createAddPlayer(){
-
-        JPanel addPlayer = new JPanel();
-        JLabel playerForenameL = new JLabel("Enter Forename");
-        JTextField playerForenameT = new JTextField(10);
-        JLabel playerSurnameL = new JLabel("Enter Surname");
-        JTextField playerSurnameT = new JTextField(10);
-        JButton send = new JButton("Send");
-        JLabel injuredL = new JLabel("Injured");
-        JCheckBox injuredCB = new JCheckBox();
-        JTextField tf = new JTextField(10);
-
-        //Adding the components to the panel
-        addPlayer.add(playerForenameL);
-        addPlayer.add(playerForenameT);
-        addPlayer.add(playerSurnameL);
-        addPlayer.add(playerSurnameT);
-        addPlayer.add(injuredL);
-        addPlayer.add(injuredCB);
-        addPlayer.add(send);
-        addPlayer.add(tf);
-
-        //Button action listener
-        ActionListener addPlayerListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String forename = playerForenameT.getText();
-                String surname = playerSurnameT.getText();
-                Boolean injured = injuredCB.isSelected();
-                Database.writePlayer(new Player(forename, surname, injured));
-                tf.setText("Player added!");
-            }
-        };
-
-        send.addActionListener(addPlayerListener);
-
-        //TODO add a randomise button to generate random strings for player names
-        return addPlayer;
-    }
-
-
 
     public static JPanel viewPlayer(){
         JPanel viewPlayer = new JPanel();
@@ -73,6 +31,9 @@ public class Gui{
         JLabel injuredL = new JLabel("Injured");
         JCheckBox injuredCB = new JCheckBox();
 
+        //Created a back button to allow you to return to the menu page
+        JButton back = new JButton("Back");
+
         //Makes the text fields with the player information protected
         tf1.setEditable(false);
         tf2.setEditable(false);
@@ -90,6 +51,7 @@ public class Gui{
         viewPlayer.add(tf3);
         viewPlayer.add(injuredL);
         viewPlayer.add(injuredCB);
+        viewPlayer.add(back);
 
         //Event listener used to fill the fields on the form with the search results when the button is clicked
         ActionListener viewPlayerListener = new ActionListener() {
@@ -104,7 +66,15 @@ public class Gui{
             }
         };
 
+        ActionListener openMenu = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Opening the Menu frame");
+                createFrame(menu());
+            }
+        };
+
         update.addActionListener(viewPlayerListener);
+        update.addActionListener(openMenu);
 
         return viewPlayer;
     }
