@@ -349,10 +349,60 @@ public class Database {
     //               MATCH MANAGEMENT                //
     ///////////////////////////////////////////////////
 
-    //TODO readMatch
-    //TODO writeMatch
-    //TODO updateMatch
+    //TODO test the read/write/update match functions
 
+    public static Match readMatch(String matchCode){
+        Match match = new Match();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Match");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM matches WHERE matchCode='" + matchCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String homeTeamCode = rs.getString("homeTeamCode");
+                String awayTeamCode = rs.getString("awayTeamCode");
+                String homeTacticCode = rs.getString("homeTacticCode");
+                String awayTacticCode = rs.getString("awayTacticCode");
+                String score = rs.getString("score");
+                String date = rs.getString("date");
+                match = new Match(matchCode, homeTeamCode, awayTeamCode, homeTacticCode, awayTacticCode, score, date);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return match;
+    }
+
+    public static void writeMatch(Match match){
+        try {
+            connect();
+            System.out.println("Creating statement - Write Match");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO matches VALUES ('" + match.getMatchCode() + "', '" + match.getHomeTeamCode() + "', '" + match.getAwayTeamCode() + "', '" + match.getHomeTacticCode() + "', '" + match.getAwayTacticCode() + "', '" + match.getScore() + "', '" + match.getDate() + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateMatch(Match match){
+        try{
+            connect();
+            System.out.println("Creating statement - Update Match");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE matches SET homeTeamCode='" + match.getHomeTeamCode() + "', awayTeamCode='" + match.getAwayTeamCode() + "', homeTacticCode='" + match.getHomeTacticCode() + "', awayTacticCode='" + match.getAwayTacticCode() + "', score='" + match.getScore() + "', date='" + match.getDate() + "' WHERE matchCode='" + match.getMatchCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
     ///////////////////////////////////////////////////
     //                MISC MANAGEMENT                //
     ///////////////////////////////////////////////////
@@ -447,6 +497,25 @@ public class Database {
         } catch (SQLException ex){
             System.out.println(ex);
         }finally{
+            close();
+        }
+        return count;
+    }
+
+    public static int countMatches() {
+        int count =0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count Matches");
+            Statement stmt = conn.createStatement();
+                    String sql = "SELECT matchCode FROM matches";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally {
             close();
         }
         return count;

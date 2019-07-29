@@ -2,120 +2,114 @@ import java.util.ArrayList;
 public class Match {
     //Match variables
     String matchCode;
-    Team homeTeam;
-    Team awayTeam;
-    Venue venue;
-    ArrayList<Player> homeStartingXI;
-    ArrayList<Player> awayStartingXI;
-    int homeGoals;
-    int awayGoals;
-    String result;
+    String homeTeamCode;
+    String awayTeamCode;
+    String homeTacticCode;
+    String awayTacticCode;
+    String score;
     String date;
-
 
     //Constructors
     public Match(){}
 
-    public Match(Team homeTeam, Team awayTeam, ArrayList<Player> homeStartingXI, ArrayList<Player> awayStartingXI, int homeGoals, int awayGoals, String result, String date) {
-        this.matchCode = homeTeam.getTeamCode() + "v" + awayTeam.getTeamCode() + date;
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-//        this.venue = homeTeam.getVenue();
-        this.homeStartingXI = homeStartingXI;
-        this.awayStartingXI = awayStartingXI;
-        this.homeGoals = homeGoals;
-        this.awayGoals = awayGoals;
-        this.result = result;
+    //Constructor used to create complete match
+    public Match(String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, String date) {
+        this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
+        this.homeTeamCode = homeTeamCode;
+        this.awayTeamCode = awayTeamCode;
+        this.homeTacticCode = homeTacticCode;
+        this.awayTacticCode = awayTacticCode;
+        this.score = score;
         this.date = date;
     }
+
+    //Constructor used to create future match
+    public Match(String homeTeamCode, String awayTeamCode, String date){
+        this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
+        this.homeTeamCode = homeTeamCode;
+        this.awayTeamCode = awayTeamCode;
+        this.date = date;
+    }
+
+    //Constructor used to create complete match with matchCode for creation of match object from DB so match code remains consistent
+    public Match(String matchCode, String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, String date) {
+        this.matchCode = matchCode;
+        this.homeTeamCode = homeTeamCode;
+        this.awayTeamCode = awayTeamCode;
+        this.homeTacticCode = homeTacticCode;
+        this.awayTacticCode = awayTacticCode;
+        this.score = score;
+        this.date = date;
+    }
+
+    //Constructor used to create future match with matchCode for creation of match object from DB so match code remains consistent
+    public Match(String matchCode, String homeTeamCode, String awayTeamCode, String date){
+        this.matchCode = matchCode;
+        this.homeTeamCode = homeTeamCode;
+        this.awayTeamCode = awayTeamCode;
+        this.date = date;
+    }
+
+
 
     //Getters
     public String getMatchCode() {
         return matchCode;
     }
-    public Team getHomeTeam() {
-        return homeTeam;
+
+    public String getHomeTeamCode() {
+        return homeTeamCode;
     }
-    public Team getAwayTeam() {
-        return awayTeam;
+
+    public String getAwayTeamCode() {
+        return awayTeamCode;
     }
-    public Venue getVenue() {
-        return venue;
+
+    public String getHomeTacticCode() {
+        return homeTacticCode;
     }
-    public ArrayList<Player> getHomeStartingXI() {
-        return homeStartingXI;
+
+    public String getAwayTacticCode() {
+        return awayTacticCode;
     }
-    public ArrayList<Player> getAwayStartingXI() {
-        return awayStartingXI;
+
+    public String getScore() {
+        return score;
     }
-    public int getHomeGoals() {
-        return homeGoals;
-    }
-    public int getAwayGoals() {
-        return awayGoals;
-    }
-    public String getResult() {
-        return result;
+
+    public String getDate() {
+        return date;
     }
 
     //Setters
     public void setMatchCode(String matchCode) {
         this.matchCode = matchCode;
     }
-    public void setHomeTeam(Team homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-    public void setAwayTeam(Team awayTeam) {
-        this.awayTeam = awayTeam;
-    }
-    public void setVenue(Venue venue) {
-        this.venue = venue;
-    }
-    public void setHomeStartingXI(ArrayList<Player> homeStartingXI) {
-        this.homeStartingXI = homeStartingXI;
-    }
-    public void setAwayStartingXI(ArrayList<Player> awayStartingXI) {
-        this.awayStartingXI = awayStartingXI;
-    }
-    public void setHomeGoals(int homeGoals) {
-        this.homeGoals = homeGoals;
-    }
-    public void setAwayGoals(int awayGoals) {
-        this.awayGoals = awayGoals;
-    }
-    public void setResult(String result) {
-        this.result = result;
+
+    public void setHomeTeamCode(String homeTeamCode) {
+        this.homeTeamCode = homeTeamCode;
     }
 
-    //toString method
-    @Override
-    public String toString() {
-        return "Match{" +
-                "matchCode='" + matchCode + '\'' +
-                ", homeTeam=" + homeTeam.getName() +
-                ", awayTeam=" + awayTeam.getName() +
-                ", venue=" + venue.getName() +
-                ", homeStartingXI=" + homeStartingXI +
-                ", awayStartingXI=" + awayStartingXI +
-                ", homeGoals=" + homeGoals +
-                ", awayGoals=" + awayGoals +
-                ", date=" + date +
-                ", result='" + result + '\'' +
-                '}';
+    public void setAwayTeamCode(String awayTeamCode) {
+        this.awayTeamCode = awayTeamCode;
     }
-/*
-    //Function to randomly generate num matches
-    public static ArrayList<Match> genMatch(int num){
-        ArrayList<Match> matches = new ArrayList<Match>();
-        for (int i = 0; i < num; i++) {
-            ArrayList<Team> ha = Team.genTeam(2);
-            Team home = ha.get(0);
-            Team away = ha.get(1);
-            matches.add(new Match( home, away, home.getStartingXI(), away.getStartingXI(), 1, 2, "Lose", "01012019"));
-        }
-        return matches;
+
+    public void setHomeTacticCode(String homeTacticCode) {
+        this.homeTacticCode = homeTacticCode;
     }
-*/
+
+    public void setAwayTacticCode(String awayTacticCode) {
+        this.awayTacticCode = awayTacticCode;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public static void main(String[] args) {
 //        ArrayList<Match> week1 = genMatch(4);
 //        System.out.println(week1.get(0).toString());
