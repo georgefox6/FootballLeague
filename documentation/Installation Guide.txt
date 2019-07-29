@@ -1,10 +1,13 @@
 Installation guide
 
 When using an IDE:
-1) download the project.
-2) Follow this installation guide to get the SQLite JBDC driver to allow you to connect to the DB http://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
-3) Download SQLite DB browser from the following link http://www.sqlitetutorial.net/download-install-sqlite/
-4) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
-5) update the String url in the Database.java file to the file path of your DB file
-6) Run the Gui.java file
-7) Cross your fingers
+1) Install jdk-11.0.2 (Others might be OK, I'm not sure)
+2) Install an IDE (I will be using Intellij but these instructions should work for others)
+3) Follow this installation guide to get the SQLite JBDC driver to allow you to connect to the DB http://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
+4) Download SQLite DB browser from the following link http://www.sqlitetutorial.net/download-install-sqlite/
+5) Open up your IDE and checkout project from version control. Select github and enter the url https://github.com/georgefox6/FootballLeague.git
+6) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
+7) Navigate to FootballLeague/Football/src in the file explorer in the IDE
+8) Right click on Gui.java and click run
+
+This is a temporary installation guide and will be updated after further testing
