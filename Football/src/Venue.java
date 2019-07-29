@@ -1,16 +1,13 @@
 public class Venue {
     //Venue variables
-    //TODO ADD venue code constructor and generator
     String venueCode;
     String name;
     int capacity;
+    int ticketPrice;
+    static int codeIteration;
 
-    //Constructors
-    Venue(){}
-
-    Venue(String name, int capactity){
-        this.name = name;
-        this.capacity = capactity;
+    static {
+        codeIteration = Database.countVenues();
     }
 
     //Getters
@@ -21,6 +18,14 @@ public class Venue {
         return capacity;
     }
 
+    public String getVenueCode() {
+        return venueCode;
+    }
+
+    public int getTicketPrice() {
+        return ticketPrice;
+    }
+
     //Setters
     public void setName(String name) {
         this.name = name;
@@ -28,8 +33,31 @@ public class Venue {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
-    public String toString(){
-        return "Name : " + name + " Capacity : " + capacity;
+    public void setVenueCode(String venueCode) {
+        this.venueCode = venueCode;
     }
+
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    //Constructors
+    Venue(){}
+
+    Venue(String name, int capacity, int ticketPrice){
+        this.venueCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
+        this.name = name;
+        this.capacity = capacity;
+        this.ticketPrice = ticketPrice;
+    }
+
+    Venue(String venueCode, String name, int capacity, int ticketPrice){
+        this.venueCode = venueCode.toUpperCase();
+        this.name = name;
+        this.capacity = capacity;
+        this.ticketPrice = ticketPrice;
+    }
+
+
+
 }

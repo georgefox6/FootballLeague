@@ -5,7 +5,8 @@ public class Team {
     //The Team class fields
     String teamCode;
     String name;
-    Venue venue;
+    String league;
+    Club club;
     static int codeIteration;
 
     static {
@@ -15,17 +16,19 @@ public class Team {
     //Constructors
     Team(){}
 
-    Team(String name, Venue venue){
+    Team(String name, String league, Club club){
         this.teamCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
-        this.venue = venue;
+        this.league = league;
+        this.club = club;
         codeIteration++;
     }
 
-    Team(String teamCode, String name, Venue venue){
+    Team(String teamCode, String name, String league, Club club){
         this.teamCode = teamCode.toUpperCase();
         this.name = name;
-        this.venue = venue;
+        this.league = league;
+        this.club = club;
     }
 
     //Getters
@@ -35,24 +38,14 @@ public class Team {
     public String getName() {
         return name;
     }
-    //TODO set up a return players from team ( ArrayList )
-    //TODO set up a list players from team ( String )
-    public String getPlayersString() throws SQLException {
-        String pl = "";
-        ArrayList<Player> players = Database.readPlayersTeam(this.getTeamCode());
-        for (int i = 0; i < players.size(); i++){
-            pl = pl + players.get(i).getFullName() + ", ";
-        }
-        return pl;
-    }
-    public Venue getVenue() {
-        return venue;
+
+    public String getLeague() {
+        return league;
     }
 
-    //TODO set up a getStartingXI
-//    public ArrayList<Player> getStartingXI() {
-//        return new ArrayList<Player>(players.subList(0,11));
-//    }
+    public Club getClub() {
+        return club;
+    }
 
     //Setters
     public void setTeamCode(String teamCode) {
@@ -61,15 +54,15 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
-//    public void setPlayers(ArrayList<Player> players) {
-//        this.players = players;
-//    }
-//    public void addPlayer(Player player) {
-//        this.players.add(player);
-//    }
-    public void setVenue(Venue venue) {
-        this.venue = venue;
+
+    public void setLeague(String league) {
+        this.league = league;
     }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
 
     public void addPlayer(String playerCode)throws SQLException{
         Player player = Database.readPlayer(playerCode);
@@ -83,26 +76,16 @@ public class Team {
         Database.updatePlayer(player);
     }
 
-    //toString method
-    public String toString(){
-        return "Team code : " + teamCode + " Team name : " + name + " Venue : " + this.getVenue().getName();
-    }
-
     //Function to randomly generate num teams
-    public static ArrayList<Team> genTeam(int num){
-        ArrayList<Team> teams = new ArrayList<Team>();
-        for (int i = 0; i < num; i++) {
-            teams.add(new Team(Player.genString(), new Venue(Player.genString(), 500)));
-        }
-        return teams;
-    }
+//    public static ArrayList<Team> genTeam(int num){
+//        ArrayList<Team> teams = new ArrayList<Team>();
+//        for (int i = 0; i < num; i++) {
+//            teams.add(new Team(Player.genString(), new Venue(Player.genString(), 500, 5)));
+//        }
+//        return teams;
+//    }
 
 
     public static void main(String[] args) {
-        ArrayList<Team> league = new ArrayList<Team>();
-        league = genTeam(20);
-        for(int i=0;i<20;i++){
-            System.out.println(league.get(i).toString());
-        }
     }
 }

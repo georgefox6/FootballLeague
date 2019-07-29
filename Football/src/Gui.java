@@ -5,13 +5,18 @@ import java.awt.event.ActionListener;
 
 public class Gui{
 
+    //TODO stop all of the popups when moving between screens
     public static void createFrame(JPanel panel){
         JFrame frame = new JFrame("Football League Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600,600);
+        frame.setSize(1000,600);
         frame.setVisible(true);
         frame.getContentPane().add(BorderLayout.NORTH, panel);
     }
+
+    ///////////////////////////////////////////////////
+    //               PLAYER MANAGEMENT               //
+    ///////////////////////////////////////////////////
 
     public static JPanel viewPlayer(){
         JPanel viewPlayer = new JPanel();
@@ -74,7 +79,7 @@ public class Gui{
         };
 
         update.addActionListener(viewPlayerListener);
-        update.addActionListener(openMenu);
+        back.addActionListener(openMenu);
 
         return viewPlayer;
     }
@@ -100,6 +105,9 @@ public class Gui{
         //The button used to write the changes made in the form to the DB
         JButton update = new JButton("Update Player");
 
+        //Created a back button to allow you to return to the menu page
+        JButton back = new JButton("Back");
+
         //Adds the components to the panel
         updatePlayer.add(playerCodeL);
         updatePlayer.add(playerCodeT);
@@ -113,6 +121,7 @@ public class Gui{
         updatePlayer.add(injuredL);
         updatePlayer.add(injuredCB);
         updatePlayer.add(update);
+        updatePlayer.add(back);
 
         //Event listener used to fill the fields on the form with the search results when the button is clicked
         ActionListener viewPlayerListener = new ActionListener() {
@@ -139,9 +148,18 @@ public class Gui{
             }
         };
 
+        //The action listener used to take you back to the menu page
+        ActionListener openMenu = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Opening the Menu frame");
+                createFrame(menu());
+            }
+        };
+
         //Adds the actionlisteners to the button
         view.addActionListener(viewPlayerListener);
         update.addActionListener(updatePlayerListener);
+        back.addActionListener(openMenu);
 
         return updatePlayer;
     }
@@ -166,6 +184,9 @@ public class Gui{
         //The button used to write the changes made in the form to the DB
         JButton add = new JButton("Add Player");
 
+        //Created a back button to allow you to return to the menu page
+        JButton back = new JButton("Back");
+
         playerCodeT.setEditable(false);
 
         //Adds the components to the panel
@@ -180,6 +201,7 @@ public class Gui{
         addPlayer.add(injuredL);
         addPlayer.add(injuredCB);
         addPlayer.add(add);
+        addPlayer.add(back);
 
         //Event listener used to create the player object and write it to DB with the values filled in the text boxes
         ActionListener addPlayerListener = new ActionListener() {
@@ -195,8 +217,17 @@ public class Gui{
             }
         };
 
+        //The action listener used to take you back to the menu page
+        ActionListener openMenu = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Opening the Menu frame");
+                createFrame(menu());
+            }
+        };
+
         //Adds the actionlisteners to the button
         add.addActionListener(addPlayerListener);
+        back.addActionListener(openMenu);
 
         return addPlayer;
     }

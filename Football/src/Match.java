@@ -20,7 +20,7 @@ public class Match {
         this.matchCode = homeTeam.getTeamCode() + "v" + awayTeam.getTeamCode() + date;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.venue = homeTeam.getVenue();
+//        this.venue = homeTeam.getVenue();
         this.homeStartingXI = homeStartingXI;
         this.awayStartingXI = awayStartingXI;
         this.homeGoals = homeGoals;

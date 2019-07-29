@@ -7,7 +7,7 @@ public class Database {
     static Statement stmt = null;
     static ResultSet rs = null;
     public static void connect()throws SQLException{
-        String url = "jdbc:sqlite:C:/Users/Georg/IdeaProjects/FootballLeague/Football/leagueTable.db";
+        String url = "jdbc:sqlite:Football/leagueTable.db";
         conn = DriverManager.getConnection(url);
         System.out.println("Connection to the db was successful!");
     }
@@ -125,15 +125,14 @@ public class Database {
             connect();
             System.out.println("Creating Statement - Read Team");
             Statement stmt = conn.createStatement();
-            String sql = " SELECT * FROM teams WHERE teamCode='" + teamCode + "';";
+            String sql = " SELECT * FROM team WHERE teamCode='" + teamCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String teamName = rs.getString("teamName");
-                String venueName = rs.getString("Venue");
-                Venue venue = new Venue(venueName, 60000);
-                team = new Team(teamCode, teamName, venue);
-                //TODO add venue to team object
-                team = new Team(teamCode, teamName, venue);
+                String league = rs.getString("league");
+                String clubCode = rs.getString("club");
+                Club club = readClub(clubCode);
+                team = new Team(teamCode, teamName, league, club);
             }
         } catch(SQLException ex){
             System.out.println(ex);
@@ -148,7 +147,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Write Team");
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO teams VALUES ('" + team.getTeamCode() + "', '" + team.getName() + "', '" + team.getVenue().getName() + "');";
+            String sql = "INSERT INTO team VALUES ('" + team.getTeamCode() + "', '" + team.getName() + "', '" + team.getLeague() + "', '" + team.getClub().getClubCode() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
             System.out.println(ex);
@@ -162,7 +161,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Update Team");
             Statement stmt = conn.createStatement();
-            String sql = "UPDATE teams SET teamName='" + team.getName() + "', Venue='" + team.getVenue().getName() + "' WHERE teamCode='" + team.getTeamCode() + "';";
+            String sql = "UPDATE team SET teamName='" + team.getName() + "', league='" + team.getLeague() + "', club='" + team.getClub().getClubCode() + "' WHERE teamCode='" + team.getTeamCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
             System.out.println(ex);
@@ -175,9 +174,184 @@ public class Database {
     //               VENUE MANAGEMENT                //
     ///////////////////////////////////////////////////
 
-    //TODO readVenue
-    //TODO writeVenue
-    //TODO updateVenue
+    //TODO test the read/write/update venue functions
+
+    public static Venue readVenue(String venueCode){
+        Venue venue = new Venue();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Venue");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM venue WHERE venueCode='" + venueCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String venueName = rs.getString("venueName");
+                int capacity = rs.getInt("capacity");
+                int ticketPrice = rs.getInt("ticketPrice");
+                venue = new Venue(venueCode, venueName, capacity, ticketPrice);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return venue;
+    }
+
+    public static void writeVenue(Venue venue){
+        try {
+            connect();
+            System.out.println("Creating statement - Write Venue");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO venue VALUES ('" + venue.getVenueCode() + "', '" + venue.getName() + "', '" + venue.getCapacity() + "', '" + venue.getTicketPrice() + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateVenue(Venue venue){
+        try{
+            connect();
+            System.out.println("Creating statement - Update Venue");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE venue SET venueName='" + venue.getName() + "', capacity='" + venue.getCapacity() + "', ticketPrice='" + venue.getTicketPrice() + "' WHERE venueCode='" + venue.getVenueCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
+
+    ///////////////////////////////////////////////////
+    //               TACTIC MANAGEMENT               //
+    ///////////////////////////////////////////////////
+
+
+    //TODO test the read/write/update tactic functions
+
+    public static Tactic readTactic(String tacticCode){
+        Tactic tactic = new Tactic();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Tactic");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM tactic WHERE tacticCode='" + tacticCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String startingXI = rs.getString("startingXI");
+                String substitutionBench = rs.getString("substitutionBench");
+                int attackScore = rs.getInt("attackScore");
+                int defenceScore = rs.getInt("defenceScore");
+                String formation = rs.getString("formation");
+                String playStyle = rs.getString("playStyle");
+                tactic = new Tactic(Tactic.codeToStartingXI(startingXI), Tactic.codeToStartingXI(substitutionBench), attackScore, defenceScore, formation, playStyle);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return tactic;
+    }
+
+    public static void writeTactic(Tactic tactic){
+        try {
+            connect();
+            System.out.println("Creating statement - Write Tactic");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO tactic VALUES ('" + tactic.getTacticCode() + "', '" + Tactic.startingXIToCode(tactic.getStartingXI()) +
+                    "', '" + Tactic.startingXIToCode(tactic.getSubstitutionBench()) + "', '" + tactic.getAttackScore() + "', '" + tactic.getDefenceScore() +
+                    "', '" + tactic.getFormation() + "', '" + tactic.getPlayStyle() + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateTactic(Tactic tactic){
+        try{
+            connect();
+            System.out.println("Creating statement - Update Tactic");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE tactic SET startingXI='" + Tactic.startingXIToCode(tactic.getStartingXI()) + "', substitutionBench='" +
+                    Tactic.startingXIToCode(tactic.getSubstitutionBench()) + "', attackScore='" + tactic.getAttackScore() + "', defenseScore='" +
+                    tactic.getDefenceScore() + "', formation='" + tactic.getFormation() + "', playStyle='" + tactic.getPlayStyle()
+                    + "' WHERE tacticCode='" + tactic.getTacticCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
+    ///////////////////////////////////////////////////
+    //                CLUB MANAGEMENT                //
+    ///////////////////////////////////////////////////
+
+    //TODO test the read/write/update club functions
+
+    public static Club readClub(String clubCode){
+        Club club = new Club();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Club");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM club WHERE clubCode='" + clubCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String clubName = rs.getString("clubName");
+                String venueCode = rs.getString("venue");
+                Venue venue = readVenue(venueCode);
+                club = new Club(clubCode, clubName, venue);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return club;
+    }
+
+    public static void writeClub(Club club){
+        try {
+            connect();
+            System.out.println("Creating statement - Write Club");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO club VALUES ('" + club.getClubCode() + "', '" + club.getName() + "', '" + club.getVenue().getVenueCode() + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateClub(Club club){
+        try{
+            connect();
+            System.out.println("Creating statement - Update Club");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE club SET clubName='" + club.getName() + "', venue='" + club.getVenue().getVenueCode() + "' WHERE clubCode='" + club.getClubCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
+    ///////////////////////////////////////////////////
+    //               MATCH MANAGEMENT                //
+    ///////////////////////////////////////////////////
+
+    //TODO readMatch
+    //TODO writeMatch
+    //TODO updateMatch
 
     ///////////////////////////////////////////////////
     //                MISC MANAGEMENT                //
@@ -221,6 +395,63 @@ public class Database {
         return count;
     }
 
+    public static int countTactics() {
+        int count = 0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count Tactics");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT tacticCode FROM tactics;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return count;
+    }
+
+    public static int countVenues() {
+        int count = 0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count Venues");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT venueCode FROM venue;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return count;
+    }
+
+    public static int countClubs() {
+        int count = 0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count Clubs");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT clubCode FROM club;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+        return count;
+    }
+
     public static int checkDuplication(String playerCode){
         int count = 0;
         try {
@@ -241,27 +472,6 @@ public class Database {
     }
 
     public static void main(String[] args){
-//        Venue ot = new Venue("Old Trafford", 65000);
-//        Team team = new Team("Manchester United", ot);
-//        writeTeam(team);
-//        System.out.println(readTeam("000Man"));
- //       Player player = new Player("Kay", "Sutcliffe", false, "000Man");
- //       writePlayer(player);
- //       System.out.println(player);
- //       player.setSurname("Fox");
- //       updatePlayer(player);
- //       System.out.println(player.getSurname());
-
-//        ArrayList<Player> players = readPlayersTeam("000Man");
-//        for( int i = 0; i < players.size(); i++){
-//            System.out.println(players.get(i).getForename());
-//        }
-
-//        System.out.println(readTeam("000Man").getName());
-
-        Team ev = readTeam("007EVE");
-        ev.setName("Newcastle");
-        updateTeam(ev);
 
     }
 }
