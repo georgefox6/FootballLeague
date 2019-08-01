@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.Random;
+import java.lang.Math;
 public class Match {
     //Match variables
     String matchCode;
@@ -110,9 +111,41 @@ public class Match {
         this.date = date;
     }
 
+    //TODO Test the playMatch method
+    //Match Engine method
+    public void playMatch(){
+        Tactic homeTactic = Database.readTactic(this.homeTacticCode);
+        Tactic awayTactic = Database.readTactic(this.awayTacticCode);
+
+        //                      HOME TEAM GOALS
+        //Generate amount of chances home team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
+        Random rand = new Random();
+        int chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
+        //Generate conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
+        rand = new Random();
+        double conversionRate = homeTactic.getAttackScore() * (rand.nextInt(100)/200);
+        //The final number of goals scored by the home team
+        int homeGoals = (int)Math.round(chancesCreated * conversionRate);
+
+        //                      AWAY TEAM GOALS
+        //Generate amount of chances away team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
+        rand = new Random();
+        chancesCreated = Math.round(rand.nextInt(40) * (1 - homeTactic.getDefenceScore()));
+        //Generate conversion rate away team will get (Dependant on the away team attack score) - Average in the premier league is 8% - 22%
+        rand = new Random();
+        conversionRate = awayTactic.getAttackScore() * (rand.nextInt(100)/200);
+        //The final number of goals scored by the away team
+        int awayGoals = (int)Math.round(chancesCreated * conversionRate);
+
+        this.setScore(homeGoals + "-" + awayGoals);
+
+        //These functions are used to update the league table for both the home and away teams
+        Database.updateLeagueTableHome(this);
+        Database.updateLeagueTableAway(this);
+    }
+
+    //TODO add function to organise the scheduling of matches (Create every match and set dates)
+
     public static void main(String[] args) {
-//        ArrayList<Match> week1 = genMatch(4);
-//        System.out.println(week1.get(0).toString());
-//        System.out.println(week1.get(1).toString());
     }
 }

@@ -5,7 +5,9 @@ public class Tactic {
     String tacticCode;
     ArrayList<Player> startingXI;
     ArrayList<Player> substitutionBench;
+    //Scale from 0 to 1 of how good the team is at scoring goals
     int attackScore;
+    //Scale from 0 to 1 of how good the team is at defending
     int defenceScore;
     String formation;
     String playStyle;

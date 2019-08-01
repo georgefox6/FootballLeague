@@ -403,6 +403,122 @@ public class Database {
             close();
         }
     }
+
+    ///////////////////////////////////////////////////
+    //                 LEAGUE TABLE                  //
+    ///////////////////////////////////////////////////
+
+    //TODO Test updateLeagueTableHome and updateLeagueTableAway
+    //Function used to update the league table of the home team given a match as input
+    public static void updateLeagueTableHome(Match match){
+        Team homeTeam = readTeam(match.getHomeTeamCode());
+        Team awayTeam = readTeam(match.getAwayTeamCode());
+        String[] scoreLine = match.getScore().split("-");
+        int homeGoals = Integer.parseInt(scoreLine[0]);
+        int awayGoals = Integer.parseInt(scoreLine[1]);
+        try{
+            connect();
+            System.out.println("Creating statement - Update League Table Home");
+            Statement stmt = conn.createStatement();
+            //First we need to read the values from the database before updating them
+            String sql = "SELECT * FROM " + homeTeam.getLeague() + " WHERE teamCode = '" + match.getHomeTeamCode() + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                //Values read from the league table
+                int position = rs.getInt(0);
+                int played = rs.getInt(3);
+                int won = rs.getInt(4);
+                int drawn = rs.getInt(5);
+                int lost = rs.getInt(6);
+                int goalsScored = rs.getInt(7);
+                int goalsConceded = rs.getInt(8);
+                int goalDifference = rs.getInt(9);
+                int points = rs.getInt(10);
+
+                //modifications after the game
+                played++;
+                if(homeGoals>awayGoals){
+                    won++;
+                    points = points + 3;
+                }
+                else if(homeGoals == awayGoals){
+                    drawn++;
+                    points = points + 1;
+                }
+                else if(homeGoals<awayGoals){
+                    lost++;
+                }
+                goalsScored = goalsScored + homeGoals;
+                goalsConceded = goalsConceded + awayGoals;
+                goalDifference = goalsScored - goalsConceded;
+                stmt = conn.createStatement();
+                sql = "UPDATE " + homeTeam.getLeague() + " SET played='" + played + "' won='" + won + "' drawn='" + drawn + "' lost='" + lost + "' goalsScored='" + goalsScored + "' goalsConceded='" + goalsConceded + "' goalDifference='" + goalDifference + "' points='" + points + "' WHERE teamCode ='" + match.getHomeTeamCode() + "';";
+                stmt.executeUpdate(sql);
+            }
+
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    //Function used to update the league table for the away team given a match as input
+    public static void updateLeagueTableAway(Match match){
+        Team homeTeam = readTeam(match.getHomeTeamCode());
+        Team awayTeam = readTeam(match.getAwayTeamCode());
+        String[] scoreLine = match.getScore().split("-");
+        int homeGoals = Integer.parseInt(scoreLine[0]);
+        int awayGoals = Integer.parseInt(scoreLine[1]);
+        try{
+            connect();
+            System.out.println("Creating statement - Update League Table");
+            Statement stmt = conn.createStatement();
+            //First we need to read the values from the database before updating them
+            String sql = "SELECT * FROM " + awayTeam.getLeague() + " WHERE teamCode = '" + match.getAwayTeamCode() + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                //Values read from the league table
+                int position = rs.getInt(0);
+                int played = rs.getInt(3);
+                int won = rs.getInt(4);
+                int drawn = rs.getInt(5);
+                int lost = rs.getInt(6);
+                int goalsScored = rs.getInt(7);
+                int goalsConceded = rs.getInt(8);
+                int goalDifference = rs.getInt(9);
+                int points = rs.getInt(10);
+
+                //modifications after the game
+                played++;
+                if(homeGoals<awayGoals){
+                    won++;
+                    points = points + 3;
+                }
+                else if(homeGoals == awayGoals){
+                    drawn++;
+                    points = points + 1;
+                }
+                else if(homeGoals>awayGoals){
+                    lost++;
+                }
+                goalsScored = goalsScored + awayGoals;
+                goalsConceded = goalsConceded + homeGoals;
+                goalDifference = goalsScored - goalsConceded;
+                stmt = conn.createStatement();
+                sql = "UPDATE " + awayTeam.getLeague() + " SET played='" + played + "' won='" + won + "' drawn='" + drawn + "' lost='" + lost + "' goalsScored='" + goalsScored + "' goalsConceded='" + goalsConceded + "' goalDifference='" + goalDifference + "' points='" + points + "' WHERE teamCode ='" + match.getAwayTeamCode() + "';";
+                stmt.executeUpdate(sql);
+            }
+
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    //TODO Create a function which updates the position of the team depending on their points then goal difference
+
     ///////////////////////////////////////////////////
     //                MISC MANAGEMENT                //
     ///////////////////////////////////////////////////
