@@ -1,8 +1,10 @@
+package DatabaseManagerForms;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerEditor {
+public class DatabaseManager {
     private JButton viewTeamButton;
     private JButton viewClubButton;
     private JButton viewVenueButton;
@@ -18,13 +20,28 @@ public class PlayerEditor {
     private JButton addClubButton;
     private JButton addVenueButton;
     private JButton addMatchButton;
+    private JPanel DatabaseManager;
 
-    public PlayerEditor() {
+    //Opens view player
+    public DatabaseManager() {
         viewPlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("The button worked!");
+
+                JFrame frame = new JFrame("ViewPlayerPanel");
+                frame.setContentPane(new ViewPlayer().ViewPlayerPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("DatabaseManager");
+        frame.setContentPane(new DatabaseManager().DatabaseManager);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

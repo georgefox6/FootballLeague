@@ -1,5 +1,7 @@
+package FootballLeagueBackend;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 public class Team {
 
     //The Team class fields

@@ -1,3 +1,5 @@
+package FootballLeagueBackend;
+
 import java.util.ArrayList;
 import java.util.Random;
 public class Player {
@@ -15,10 +17,10 @@ public class Player {
 
 
     //Constructors
-    Player(){}
+    public Player(){}
 
     //Constructor without team teamCode and generated player code
-    Player(String forename, String surname, Boolean injuryStatus){
+    public Player(String forename, String surname, Boolean injuryStatus){
         this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;
@@ -27,7 +29,7 @@ public class Player {
     }
 
     //Constructor with teamCode and generated player code
-    Player(String forename, String surname, Boolean injuryStatus, String teamCode){
+    public Player(String forename, String surname, Boolean injuryStatus, String teamCode){
         this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;

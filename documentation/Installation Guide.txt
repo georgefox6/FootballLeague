@@ -8,6 +8,6 @@ When using an IDE:
 5) Open up your IDE and checkout project from version control. Select github and enter the url https://github.com/georgefox6/FootballLeague.git
 6) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
 7) Navigate to FootballLeague/Football/src in the file explorer in the IDE
-8) Right click on Gui.java and click run
+8) Right click on FootballLeagueBackend.Gui.java and click run
 
 This is a temporary installation guide and will be updated after further testing

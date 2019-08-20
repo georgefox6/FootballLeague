@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package FootballLeagueBackend;
+
 public class Club {
     //The club class fields
     String clubCode;

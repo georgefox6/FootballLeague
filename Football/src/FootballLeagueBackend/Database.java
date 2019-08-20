@@ -1,6 +1,9 @@
+package FootballLeagueBackend;
+
 import java.sql.*;
 import java.lang.*;
 import java.util.ArrayList;
+
 
 public class Database {
     static Connection conn;
@@ -617,6 +620,9 @@ public class Database {
         }
         return count;
     }
+
+    //TODO Possibly create a function to change date format from internal to external and vice versa for storing to db
+    //TODO add primary keys and foreign keys to the database
 
     public static int countMatches() {
         int count =0;
