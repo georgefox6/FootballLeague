@@ -39,7 +39,7 @@ public class Player {
     }
 
     //Constructor with playerCode for creation of player object from DB so player code remains consistent
-    Player(String playerCode, String forename, String surname, Boolean injuryStatus, String teamCode){
+    public Player(String playerCode, String forename, String surname, Boolean injuryStatus, String teamCode){
         this.playerCode = playerCode.toUpperCase();
         this.forename = forename;
         this.surname = surname;

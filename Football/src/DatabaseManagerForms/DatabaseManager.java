@@ -3,6 +3,8 @@ package DatabaseManagerForms;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import FootballLeagueBackend.*;
+import DatabaseManagerForms.*;
 
 public class DatabaseManager {
     private JButton viewTeamButton;
@@ -20,7 +22,7 @@ public class DatabaseManager {
     private JButton addClubButton;
     private JButton addVenueButton;
     private JButton addMatchButton;
-    private JPanel DatabaseManager;
+    public JPanel DatabaseManager;
 
     //Opens view player
     public DatabaseManager() {
@@ -30,6 +32,36 @@ public class DatabaseManager {
 
                 JFrame frame = new JFrame("ViewPlayerPanel");
                 frame.setContentPane(new ViewPlayer().ViewPlayerPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        addPlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("AddPlayerPanel");
+                frame.setContentPane(new AddPlayer().AddPlayerPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        updatePlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("UpdatePlayerPanel");
+                frame.setContentPane(new UpdatePlayer().UpdatePlayerPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        viewTeamButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("ViewTeam");
+                frame.setContentPane(new ViewTeam().ViewTeamPanel);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

@@ -16,9 +16,9 @@ public class Team {
     }
 
     //Constructors
-    Team(){}
+    public Team(){}
 
-    Team(String name, String league, Club club){
+    public Team(String name, String league, Club club){
         this.teamCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.league = league;
@@ -26,7 +26,7 @@ public class Team {
         codeIteration++;
     }
 
-    Team(String teamCode, String name, String league, Club club){
+    public Team(String teamCode, String name, String league, Club club){
         this.teamCode = teamCode.toUpperCase();
         this.name = name;
         this.league = league;

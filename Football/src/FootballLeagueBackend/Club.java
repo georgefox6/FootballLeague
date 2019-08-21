@@ -13,14 +13,14 @@ public class Club {
     }
 
     //Constructors
-    Club(){}
+    public Club(){}
 
-    Club(String clubCode, String name, Venue venue){
+    public Club(String clubCode, String name, Venue venue){
         this.clubCode = clubCode.toUpperCase();
         this.name = name;
         this.venue = venue;
     }
-    Club(String name, Venue venue){
+    public Club(String name, Venue venue){
         this.clubCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.venue = venue;
