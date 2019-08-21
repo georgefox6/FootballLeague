@@ -1,6 +1,4 @@
-package FootballLeagueBackend;
-
-import java.util.ArrayList;
+import java.util.ArrayListv;
 import java.util.Arrays;
 
 public class Tactic {
@@ -8,9 +6,9 @@ public class Tactic {
     ArrayList<Player> startingXI;
     ArrayList<Player> substitutionBench;
     //Scale from 0 to 1 of how good the team is at scoring goals
-    int attackScore;
+    double attackScore;
     //Scale from 0 to 1 of how good the team is at defending
-    int defenceScore;
+    double defenceScore;
     String formation;
     String playStyle;
 
@@ -72,7 +70,7 @@ public class Tactic {
     //Constructors
     Tactic(){}
 
-    Tactic(ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, int attackScore, int defenceScore, String formation, String playStyle){
+    Tactic(ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
         this.startingXI = startingXI;
         this.substitutionBench = substitutionBench;
@@ -82,7 +80,7 @@ public class Tactic {
         this.playStyle = playStyle;
     }
 
-    Tactic(String tacticCode, ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, int attackScore, int defenceScore, String formation, String playStyle){
+    Tactic(String tacticCode, ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = tacticCode.toUpperCase();
         this.startingXI = startingXI;
         this.substitutionBench = substitutionBench;

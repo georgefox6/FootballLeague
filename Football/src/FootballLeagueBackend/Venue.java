@@ -1,5 +1,3 @@
-package FootballLeagueBackend;
-
 public class Venue {
     //Venue variables
     String venueCode;
