@@ -7,7 +7,7 @@ public class Database {
     static Statement stmt = null;
     static ResultSet rs = null;
     public static void connect()throws SQLException{
-        String url = "jdbc:sqlite:Football/leagueTable.db";
+        String url = "jdbc:sqlite:/home/josh/FootballLeagueMaster/Football/leagueTable.db";
         conn = DriverManager.getConnection(url);
         System.out.println("Connection to the db was successful!");
     }
@@ -48,14 +48,14 @@ public class Database {
             Statement stmt = conn.createStatement();
             String sql = "SELECT * FROM player WHERE playerCode='" + playerCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
-//            if (rs.next()){
+            //if (rs.next()){
                 String forename = rs.getString("forename");
                 String surname = rs.getString("surname");
                 String injuryStatusStr = rs.getString("injuryStatus");
                 Boolean injuryStatus = (injuryStatusStr == "true");
                 String teamCode = rs.getString("teamCode");
                 player = new Player(playerCode, forename, surname, injuryStatus, teamCode);
-//            }
+                //}
         } catch (SQLException ex){
             System.out.println(ex);
         } finally {
@@ -140,6 +140,26 @@ public class Database {
             close();
         }
         return team;
+    }
+
+    public static ArrayList<String> readTeamsFromLeague(String league) {
+        ArrayList<String> teamList = new ArrayList<String>();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read Teams From League");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM team WHERE league='" + league + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String teamCode = rs.getString("teamCode");
+                teamList.add(teamCode);
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return teamList;
     }
 
     public static void writeTeam(Team team){
@@ -244,8 +264,11 @@ public class Database {
             while (rs.next()) {
                 String startingXI = rs.getString("startingXI");
                 String substitutionBench = rs.getString("substitutionBench");
-                int attackScore = rs.getInt("attackScore");
-                int defenceScore = rs.getInt("defenceScore");
+                // Attack and defence score are INT in db so restrict these to [0, 100] in db
+                // since attackScore and defence score are [0, 1] we divide the db value by 100
+                // to return a double [0, 1].
+                double attackScore = rs.getInt("attackScore") / 1;
+                double defenceScore = rs.getInt("defenceScore") / 1;
                 String formation = rs.getString("formation");
                 String playStyle = rs.getString("playStyle");
                 tactic = new Tactic(Tactic.codeToStartingXI(startingXI), Tactic.codeToStartingXI(substitutionBench), attackScore, defenceScore, formation, playStyle);
@@ -520,6 +543,32 @@ public class Database {
     //TODO Create a function which updates the position of the team depending on their points then goal difference
 
     ///////////////////////////////////////////////////
+    //              SCHEDULE MANAGEMENT              //
+    ///////////////////////////////////////////////////
+
+    // Method to write all matches produced as schedule to the database
+    /// Open a database connection and iterate over list of matches for 
+    /// each element produce a new SQL statement to execute
+    public static void updateSchedule(ArrayList<Match> matches) {
+        try {
+            connect();
+            int numberOfMatches = matches.size();
+            for (int matchNumber=0; matchNumber<numberOfMatches; matchNumber++){
+                System.out.println("Creating statement - Write Match");
+                Statement stmt = conn.createStatement();
+                // TODO add homeTeamTactic and awayTeamTactic
+                Match match = matches.get(matchNumber);
+                String sql = "INSERT INTO matches VALUES ('" + match.getMatchCode() + "' , '" + match.getHomeTeamCode() + "' , '" + match.getAwayTeamCode() + "' , '" + "homeTacticCode" + "' , '" + "awayTacticCode" + "' , '" + "score" + "' , '" + match.getDate() + "');";
+                stmt.executeUpdate(sql);
+            }    
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                close();
+            }
+    }
+
+    ///////////////////////////////////////////////////
     //                MISC MANAGEMENT                //
     ///////////////////////////////////////////////////
 
@@ -657,6 +706,6 @@ public class Database {
     }
 
     public static void main(String[] args){
-
+        
     }
 }

@@ -3,7 +3,7 @@ NB: Numbering is an informal relative priority ranking within type. e.g. could b
 
 CHECK: Which is correct name for a class property? "property" or "variable"
 
-check: Classes->Properties->Database are these properties actually properties of the class or are they just things in a method? - MAY BE ABLE TO ANSWER THIS MYSELF BY LOOKING
+check: Classes->Properties->FootballLeagueBackend.Database are these properties actually properties of the class or are they just things in a method? - MAY BE ABLE TO ANSWER THIS MYSELF BY LOOKING
 Add: An explanation of repeated abbreviations. e.g. L and T appended to property names that are Jlabel and JTextField classes respectively
 Add: Classes->Properties A column "Description" containing a short description of the property
 Add: Classes->Properties A column "Default" containing the default value of the property
