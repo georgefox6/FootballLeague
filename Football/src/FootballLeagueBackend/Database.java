@@ -1,3 +1,4 @@
+package FootballLeagueBackend;
 import java.sql.*;
 import java.lang.*;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ public class Database {
     static Statement stmt = null;
     static ResultSet rs = null;
     public static void connect()throws SQLException{
-        String url = "jdbc:sqlite:/home/josh/FootballLeagueMaster/Football/leagueTable.db";
+        String url = "jdbc:sqlite:Football/leagueTable.db";
         conn = DriverManager.getConnection(url);
         System.out.println("Connection to the db was successful!");
     }

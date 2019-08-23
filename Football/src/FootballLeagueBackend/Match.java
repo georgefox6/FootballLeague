@@ -1,3 +1,5 @@
+package FootballLeagueBackend;
+
 import java.util.Random;
 import java.lang.Math;
 public class Match {
@@ -122,7 +124,7 @@ public class Match {
         //                      HOME TEAM GOALS
         //Generate amount of chances home team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
         Random rand = new Random();
-        int chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
+        double chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
         //Generate conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
         rand = new Random();
         double conversionRate = homeTactic.getAttackScore() * (rand.nextInt(100)/200);

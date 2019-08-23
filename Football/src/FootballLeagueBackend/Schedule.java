@@ -1,4 +1,5 @@
-import java.util.ArrayList; 
+package FootballLeagueBackend;
+import java.util.ArrayList;
 public class Schedule {
 	String scheduleCode;
 	ArrayList<String> teamCodes;

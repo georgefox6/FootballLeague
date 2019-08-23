@@ -1,3 +1,4 @@
+package FootballLeagueBackend;
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class Team {
@@ -6,7 +7,7 @@ public class Team {
     String teamCode;
     String name;
     String league;
-    Club club;
+    String clubCode;
     static int codeIteration;
 
     static {
@@ -16,19 +17,19 @@ public class Team {
     //Constructors
     public Team(){}
 
-    public Team(String name, String league, Club club){
+    public Team(String name, String league, String clubCode){
         this.teamCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.league = league;
-        this.club = club;
+        this.clubCode = clubCode;
         codeIteration++;
     }
 
-    public Team(String teamCode, String name, String league, Club club){
+    public Team(String teamCode, String name, String league, String clubCode){
         this.teamCode = teamCode.toUpperCase();
         this.name = name;
         this.league = league;
-        this.club = club;
+        this.clubCode = clubCode;
     }
 
     //Getters
@@ -43,8 +44,8 @@ public class Team {
         return league;
     }
 
-    public Club getClub() {
-        return club;
+    public String getClub() {
+        return clubCode;
     }
 
     //Setters
@@ -59,8 +60,8 @@ public class Team {
         this.league = league;
     }
 
-    public void setClub(Club club) {
-        this.club = club;
+    public void setClub(String clubCode) {
+        this.clubCode = clubCode;
     }
 
 

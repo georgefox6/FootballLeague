@@ -1,4 +1,5 @@
-import java.util.ArrayListv;
+package FootballLeagueBackend;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tactic {
@@ -28,10 +29,10 @@ public class Tactic {
     public ArrayList<Player> getSubstitutionBench() {
         return substitutionBench;
     }
-    public int getAttackScore() {
+    public double getAttackScore() {
         return attackScore;
     }
-    public int getDefenceScore() {
+    public double getDefenceScore() {
         return defenceScore;
     }
     public String getFormation() {

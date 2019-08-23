@@ -1,8 +1,6 @@
 package DatabaseManagerForms;
 
-import FootballLeagueBackend.Database;
-import FootballLeagueBackend.Player;
-
+import FootballLeagueBackend.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
