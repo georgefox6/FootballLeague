@@ -44,7 +44,7 @@ public class Team {
         return league;
     }
 
-    public String getClub() {
+    public String getClubCode() {
         return clubCode;
     }
 
@@ -60,7 +60,7 @@ public class Team {
         this.league = league;
     }
 
-    public void setClub(String clubCode) {
+    public void setClubCode(String clubCode) {
         this.clubCode = clubCode;
     }
 

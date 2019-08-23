@@ -132,8 +132,7 @@ public class Database {
                 String teamName = rs.getString("teamName");
                 String league = rs.getString("league");
                 String clubCode = rs.getString("club");
-                Club club = readClub(clubCode);
-                team = new Team(teamCode, teamName, league, club);
+                team = new Team(teamCode, teamName, league, clubCode);
             }
         } catch(SQLException ex){
             System.out.println(ex);
@@ -168,7 +167,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Write Team");
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO team VALUES ('" + team.getTeamCode() + "', '" + team.getName() + "', '" + team.getLeague() + "', '" + team.getClub().getClubCode() + "');";
+            String sql = "INSERT INTO team VALUES ('" + team.getTeamCode() + "', '" + team.getName() + "', '" + team.getLeague() + "', '" + team.getClubCode() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
             System.out.println(ex);
@@ -182,7 +181,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Update Team");
             Statement stmt = conn.createStatement();
-            String sql = "UPDATE team SET teamName='" + team.getName() + "', league='" + team.getLeague() + "', club='" + team.getClub().getClubCode() + "' WHERE teamCode='" + team.getTeamCode() + "';";
+            String sql = "UPDATE team SET teamName='" + team.getName() + "', league='" + team.getLeague() + "', club='" + team.getClubCode() + "' WHERE teamCode='" + team.getTeamCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
             System.out.println(ex);

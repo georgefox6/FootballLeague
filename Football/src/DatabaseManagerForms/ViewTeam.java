@@ -23,7 +23,7 @@ public class ViewTeam {
                 Team team = Database.readTeam(teamCode);
                 teamNameTF.setText(team.getName());
                 teamLeagueTF.setText(team.getLeague());
-                teamClubTF.setText(team.getClub().getClubCode());
+                teamClubTF.setText(team.getClubCode());
                 //TODO IMPORTANT need to update team to include club code rather than club object
             }
         });

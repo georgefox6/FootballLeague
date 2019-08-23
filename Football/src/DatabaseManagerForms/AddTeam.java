@@ -20,8 +20,7 @@ public class AddTeam {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Creates a new team object based on the user input
-                Club club = new Club();
-                Team team = new Team(teamNameTF.getText(),teamLeagueTF.getText(),club);
+                Team team = new Team(teamNameTF.getText(),teamLeagueTF.getText(),teamClubTF.getText());
             }
         });
     }
