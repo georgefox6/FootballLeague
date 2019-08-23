@@ -15,7 +15,7 @@ public class AddPlayer {
     private JButton BackButton;
     private JButton addPlayerButton;
     private JCheckBox injuredCheckBox;
-    private JPanel AddPlayerPanel;
+    public JPanel AddPlayerPanel;
 
     //Action listener is activated when the add player button is pressed
     //Once this button is clicked it will write all of the details into the database.
@@ -34,6 +34,16 @@ public class AddPlayer {
 
                 //Writes the new player that has been created to the database
                 Database.writePlayer(player);
+            }
+        });
+        BackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("DatabaseManager");
+                frame.setContentPane(new DatabaseManager().DatabaseManager);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
     }

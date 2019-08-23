@@ -26,7 +26,8 @@ public class ViewPlayer {
                 playerForenameTF.setText(player.getForename());
                 playerSurnameTF.setText(player.getSurname());
                 playerTeamCodeTF.setText(player.getTeamCode());
-                //TODO change it display team name rather than code?? or team name as well as team code??
+                injuredCheckBox.setSelected(player.getInjuryStatus());
+                //TODO injured checkbox is currently not working
             }
         });
 
@@ -34,7 +35,11 @@ public class ViewPlayer {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JFrame frame = new JFrame("DatabaseManager");
+                frame.setContentPane(new DatabaseManager().DatabaseManager);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
     }
