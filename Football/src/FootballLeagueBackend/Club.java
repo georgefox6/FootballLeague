@@ -4,7 +4,7 @@ public class Club {
     //The club class fields
     String clubCode;
     String name;
-    Venue venue;
+    String venueCode;
 
     static int codeIteration;
 
@@ -15,15 +15,15 @@ public class Club {
     //Constructors
     public Club(){}
 
-    public Club(String clubCode, String name, Venue venue){
+    public Club(String clubCode, String name, String venueCode){
         this.clubCode = clubCode.toUpperCase();
         this.name = name;
-        this.venue = venue;
+        this.venueCode = venueCode;
     }
-    public Club(String name, Venue venue){
+    public Club(String name, String venueCode){
         this.clubCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
-        this.venue = venue;
+        this.venueCode = venueCode;
         codeIteration++;
     }
 
@@ -37,8 +37,8 @@ public class Club {
         return name;
     }
 
-    public Venue getVenue() {
-        return venue;
+    public String getVenue() {
+        return venueCode;
     }
 
     //Setters
@@ -51,8 +51,8 @@ public class Club {
         this.name = name;
     }
 
-    public void setVenue(Venue venue) {
-        this.venue = venue;
+    public void setVenue(String venueCode) {
+        this.venueCode = venueCode;
     }
 
 }

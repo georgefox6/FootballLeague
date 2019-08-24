@@ -317,8 +317,6 @@ public class Database {
     //                CLUB MANAGEMENT                //
     ///////////////////////////////////////////////////
 
-    //TODO test the read/write/update club functions
-
     public static Club readClub(String clubCode){
         Club club = new Club();
         try {
@@ -330,8 +328,7 @@ public class Database {
             while (rs.next()) {
                 String clubName = rs.getString("clubName");
                 String venueCode = rs.getString("venue");
-                Venue venue = readVenue(venueCode);
-                club = new Club(clubCode, clubName, venue);
+                club = new Club(clubCode, clubName, venueCode);
             }
         } catch(SQLException ex){
             System.out.println(ex);
@@ -346,7 +343,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Write Club");
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO club VALUES ('" + club.getClubCode() + "', '" + club.getName() + "', '" + club.getVenue().getVenueCode() + "');";
+            String sql = "INSERT INTO club VALUES ('" + club.getClubCode() + "', '" + club.getName() + "', '" + club.getVenue() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
             System.out.println(ex);
@@ -360,7 +357,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Update Club");
             Statement stmt = conn.createStatement();
-            String sql = "UPDATE club SET clubName='" + club.getName() + "', venue='" + club.getVenue().getVenueCode() + "' WHERE clubCode='" + club.getClubCode() + "';";
+            String sql = "UPDATE club SET clubName='" + club.getName() + "', venue='" + club.getVenue() + "' WHERE clubCode='" + club.getClubCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
             System.out.println(ex);
@@ -595,9 +592,9 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating Statement - Count Teams");
+            System.out.println("Creating Statement - Count Team");
             Statement stmt = conn.createStatement();
-            String sql = "SELECT teamCode FROM teams;";
+            String sql = "SELECT teamCode FROM team;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 count++;
