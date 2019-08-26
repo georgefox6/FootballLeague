@@ -43,16 +43,17 @@ public class Venue {
     }
 
     //Constructors
-    Venue(){}
+    public Venue(){}
 
-    Venue(String name, int capacity, int ticketPrice){
+    public Venue(String name, int capacity, int ticketPrice){
+        codeIteration = Database.countVenues();
         this.venueCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.capacity = capacity;
         this.ticketPrice = ticketPrice;
     }
 
-    Venue(String venueCode, String name, int capacity, int ticketPrice){
+    public Venue(String venueCode, String name, int capacity, int ticketPrice){
         this.venueCode = venueCode.toUpperCase();
         this.name = name;
         this.capacity = capacity;
