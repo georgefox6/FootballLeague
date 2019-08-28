@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 // import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
@@ -20,14 +21,29 @@ public class NewGameScreen extends JFrame {
 		initUI();
 	}
 
-	private void pressedCreateGameButton() {
+	private void pressedCreateGameButton(String saveGameName) {
 		System.out.println("Create game");
+		try {
+			createNewGame(saveGameName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void pressedBackButton() {
 		System.out.println("Back");
 		dispose();
 		new HomeScreen().setVisible(true);
+	}
+
+	private void createNewGame(String saveGameName) throws IOException {
+		FileHandler f = new FileHandler();
+		String mainGameName = "mainGame";
+		try {
+			f.copyDatabase(mainGameName, saveGameName);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initUI() {
@@ -38,7 +54,7 @@ public class NewGameScreen extends JFrame {
 		// TODO de-ugly this text field
 		var newGameTitle = new JTextField();
 
-		createGameButton.addActionListener((event) -> pressedCreateGameButton());
+		createGameButton.addActionListener((event) -> pressedCreateGameButton(newGameTitle.getText()));
 		backButton.addActionListener((event) -> pressedBackButton());
 
 		var pane = getContentPane();
