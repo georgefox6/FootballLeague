@@ -1,3 +1,5 @@
+// package screens;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -17,6 +19,12 @@ public class HomeScreen extends JFrame {
 		initUI();
 	}
 
+	private void pressedNewGameButton() {
+		System.out.println("New game");
+		dispose();
+		new NewGameScreen().setVisible(true);
+	}
+
 	private void initUI() {
 
 		var newGameButton = new JButton("New game");
@@ -24,7 +32,7 @@ public class HomeScreen extends JFrame {
 		var settingsButton = new JButton("Settings");
 		var quitButton = new JButton("Quit");
 
-		newGameButton.addActionListener((event) -> System.out.println(getSize()));
+		newGameButton.addActionListener((event) -> pressedNewGameButton());
 		loadGameButton.addActionListener((event) -> System.exit(0));
 		settingsButton.addActionListener((event) -> System.exit(0));
 		quitButton.addActionListener((event) -> System.exit(0));
@@ -35,15 +43,13 @@ public class HomeScreen extends JFrame {
 		pane.setLayout(gl);
 
 		gl.setHorizontalGroup(gl.createSequentialGroup()
-				.addGroup(gl.createParallelGroup()
-						.addGap(5, 1000, 1000))
+				.addGap(5, 1000, 1000)
 				.addGroup(gl.createParallelGroup()
 						.addComponent(newGameButton)
 						.addComponent(loadGameButton)
 						.addComponent(settingsButton)
 						.addComponent(quitButton))
-				.addGroup(gl.createParallelGroup()
-						.addGap(5, 1000, 1000))
+				.addGap(5, 1000, 1000)
 		);
 		
 		gl.setVerticalGroup(gl.createSequentialGroup()
@@ -66,7 +72,7 @@ public class HomeScreen extends JFrame {
 		pack();
 
 		setTitle("Home screen");
-		setSize(300, 200);
+		setSize(250, 200);
 		setMinimumSize(minimumSize);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
