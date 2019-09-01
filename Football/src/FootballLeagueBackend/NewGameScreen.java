@@ -72,6 +72,7 @@ public class NewGameScreen extends JFrame {
 		);
 
 		gl.setVerticalGroup(gl.createSequentialGroup()
+			.addGap(100)
 			.addComponent(newGameTitle)
 			.addGroup(gl.createParallelGroup()
 					.addComponent(createGameButton)
