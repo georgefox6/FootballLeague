@@ -1,0 +1,38 @@
+import javax.swing.JFrame;
+import java.swing.GroupLayout;
+import java.awt.Dimension;
+
+import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
+
+public class SelectGameScreen extends JFrame{
+
+	Dimension minimumSize = new Dimension(132, 175);
+
+	public SelectGameScreen() {
+		initUI();
+	}
+
+	private void initUI() {
+
+		// Swing vars
+
+		// Listeners
+
+		// Pane setup
+
+		// Pane setup
+		var pane = getContentPane();
+		var gl = new GroupLayout(pane);
+		pane.setLayout(gl);
+
+		// Layout groups
+		pack();
+
+		// Display
+		setTitle("Select game");
+		setSize(300, 200);
+		setMinimumSize(minimumSize);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+}
