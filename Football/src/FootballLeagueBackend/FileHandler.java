@@ -1,8 +1,9 @@
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+/*
+package FootballLeagueBackend;
+
+import java.nio.file.*;
 import java.io.IOException;
+
 
 public class FileHandler {
 
@@ -21,11 +22,18 @@ public class FileHandler {
 	}
 
 	public void copyDatabase(String sourceTitle, String destinationTitle) throws IOException {
-		String sourcePath = "/home/josh/FootballLeague/Football/SaveGames/" + sourceTitle + ".db";
-		String destinationPath = "/home/josh/FootballLeague/Football/SaveGames/" + destinationTitle + ".db";
+		String sourcePath = "Football/SaveGames/" + sourceTitle + ".db";
+		String destinationPath = "Football/SaveGames/" + destinationTitle + ".db";
 		copyFile(sourcePath, destinationPath);
 	}
 
 	public static void main(String[] args) {
+		FileHandler f = new FileHandler();
+		try {
+			f.copyDatabase("Hello", "Hello");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
+*/

@@ -47,7 +47,7 @@ public class Match {
     }
 
     //Constructor used to create future match with matchCode for creation of match object from DB so match code remains consistent
-    //Constructor used in Schdule creation
+    //Constructor used in Schedule creation
     public Match(String matchCode, String homeTeamCode, String awayTeamCode, String date){
         this.matchCode = matchCode;
         this.homeTeamCode = homeTeamCode;

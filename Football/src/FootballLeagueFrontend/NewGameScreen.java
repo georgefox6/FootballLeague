@@ -1,17 +1,13 @@
-// package screens;
+package FootballLeagueFrontend;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-// import javax.swing.JComponent;
 import javax.swing.JFrame;
-// import javax.swing.SwingConstants;
-// import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Dimension;
 import java.io.IOException;
-
-import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
+import java.util.logging.FileHandler;
+import java.lang.*;
 
 public class NewGameScreen extends JFrame {
 

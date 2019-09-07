@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class Tactic {
     String tacticCode;
-    ArrayList<Player> startingXI;
-    ArrayList<Player> substitutionBench;
+    String startingXICode;
     //Scale from 0 to 1 of how good the team is at scoring goals
     double attackScore;
     //Scale from 0 to 1 of how good the team is at defending
@@ -23,11 +22,8 @@ public class Tactic {
     public String getTacticCode() {
         return tacticCode;
     }
-    public ArrayList<Player> getStartingXI() {
-        return startingXI;
-    }
-    public ArrayList<Player> getSubstitutionBench() {
-        return substitutionBench;
+    public String getStartingXICode() {
+        return startingXICode;
     }
     public double getAttackScore() {
         return attackScore;
@@ -44,47 +40,22 @@ public class Tactic {
 
 
     //Setters
-    public void setTacticCode(String tacticCode) {
-        this.tacticCode = tacticCode;
-    }
-    public void setStartingXI(ArrayList<Player> startingXI) {
-        this.startingXI = startingXI;
-    }
-    public void setSubstitutionBench(ArrayList<Player> substitutionBench) {
-        this.substitutionBench = substitutionBench;
-    }
-    public void setAttackScore(int attackScore) {
-        this.attackScore = attackScore;
-    }
-    public void setDefenceScore(int defenceScore) {
-        this.defenceScore = defenceScore;
-    }
-
-    public void setFormation(String formation) {
-        this.formation = formation;
-    }
-
-    public void setPlayStyle(String playStyle) {
-        this.playStyle = playStyle;
-    }
 
     //Constructors
     Tactic(){}
 
-    Tactic(ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, double attackScore, double defenceScore, String formation, String playStyle){
+    Tactic(String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
-        this.startingXI = startingXI;
-        this.substitutionBench = substitutionBench;
+        this.startingXICode = startingXICode;
         this.attackScore = attackScore;
         this.defenceScore = defenceScore;
         this.formation = formation;
         this.playStyle = playStyle;
     }
 
-    Tactic(String tacticCode, ArrayList<Player> startingXI, ArrayList<Player> substitutionBench, double attackScore, double defenceScore, String formation, String playStyle){
+    Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = tacticCode.toUpperCase();
-        this.startingXI = startingXI;
-        this.substitutionBench = substitutionBench;
+        this.startingXICode = startingXICode;
         this.attackScore = attackScore;
         this.defenceScore = defenceScore;
         this.formation = formation;

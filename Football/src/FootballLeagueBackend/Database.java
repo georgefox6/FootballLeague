@@ -194,8 +194,6 @@ public class Database {
     //               VENUE MANAGEMENT                //
     ///////////////////////////////////////////////////
 
-    //TODO test the read/write/update venue functions
-
     public static Venue readVenue(String venueCode){
         Venue venue = new Venue();
         try {
@@ -423,6 +421,76 @@ public class Database {
             close();
         }
     }
+
+    ///////////////////////////////////////////////////
+    //            STARTING XI MANAGEMENT             //
+    ///////////////////////////////////////////////////
+
+    public static StartingXI readStartingXI(String startingXICode){
+        StartingXI startingXI = new StartingXI();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read StartingXI");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM startingXI WHERE startingXICode='" + startingXICode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String player1 = rs.getString(1);
+                String player2 = rs.getString(2);
+                String player3 = rs.getString(3);
+                String player4 = rs.getString(4);
+                String player5 = rs.getString(5);
+                String player6 = rs.getString(6);
+                String player7 = rs.getString(7);
+                String player8 = rs.getString(8);
+                String player9 = rs.getString(9);
+                String player10 = rs.getString(10);
+                String player11 = rs.getString(11);
+                String sub1 = rs.getString(12);
+                String sub2 = rs.getString(13);
+                String sub3 = rs.getString(14);
+                String sub4 = rs.getString(15);
+                String sub5 = rs.getString(16);
+                String sub6 = rs.getString(17);
+                String sub7 = rs.getString(18);
+                startingXI = new StartingXI(startingXICode,player1,player2,player3,player4,player5,player6,player7,player8,player9,player10,player11,sub1,sub2,sub3,sub4,sub5,sub6,sub7);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return startingXI;
+    }
+
+    public static void writestartingXI(StartingXI startingXI){
+        try {
+            connect();
+            System.out.println("Creating statement - Write Starting XI");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO startingXI VALUES ('" + startingXI.startingXICode + "', '" + startingXI.player1 + "', '" + startingXI.player2 + "', '" + startingXI.player3 + "', '" + startingXI.player4 + "', '" + startingXI.player5 + "', '" + startingXI.player6 + "', '" + startingXI.player7 + "', '" + startingXI.player8 + "', '" + startingXI.player9 + "', '" + startingXI.player10 + "', '" + startingXI.player11 + "', '" + startingXI.sub1 + "', '" + startingXI.sub2 + "', '" + startingXI.sub3 + "', '" + startingXI.sub4 + "', '" + startingXI.sub5 + "', '" + startingXI.sub6 + "', '" + startingXI.sub7 + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateStartingXI(StartingXI startingXI){
+        try{
+            connect();
+            System.out.println("Creating statement - Update StartingXI");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE startingXI SET player1='" + startingXI.player1 + "', player2='" + startingXI.player2 + "', player3='" + startingXI.player3 + "', player4='" + startingXI.player4 + "', player5='" + startingXI.player5 + "', player6='" + startingXI.player6 + "', player7='" + startingXI.player7 + "', player8='" + startingXI.player8 + "', player9='" + startingXI.player9 + "', player10='" + startingXI.player10 + "', player11='" + startingXI.player11 + "', sub1='" + startingXI.sub1 + "', sub2='" + startingXI.sub2 + "', sub3='" + startingXI.sub3 + "', sub4='" + startingXI.sub4 + "', sub5='" + startingXI.sub5 + "', sub6='" + startingXI.sub6 + "', sub7='" + startingXI.sub7 + "' WHERE startingXICode='" + startingXI.startingXICode + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
+
 
     ///////////////////////////////////////////////////
     //                 LEAGUE TABLE                  //
