@@ -3,11 +3,8 @@ package FootballLeagueBackend;
 import java.nio.file.*;
 import java.io.IOException;
 
-
 public class FileHandler {
-
 	public FileHandler() {
-
 	}
 
 	public void copyFile(String sourcePathString, String destinationPathString) throws IOException {
