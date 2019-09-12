@@ -260,8 +260,7 @@ public class Database {
             String sql = " SELECT * FROM tactic WHERE tacticCode='" + tacticCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String startingXI = rs.getString("startingXI");
-                String substitutionBench = rs.getString("substitutionBench");
+                String startingXICode = rs.getString("startingXI");
                 // Attack and defence score are INT in db so restrict these to [0, 100] in db
                 // since attackScore and defence score are [0, 1] we divide the db value by 100
                 // to return a double [0, 1].
@@ -269,7 +268,7 @@ public class Database {
                 double defenceScore = rs.getInt("defenceScore") / 1;
                 String formation = rs.getString("formation");
                 String playStyle = rs.getString("playStyle");
-                tactic = new Tactic(Tactic.codeToStartingXI(startingXI), Tactic.codeToStartingXI(substitutionBench), attackScore, defenceScore, formation, playStyle);
+                tactic = new Tactic(startingXICode, attackScore, defenceScore, formation, playStyle);
             }
         } catch(SQLException ex){
             System.out.println(ex);
@@ -284,8 +283,8 @@ public class Database {
             connect();
             System.out.println("Creating statement - Write Tactic");
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO tactic VALUES ('" + tactic.getTacticCode() + "', '" + Tactic.startingXIToCode(tactic.getStartingXI()) +
-                    "', '" + Tactic.startingXIToCode(tactic.getSubstitutionBench()) + "', '" + tactic.getAttackScore() + "', '" + tactic.getDefenceScore() +
+            String sql = "INSERT INTO tactic VALUES ('" + tactic.getTacticCode() + "', '" + tactic.getStartingXICode() +
+                    "', '" + tactic.getAttackScore() + "', '" + tactic.getDefenceScore() +
                     "', '" + tactic.getFormation() + "', '" + tactic.getPlayStyle() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
@@ -300,8 +299,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Update Tactic");
             Statement stmt = conn.createStatement();
-            String sql = "UPDATE tactic SET startingXI='" + Tactic.startingXIToCode(tactic.getStartingXI()) + "', substitutionBench='" +
-                    Tactic.startingXIToCode(tactic.getSubstitutionBench()) + "', attackScore='" + tactic.getAttackScore() + "', defenseScore='" +
+            String sql = "UPDATE tactic SET startingXI='" + tactic.getStartingXICode()  + "', attackScore='" + tactic.getAttackScore() + "', defenseScore='" +
                     tactic.getDefenceScore() + "', formation='" + tactic.getFormation() + "', playStyle='" + tactic.getPlayStyle()
                     + "' WHERE tacticCode='" + tactic.getTacticCode() + "';";
             stmt.executeUpdate(sql);

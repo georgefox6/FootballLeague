@@ -1,4 +1,3 @@
-/*
 package FootballLeagueBackend;
 
 import java.nio.file.*;
@@ -28,12 +27,5 @@ public class FileHandler {
 	}
 
 	public static void main(String[] args) {
-		FileHandler f = new FileHandler();
-		try {
-			f.copyDatabase("Hello", "Hello");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
-*/

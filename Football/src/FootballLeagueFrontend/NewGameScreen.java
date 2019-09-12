@@ -6,8 +6,9 @@ import javax.swing.JTextField;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.io.IOException;
-import java.util.logging.FileHandler;
+//import java.util.logging.FileHandler;
 import java.lang.*;
+import FootballLeagueBackend.FileHandler;
 
 public class NewGameScreen extends JFrame {
 
@@ -86,6 +87,13 @@ public class NewGameScreen extends JFrame {
 
 	}
 
+
 	public static void main(String[] args) {
+//		try {
+//			FileHandler f = new FileHandler();
+//			f.copyDatabase();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 }
