@@ -18,7 +18,7 @@ public class SelectGameScreen extends JFrame{
 	Dimension minimumSize = new Dimension(132, 175);
 
 	public SelectGameScreen() {
-		// initUI();
+		initUI();
 	}
 
 	private void initUI() {

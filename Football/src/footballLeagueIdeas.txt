@@ -1,1 +1,0 @@
-Need a way of tracking permanent variables for a session e.g. game name

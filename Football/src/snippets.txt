@@ -1,0 +1,1 @@
+print number of lines in repository: git ls-files | xargs wc -l

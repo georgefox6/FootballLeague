@@ -1,7 +1,7 @@
 // package screens;
 
 import java.io.File;
-import java.nio.file.Piles;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -23,9 +23,21 @@ public class FileHandler {
 	}
 
 	public void copyDatabase(String sourceTitle, String destinationTitle) throws IOException {
-		String sourcePath = "/home/josh/FootballLeague/Football/SaveGames/" + sourceTitle + ".db";
-		String destinationPath = "/home/josh/FootballLeague/Football/SaveGames/" + destinationTitle + ".db";
+		String sourcePath = "Football/SaveGames/" + sourceTitle + ".db";
+		String destinationPath = "Football/SaveGames/" + destinationTitle + ".db";
 		copyFile(sourcePath, destinationPath);
+	}
+
+	public File[] getSaveGameNames() {
+		String saveGamesDirectoryPath = "../../SaveGames/";
+		ArrayList<String> saveGameTitles = new ArrayList<String>();
+		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
+		for (File file : saveGamesTitlesRaw) {
+			if (file.isFile()) {
+				saveGameTitles.add(file.getName().split("\\.")[0]);
+			}
+		}
+		return saveGamesTitles;
 	}
 
 	public static void main(String[] args) {
