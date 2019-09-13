@@ -149,6 +149,36 @@ public class DatabaseManager {
                 frame.setVisible(true);
             }
         });
+        viewMatchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("viewMatch");
+                frame.setContentPane(new viewMatch().viewMatchPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        addMatchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("AddMatch");
+                frame.setContentPane(new AddMatch().addMatchPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        updateMatchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("updateMatchForm");
+                frame.setContentPane(new updateMatchForm().updateMatchPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
