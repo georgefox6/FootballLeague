@@ -50,10 +50,10 @@ public class MainGame extends Application {
         topMenu.setPadding(new Insets(15, 12, 15, 12));
 
         //////////////////////////////////////////
-        //               LEFT MENU              //
+        //               LEFT MENUS             //
         //////////////////////////////////////////
 
-        //Creates the left menu team
+        //Creates the left menu *TEAM*
         VBox leftMenuTeam = new VBox();
         Button firstTeamButton = new Button("First Team");
         Button youthTeamButton = new Button("Youth Team");
@@ -63,7 +63,7 @@ public class MainGame extends Application {
         leftMenuTeam.setSpacing(10);
         leftMenuTeam.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu League
+        //Creates the left menu *LEAGUE*
         VBox leftMenuLeague = new VBox();
         Button leagueTableButton = new Button("League Table");
         Button topScorersButton = new Button("Top Scorers");
@@ -74,7 +74,7 @@ public class MainGame extends Application {
         leftMenuLeague.setSpacing(10);
         leftMenuLeague.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu Tactic
+        //Creates the left menu *TACTIC*
         VBox leftMenuTactic = new VBox();
         Button newTacticButton = new Button("New Tactic");
         Button loadTacticButton = new Button("Load Tactic");
@@ -84,7 +84,7 @@ public class MainGame extends Application {
         leftMenuTactic.setSpacing(10);
         leftMenuTactic.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu Training
+        //Creates the left menu *TRAINING*
         VBox leftMenuTraining = new VBox();
         //TODO change this button to something that makes sense
         Button abcButton = new Button("ABC");
@@ -93,7 +93,7 @@ public class MainGame extends Application {
         leftMenuTraining.setSpacing(10);
         leftMenuTraining.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu Scouting
+        //Creates the left menu *SCOUTING*
         VBox leftMenuScouting = new VBox();
         Button viewPlayersButton = new Button("View Players");
         Button shortlistButton = new Button("Shortlist");
@@ -103,7 +103,7 @@ public class MainGame extends Application {
         leftMenuScouting.setSpacing(10);
         leftMenuScouting.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu Club
+        //Creates the left menu *CLUB*
         VBox leftMenuClub = new VBox();
         Button facilitiesButton = new Button("Facilities");
         Button historyButton = new Button("History");
@@ -114,7 +114,7 @@ public class MainGame extends Application {
         leftMenuClub.setSpacing(10);
         leftMenuClub.setPadding(new Insets(15, 12, 15, 12));
 
-        //Creates the left menu Options
+        //Creates the left menu *OPTIONS*
         VBox leftMenuOptions = new VBox();
         Button optionsOptionsButton = new Button("Options");
         Button saveGameOptionsButton = new Button("Save Game");
