@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class HomeScreenFX extends Application {
+public class HomeScreen extends Application {
 
 	 @Override
 	 public void start(Stage stage) {
