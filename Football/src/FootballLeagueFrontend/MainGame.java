@@ -1,12 +1,22 @@
 package FootballLeagueFrontend;
 
+import FootballLeagueBackend.Player;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
+import static FootballLeagueBackend.Database.readPlayersTeam;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
@@ -125,6 +135,54 @@ public class MainGame extends Application {
         leftMenuOptions.setSpacing(10);
         leftMenuOptions.setPadding(new Insets(15, 12, 15, 12));
 
+        //////////////////////////////////////
+        //             Content              //
+        //////////////////////////////////////
+
+        //Creates the content for the *OPTIONS->PREFERENCES*
+        GridPane optionsPreferencesContent = new GridPane();
+        optionsPreferencesContent.setHgap(10);
+        optionsPreferencesContent.setVgap(10);
+        optionsPreferencesContent.setPadding(new Insets(0, 10, 0, 10));
+        //Adds the resolution option label
+        Label resolutionLabel = new Label("Resolution:");
+        optionsPreferencesContent.add(resolutionLabel, 2, 1);
+        //Creates a comboBox for the resolution options
+        ComboBox resolutionCB = new ComboBox();
+        resolutionCB.getItems().addAll("800 x 400", "1020, 500", "1920 x 1080", "2560 x 1440");
+        optionsPreferencesContent.add(resolutionCB, 3, 1);
+        //Adds the action listener to perform function setResolution when value is chosen from the ComboBox(No need to confirm with button)
+        resolutionCB.setOnAction(e -> setResolution(resolutionCB.getValue().toString()));
+        //Adds the theme options
+        Label themeLabel = new Label("Theme:");
+        optionsPreferencesContent.add(themeLabel, 2, 2);
+        //Creates the comboBox to pick the theme
+        ComboBox themeCB = new ComboBox();
+        themeCB.getItems().addAll("Not Twitter", "Dark Theme", "Very Colourful");
+        optionsPreferencesContent.add(themeCB, 3, 2);
+        //Adds the action listener to perform function setTheme when value is chosen from the ComboBox(No need to confirm with button)
+        themeCB.setOnAction(e -> setTheme(themeCB.getValue().toString()));
+
+        //Creates the content for *TEAM->FIRST TEAM*
+        //Creates the forename Column
+        TableColumn<Player, String> forenameColumn = new TableColumn<>("Forename");
+        forenameColumn.setMinWidth(200);
+        forenameColumn.setCellValueFactory(new PropertyValueFactory<>("forename"));
+        //Creates the surname Column
+        TableColumn<Player, String> surnameColumn = new TableColumn<>("Surname");
+        surnameColumn.setMinWidth(200);
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        //Creates the injury Column
+        TableColumn<Player, Boolean> injuryColumn = new TableColumn<>("Injury Status");
+        injuryColumn.setMinWidth(200);
+        injuryColumn.setCellValueFactory(new PropertyValueFactory<>("injuryStatus"));
+        //Creates the table view
+        TableView firstTeamTable = new TableView();
+        //Populates the table with players from the users team
+        firstTeamTable.setItems(getPlayersFromTeam());
+        //Adds all of the columns to the table
+        firstTeamTable.getColumns().addAll(forenameColumn, surnameColumn, injuryColumn);
+
 
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
@@ -139,6 +197,7 @@ public class MainGame extends Application {
         //Depending on the button press it will set the left menu
         teamButton.setOnAction(e -> {
             borderPane.setLeft(leftMenuTeam);
+            borderPane.setCenter(firstTeamTable);
         });
         leagueButton.setOnAction(e -> {
             borderPane.setLeft(leftMenuLeague);
@@ -160,6 +219,7 @@ public class MainGame extends Application {
         }));
         optionsButton.setOnAction((e -> {
             borderPane.setLeft(leftMenuOptions);
+            borderPane.setCenter(optionsPreferencesContent);
         }));
         quitButton.setOnAction(e -> {
             closeProgram();
@@ -176,6 +236,22 @@ public class MainGame extends Application {
         Boolean answer = ConfirmBox.display("Quit?", "Are you sure you want to close the game?");
         if(answer)
             window.close();
+    }
 
+    public void setResolution(String res){
+        //TODO Write function to change resolution
+        System.out.println("Changed the resolution to " + res);
+    }
+
+    public void setTheme(String selectedTheme){
+        //TODO Write function to change the theme (change the CSS)
+        System.out.println("Changed the theme to " + selectedTheme);
+    }
+
+    public ObservableList<Player> getPlayersFromTeam(){
+        //TODO This needs changing to the users team code
+        ArrayList<Player> players = readPlayersTeam("006SPU");
+        ObservableList<Player> playerList = FXCollections.observableArrayList(players);
+        return playerList;
     }
 }
