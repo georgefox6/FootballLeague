@@ -30,7 +30,7 @@ public class NewGameScreen extends JFrame {
 	private void pressedBackButton() {
 		System.out.println("Back");
 		dispose();
-		new HomeScreen().setVisible(true);
+		//new HomeScreen().setVisible(true);
 	}
 
 	private void createNewGame(String saveGameName) throws IOException {
@@ -89,11 +89,6 @@ public class NewGameScreen extends JFrame {
 
 
 	public static void main(String[] args) {
-//		try {
-//			FileHandler f = new FileHandler();
-//			f.copyDatabase();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		NewGameScreen n = new NewGameScreen();
 	}
 }
