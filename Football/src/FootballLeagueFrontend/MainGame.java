@@ -21,6 +21,7 @@ public class MainGame extends Application {
     }
 
     public void start(Stage primaryStage){
+        System.out.println("Hello");
         window = primaryStage;
         window.setTitle("Football League");
         //Replaces the default closing to instead close the program using our method
