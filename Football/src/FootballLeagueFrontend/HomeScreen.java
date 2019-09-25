@@ -18,7 +18,6 @@ public class HomeScreen extends Application {
 	 	initUI(stage);
 	 }
 
-
 	 private void initUI(Stage stage) {
 
 	 	Button newGameButton = new Button();
@@ -74,7 +73,7 @@ public class HomeScreen extends Application {
 	 }
 
 	 private void pressedQuitButton() {
-	 	Platform.exit();
+	 	// stage.close();
 	 }
 
 	 public static void main(String[] args) {

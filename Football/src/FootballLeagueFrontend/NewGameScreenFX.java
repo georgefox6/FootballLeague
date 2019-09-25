@@ -2,7 +2,7 @@ package FootballLeagueFrontend;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.application.ActionEvent;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -10,27 +10,62 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
 
 import FootballLeagueBackend.FileHandler;
 
 public class NewGameScreenFX extends Application {
 
-	public NewGameScreenFX() {
+	Stage stage;
 
-		initUI();
+	public static void main(String[] args) {
+		launch(args);
 	}
 
-	// TODO
-	// This method may not be necessary but may be best practice so should be included.
-	// @Override
-	// public void start(Stage stage) {
+	// public NewGameScreenFX() {
 
-	// 	initUI(stage);
+	// 	start();
 	// }
 
-	private void initUI(Stage stage) {
+	@Override
+	public void start(Stage stage) {
+		initUI(stage);
+	}
 
-		Button newGameButton = new Button();
+	private void initUI(Stage primaryStage) {
+
+		stage = primaryStage;
+
+		TextField newGameName = new TextField();
+		Button backButton = new Button();
+		Button createGameButton = new Button();
+
+		backButton.setText("Back");
+		createGameButton.setText("Create game");
+
+		backButton.setOnAction((ActionEvent event) -> {
+			pressedBackButton();
+		});
+		createGameButton.setOnAction((ActionEvent event) -> {
+			pressedCreateGameButton(newGameName.getText());
+		});
+
+		VBox menu = new VBox();
+		menu.getChildren().addAll(newGameName, backButton, createGameButton);
+		menu.setSpacing(10);
+		menu.setPadding(new Insets(25));
+
+		BorderPane borderPane = new BorderPane();
+	 	borderPane.setCenter(menu);
+
+	 	Scene scene = new Scene(borderPane, 280, 200);
+		scene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
+
+	 	stage.setTitle("New game");
+	 	stage.setScene(scene);
+	 	stage.show();
 	}
 
 	private void pressedCreateGameButton(String saveGameName) {
@@ -44,8 +79,8 @@ public class NewGameScreenFX extends Application {
 
 	private void pressedBackButton() {
 		System.out.println("Back");
-		close();
-		//new HomeScreen().setVisible(true);
+		stage.close();
+		HomeScreen h = new HomeScreen();
 	}
 
 	private void createNewGame(String saveGameName) throws IOException {

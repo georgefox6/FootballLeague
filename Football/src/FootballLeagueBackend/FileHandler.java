@@ -22,8 +22,8 @@ public class FileHandler {
 	}
 
 	public void copyDatabase(String sourceTitle, String destinationTitle) throws IOException {
-		String sourcePath = "Football/SaveGames/" + sourceTitle + ".db";
-		String destinationPath = "Football/SaveGames/" + destinationTitle + ".db";
+		String sourcePath = "/home/josh/FootballLeague/Football/SaveGames/" + sourceTitle + ".db";
+		String destinationPath = "/home/josh/FootballLeague/Football/SaveGames/" + destinationTitle + ".db";
 		copyFile(sourcePath, destinationPath);
 	}
 
