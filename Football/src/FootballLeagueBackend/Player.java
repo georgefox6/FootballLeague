@@ -48,9 +48,8 @@ public class Player {
 
     //To String method
     public String toString(){
-        return "Player Code : " + playerCode + " Name : " + forename + " " + surname +  " Injured? " + injuryStatus;
+        return forename.charAt(0) + " " + surname;
     }
-
 
     //Setters
     public void setForename(String forename){
