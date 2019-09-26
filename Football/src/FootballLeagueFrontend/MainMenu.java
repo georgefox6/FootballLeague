@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import FootballLeagueBackend.FileHandler;
 
-public class HomeScreen extends Application {
+public class MainMenu extends Application {
 
 	 @Override
 	 public void start(Stage stage) {
@@ -44,11 +44,11 @@ public class HomeScreen extends Application {
 	 	mainMenu.setSpacing(10);
 	 	mainMenu.setPadding(new Insets(25));
 
-	 	BorderPane borderPaneHomeScreen = new BorderPane();
-	 	borderPaneHomeScreen.setCenter(mainMenu);
+	 	BorderPane borderPaneMainMenu = new BorderPane();
+	 	borderPaneMainMenu.setCenter(mainMenu);
 
-	 	Scene homeScreenScene = new Scene(borderPaneHomeScreen, 280, 200);
-		homeScreenScene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
+	 	Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
+		mainMenuScene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
 
 		/////////////////////////////
 	 	//     NewGame Screen      //
@@ -95,7 +95,7 @@ public class HomeScreen extends Application {
 		/////////////////////////////
 
 	 	backButton.setOnAction((ActionEvent event) -> {
-			pressedBackButton(stage, homeScreenScene);
+			pressedBackButton(stage, mainMenuScene);
 		});
 		createGameButton.setOnAction((ActionEvent event) -> {
 			pressedCreateGameButton(newGameName.getText());
@@ -106,7 +106,7 @@ public class HomeScreen extends Application {
 		/////////////////////////////
 
 	 	stage.setTitle("Main menu");
-	 	stage.setScene(homeScreenScene);
+	 	stage.setScene(mainMenuScene);
 	 	stage.show();
 	 }
 
@@ -136,10 +136,10 @@ public class HomeScreen extends Application {
 		}
 	}
 
-	private void pressedBackButton(Stage stage, Scene homeScreenScene) {
+	private void pressedBackButton(Stage stage, Scene mainMenuScene) {
 		System.out.println("Back");
 		stage.setTitle("Main menu");
-		stage.setScene(homeScreenScene);
+		stage.setScene(mainMenuScene);
 	}
 
 	private void createNewGame(String saveGameName) throws IOException {
