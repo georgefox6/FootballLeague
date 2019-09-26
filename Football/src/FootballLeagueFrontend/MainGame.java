@@ -8,10 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ public class MainGame extends Application {
     }
 
     public void start(Stage primaryStage){
-        System.out.println("Hello");
         window = primaryStage;
         window.setTitle("Football League");
         //Replaces the default closing to instead close the program using our method
@@ -87,11 +83,11 @@ public class MainGame extends Application {
 
         //Creates the left menu *TACTIC*
         VBox leftMenuTactic = new VBox();
-        Button newTacticButton = new Button("New Tactic");
+        Button newTacticButton = new Button("Reset Tactic");
         Button loadTacticButton = new Button("Load Tactic");
         Button saveTacticButton = new Button("Save Tactic");
         //Adds the content to the left menu Tactic
-        leftMenuTactic.getChildren().addAll(newTacticButton, loadTacticButton, saveTacticButton);
+        leftMenuTactic.getChildren().addAll(newTacticButton, saveTacticButton, loadTacticButton);
         leftMenuTactic.setSpacing(10);
         leftMenuTactic.setPadding(new Insets(15, 12, 15, 12));
 
@@ -184,6 +180,172 @@ public class MainGame extends Application {
         //Adds all of the columns to the table
         firstTeamTable.getColumns().addAll(forenameColumn, surnameColumn, injuryColumn);
 
+        //Creates the content for *TACTIC*
+        GridPane tacticContent = new GridPane();
+        tacticContent.setHgap(10);
+        tacticContent.setVgap(10);
+        tacticContent.setPadding(new Insets(0, 10, 0, 10));
+        //Sets the min column width to 50px
+        for (int i = 0; i < 10; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setMinWidth(50);
+            tacticContent.getColumnConstraints().add(column);
+        }
+        //Creates the formation selector ComboBox and adds it to the screen
+        ComboBox formation = new ComboBox();
+        formation.getItems().addAll("4-4-2", "4-3-3", "5-3-2", "3-4-3");
+        tacticContent.add(formation, 2, 1);
+        Label formationLabel = new Label("Formation:");
+        tacticContent.add(formationLabel, 1, 1);
+        //Creates labels for every possible position which will be added to the screen depending on the chosen formation
+        Label gkLabel = new Label("GK:");
+        Label rbLabel = new Label("RB:");
+        Label rcbLabel = new Label("RCB:");
+        Label cbLabel = new Label("CB:");
+        Label lcbLabel = new Label("LCB:");
+        Label lbLabel = new Label("LB:");
+        Label rcmLabel = new Label("RCM:");
+        Label cmLabel = new Label("CM:");
+        Label lcmLabel = new Label("LCM:");
+        Label rmLabel = new Label("RM:");
+        Label lmLabel = new Label("LM:");
+        Label rwLabel = new Label("RW:");
+        Label lwLabel = new Label("LW:");
+        Label rstLabel = new Label("RST:");
+        Label lstLabel = new Label("LST:");
+        Label stLabel = new Label("ST:");
+        //Adds all of the ComboBoxes to select the players for each position
+        ComboBox positionOneCB = new ComboBox();
+        ComboBox positionTwoCB = new ComboBox();
+        ComboBox positionThreeCB = new ComboBox();
+        ComboBox positionFourCB = new ComboBox();
+        ComboBox positionFiveCB = new ComboBox();
+        ComboBox positionSixCB = new ComboBox();
+        ComboBox positionSevenCB = new ComboBox();
+        ComboBox positionEightCB = new ComboBox();
+        ComboBox positionNineCB = new ComboBox();
+        ComboBox positionTenCB = new ComboBox();
+        ComboBox positionElevenCB = new ComboBox();
+        //adds the list of players from that team to the combo box
+        ObservableList<Player> playerList = getPlayersFromTeam();
+        positionOneCB.setItems(playerList);
+        positionTwoCB.setItems(playerList);
+        positionThreeCB.setItems(playerList);
+        positionFourCB.setItems(playerList);
+        positionFiveCB.setItems(playerList);
+        positionSixCB.setItems(playerList);
+        positionSevenCB.setItems(playerList);
+        positionEightCB.setItems(playerList);
+        positionNineCB.setItems(playerList);
+        positionTenCB.setItems(playerList);
+        positionElevenCB.setItems(playerList);
+        //Labels used to display the players on the right of the screen in formation
+        Label p1 = new Label("*");
+        Label p2 = new Label("*");
+        Label p3 = new Label("*");
+        Label p4 = new Label("*");
+        Label p5 = new Label("*");
+        Label p6 = new Label("*");
+        Label p7 = new Label("*");
+        Label p8 = new Label("*");
+        Label p9 = new Label("*");
+        Label p10 = new Label("*");
+        Label p11 = new Label("*");
+        //Adds an action listener to the formation combobox which will add the correct labels to the screen
+        formation.setOnAction(e -> {
+            //Removes all previous labels from the screen
+            if(tacticContent.getChildren().contains(gkLabel)){
+                tacticContent.getChildren().removeAll(gkLabel, rbLabel, rcbLabel, cbLabel, lcbLabel, lbLabel, rmLabel, rcmLabel, cmLabel, lcmLabel, lmLabel, rwLabel, lwLabel, stLabel, rstLabel, lstLabel);
+            }
+            //Removes all of the previous * or player names from the right of the screen
+            if(tacticContent.getChildren().contains(p1)){
+                tacticContent.getChildren().removeAll(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+            }
+            //Adds all of the comboBoxes to the screen if they are not already there
+            if(!tacticContent.getChildren().contains(positionOneCB)){
+                tacticContent.addColumn(2,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
+            }
+            String form = formation.getValue().toString();
+            if(form == "4-4-2"){
+                tacticContent.addColumn(1, gkLabel, rbLabel, rcbLabel, lcbLabel, lbLabel, rmLabel, rcmLabel, lcmLabel, lmLabel, rstLabel, lstLabel);
+                //Sets the positions on the right of the screen according to the formation
+                tacticContent.add(p1, 7, 10);
+                tacticContent.add(p2, 9, 8);
+                tacticContent.add(p3, 8, 8);
+                tacticContent.add(p4, 6, 8);
+                tacticContent.add(p5, 5, 8);
+                tacticContent.add(p6, 9, 6);
+                tacticContent.add(p7, 8, 6);
+                tacticContent.add(p8, 6, 6);
+                tacticContent.add(p9, 5, 6);
+                tacticContent.add(p10, 8, 4);
+                tacticContent.add(p11, 6, 4);
+            }
+            if(form == "4-3-3"){
+                tacticContent.addColumn(1, gkLabel, rbLabel, rcbLabel, lcbLabel, lbLabel, rcmLabel, cmLabel, lcmLabel, rwLabel, stLabel, lwLabel);
+                //Sets the positions on the right of the screen according to the formation
+                tacticContent.add(p1, 7, 10);
+                tacticContent.add(p2, 9, 8);
+                tacticContent.add(p3, 8, 8);
+                tacticContent.add(p4, 6, 8);
+                tacticContent.add(p5, 5, 8);
+                tacticContent.add(p6, 8, 6);
+                tacticContent.add(p7, 7, 6);
+                tacticContent.add(p8, 6, 6);
+                tacticContent.add(p9, 9, 4);
+                tacticContent.add(p10, 7, 4);
+                tacticContent.add(p11, 5, 4);
+            }
+            if(form == "5-3-2"){
+                tacticContent.addColumn(1, gkLabel, rbLabel, rcbLabel, cbLabel, lcbLabel, lbLabel, rcmLabel, cmLabel, lcmLabel, rstLabel, lstLabel);
+                //Sets the positions on the right of the screen according to the formation
+                tacticContent.add(p1, 7, 10);
+                tacticContent.add(p2, 9, 8);
+                tacticContent.add(p3, 8, 8);
+                tacticContent.add(p4, 7, 8);
+                tacticContent.add(p5, 6, 8);
+                tacticContent.add(p6, 5, 8);
+                tacticContent.add(p7, 8, 6);
+                tacticContent.add(p8, 7, 6);
+                tacticContent.add(p9, 6, 6);
+                tacticContent.add(p10, 8, 4);
+                tacticContent.add(p11, 6, 4);
+            }
+            if(form == "3-4-3"){
+                tacticContent.addColumn(1, gkLabel, rcbLabel, cbLabel, lcbLabel, rmLabel, rcmLabel, lcmLabel, lmLabel, rwLabel, stLabel, lwLabel);
+                //Sets the positions on the right of the screen according to the formation
+                tacticContent.add(p1, 7, 10);
+                tacticContent.add(p2, 8, 8);
+                tacticContent.add(p3, 7, 8);
+                tacticContent.add(p4, 6, 8);
+                tacticContent.add(p5, 9, 6);
+                tacticContent.add(p6, 8, 6);
+                tacticContent.add(p7, 6, 6);
+                tacticContent.add(p8, 5, 6);
+                tacticContent.add(p9, 9, 4);
+                tacticContent.add(p10, 7, 4);
+                tacticContent.add(p11, 5, 4);
+            }
+        });
+        //Replaces the * with player name when a player is selected in the combo box
+        positionOneCB.setOnAction(e -> p1.setText(positionOneCB.getValue().toString()));
+        positionTwoCB.setOnAction(e -> p2.setText(positionTwoCB.getValue().toString()));
+        positionThreeCB.setOnAction(e -> p3.setText(positionThreeCB.getValue().toString()));
+        positionFourCB.setOnAction(e -> p4.setText(positionFourCB.getValue().toString()));
+        positionFiveCB.setOnAction(e -> p5.setText(positionFiveCB.getValue().toString()));
+        positionSixCB.setOnAction(e -> p6.setText(positionSixCB.getValue().toString()));
+        positionSevenCB.setOnAction(e -> p7.setText(positionSevenCB.getValue().toString()));
+        positionEightCB.setOnAction(e -> p8.setText(positionEightCB.getValue().toString()));
+        positionNineCB.setOnAction(e -> p9.setText(positionNineCB.getValue().toString()));
+        positionTenCB.setOnAction(e -> p10.setText(positionTenCB.getValue().toString()));
+        positionElevenCB.setOnAction(e -> p11.setText(positionElevenCB.getValue().toString()));
+
+
+        //TODO get reset tactic to clear the pane apart from formation stuff
+        //TODO save tactic button... pop out?
+        //TODO load tactic button... pop out? then fill all of the data
+
+
 
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
@@ -205,6 +367,7 @@ public class MainGame extends Application {
         });
         tacticButton.setOnAction(e -> {
             borderPane.setLeft(leftMenuTactic);
+            borderPane.setCenter(tacticContent);
         });
         advanceButton.setOnAction(e -> {
             //TODO add advance game function
