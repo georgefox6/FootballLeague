@@ -1,5 +1,8 @@
 package FootballLeagueFrontend;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -9,9 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-
-import java.io.IOException;
 
 import FootballLeagueBackend.FileHandler;
 
@@ -61,8 +63,12 @@ public class MainMenu extends Application {
 		backButton.setText("Back");
 		createGameButton.setText("Create game");
 
+		HBox newGameMenuButtons = new HBox();
+		newGameMenuButtons.getChildren().addAll(backButton, createGameButton);
+		newGameMenuButtons.setSpacing(10);
+
 		VBox newGameMenu = new VBox();
-		newGameMenu.getChildren().addAll(newGameName, backButton, createGameButton);
+		newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
 		newGameMenu.setSpacing(10);
 		newGameMenu.setPadding(new Insets(25));
 
@@ -107,6 +113,10 @@ public class MainMenu extends Application {
 
 	 	stage.setTitle("Main menu");
 	 	stage.setScene(mainMenuScene);
+	 	stage.setMaxHeight(230);
+	 	stage.setMaxWidth(260);
+	 	stage.setResizable(false);
+	 	// stage.setMaximized(true);
 	 	stage.show();
 	 }
 
@@ -129,11 +139,22 @@ public class MainMenu extends Application {
 
 	 private void pressedCreateGameButton(String saveGameName) {
 		System.out.println("Create game");
-		try {
-			createNewGame(saveGameName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (checkGameExists(saveGameName)) {
+			Boolean answer = ConfirmBox.display("Game already exists:", "Are you sure you want to overwrite this game?");
+			if (answer) {
+				try {
+					createNewGame(saveGameName, true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			try {
+				createNewGame(saveGameName, false);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
 	}
 
 	private void pressedBackButton(Stage stage, Scene mainMenuScene) {
@@ -142,17 +163,24 @@ public class MainMenu extends Application {
 		stage.setScene(mainMenuScene);
 	}
 
-	private void createNewGame(String saveGameName) throws IOException {
+	private boolean checkGameExists(String saveGameName) {
+		FileHandler f = new FileHandler();
+		ArrayList<String> saveGameNames = f.getSaveGameNames();
+		boolean gameExists = saveGameNames.contains(saveGameName);
+		return gameExists;
+	}
+
+	private void createNewGame(String saveGameName, Boolean overwrite) throws IOException {
 		FileHandler f = new FileHandler();
 		String mainGameName = "mainGame";
 		try {
-			f.copyDatabase(mainGameName, saveGameName);
+			f.copyBaseSaveGame(mainGameName, saveGameName, overwrite);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	 public static void main(String[] args) {
+	public static void main(String[] args) {
 	 	launch(args);
 	 }
 }

@@ -21,20 +21,23 @@ public class FileHandler {
 		}
 	}
 
-	public void copyDatabase(String sourceTitle, String destinationTitle) throws IOException {
-		String sourcePath = "/home/josh/FootballLeague/Football/SaveGames/" + sourceTitle + ".db";
-		String destinationPath = "/home/josh/FootballLeague/Football/SaveGames/" + destinationTitle + ".db";
+	public void copyBaseSaveGame(String sourceTitle, String destinationTitle, Boolean overwrite) throws IOException {
+		String sourcePath = "../SaveGames/" + sourceTitle + ".db";
+		String destinationPath = "../SaveGames/" + destinationTitle + ".db";
+		if (overwrite) {
+			File f = new File(destinationPath);
+			f.delete();
+		}
 		copyFile(sourcePath, destinationPath);
 	}
 
 	public ArrayList<String> getSaveGameNames() {
-		String saveGamesDirectoryPath = "../../SaveGames/";
+		String saveGamesDirectoryPath = "../SaveGames/";
 		ArrayList<String> saveGameTitles = new ArrayList<String>();
 		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
 		for (File file : saveGamesTitlesRaw) {
 			if (file.isFile()) {
 				saveGameTitles.add(file.getName().split("\\.")[0]);
-				System.out.println(file.getName().split("\\.")[0]);
 			}
 		}
 		return saveGameTitles;
