@@ -1,6 +1,9 @@
 package FootballLeagueFrontend;
 
+import FootballLeagueBackend.Database;
 import FootballLeagueBackend.Player;
+import FootballLeagueBackend.StartingXI;
+import FootballLeagueBackend.Tactic;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -192,7 +195,7 @@ public class MainGame extends Application {
             tacticContent.getColumnConstraints().add(column);
         }
         //Creates the formation selector ComboBox and adds it to the screen
-        ComboBox formation = new ComboBox();
+        ComboBox<String> formation = new ComboBox();
         formation.getItems().addAll("4-4-2", "4-3-3", "5-3-2", "3-4-3");
         tacticContent.add(formation, 2, 1);
         Label formationLabel = new Label("Formation:");
@@ -215,17 +218,17 @@ public class MainGame extends Application {
         Label lstLabel = new Label("LST:");
         Label stLabel = new Label("ST:");
         //Adds all of the ComboBoxes to select the players for each position
-        ComboBox positionOneCB = new ComboBox();
-        ComboBox positionTwoCB = new ComboBox();
-        ComboBox positionThreeCB = new ComboBox();
-        ComboBox positionFourCB = new ComboBox();
-        ComboBox positionFiveCB = new ComboBox();
-        ComboBox positionSixCB = new ComboBox();
-        ComboBox positionSevenCB = new ComboBox();
-        ComboBox positionEightCB = new ComboBox();
-        ComboBox positionNineCB = new ComboBox();
-        ComboBox positionTenCB = new ComboBox();
-        ComboBox positionElevenCB = new ComboBox();
+        ComboBox<Player> positionOneCB = new ComboBox();
+        ComboBox<Player> positionTwoCB = new ComboBox();
+        ComboBox<Player> positionThreeCB = new ComboBox();
+        ComboBox<Player> positionFourCB = new ComboBox();
+        ComboBox<Player> positionFiveCB = new ComboBox();
+        ComboBox<Player> positionSixCB = new ComboBox();
+        ComboBox<Player> positionSevenCB = new ComboBox();
+        ComboBox<Player> positionEightCB = new ComboBox();
+        ComboBox<Player> positionNineCB = new ComboBox();
+        ComboBox<Player> positionTenCB = new ComboBox();
+        ComboBox<Player> positionElevenCB = new ComboBox();
         //adds the list of players from that team to the combo box
         ObservableList<Player> playerList = getPlayersFromTeam();
         positionOneCB.setItems(playerList);
@@ -339,10 +342,57 @@ public class MainGame extends Application {
         positionNineCB.setOnAction(e -> p9.setText(positionNineCB.getValue().toString()));
         positionTenCB.setOnAction(e -> p10.setText(positionTenCB.getValue().toString()));
         positionElevenCB.setOnAction(e -> p11.setText(positionElevenCB.getValue().toString()));
+        //Action listener for the reset tactic button
+        newTacticButton.setOnAction(e -> {
+            //Removes the labels from the right of the screen and sets the value back to *
+            if(tacticContent.getChildren().contains(p1)){
+                p1.setText("*");
+                p2.setText("*");
+                p3.setText("*");
+                p4.setText("*");
+                p5.setText("*");
+                p6.setText("*");
+                p7.setText("*");
+                p8.setText("*");
+                p9.setText("*");
+                p10.setText("*");
+                p11.setText("*");
+                tacticContent.getChildren().removeAll(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+            }
+            //Removes all previous labels from the screen
+            if(tacticContent.getChildren().contains(gkLabel)){
+                tacticContent.getChildren().removeAll(gkLabel, rbLabel, rcbLabel, cbLabel, lcbLabel, lbLabel, rmLabel, rcmLabel, cmLabel, lcmLabel, lmLabel, rwLabel, lwLabel, stLabel, rstLabel, lstLabel);
+            }
+            //removes the comboboxes from the screen
+            if(tacticContent.getChildren().contains(positionOneCB)){
+                //TODO figure out how to set the values of the combo boxes to null (including formation combobox)
+                tacticContent.getChildren().removeAll(positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
+            }
+        });
+        //Save tactic button
+        saveTacticButton.setOnAction(e -> {
+            //Check that each position contains a player
+            if(positionOneCB.getValue() == null || positionTwoCB.getValue() == null || positionThreeCB.getValue() == null || positionFourCB.getValue() == null || positionFiveCB.getValue() == null || positionSixCB.getValue() == null || positionSevenCB.getValue() == null || positionEightCB.getValue() == null || positionNineCB.getValue() == null || positionTenCB.getValue() == null || positionElevenCB.getValue() == null){
+                //Team not filled out
+                AlertBox.display("Incomplete Team", "You must add players to each position before saving");
+            } else {
+                //Write the tactic to the database
+                System.out.println(positionTwoCB.getValue().getPlayerCode());
+                //TODO This currently just saves the goalkeeper as the 7 subs, change this to allow the user to pick subs or remove subs
+                StartingXI startingXI = new StartingXI(positionOneCB.getValue().getPlayerCode(), positionTwoCB.getValue().getPlayerCode(), positionThreeCB.getValue().getPlayerCode(), positionFourCB.getValue().getPlayerCode(), positionFiveCB.getValue().getPlayerCode(), positionSixCB.getValue().getPlayerCode(), positionSevenCB.getValue().getPlayerCode(), positionEightCB.getValue().getPlayerCode(), positionNineCB.getValue().getPlayerCode(), positionTenCB.getValue().getPlayerCode(), positionElevenCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode(), positionOneCB.getValue().getPlayerCode());
+                Database.writestartingXI(startingXI);
+                //Reads what formation has been selected
+                String selectedFormation = formation.getValue();
+                //TODO just filled with dummy variables for now
+                Tactic tactic = new Tactic(startingXI.getStartingXICode(),0.5,0.5,selectedFormation,"Tiki Taka");
+                //Write the tactic to the database
+                Database.writeTactic(tactic);
+                //Popout to say tactic saved
+                AlertBox.display("Tactic Saved", "Your tactic " + tactic.getTacticCode() + " has been saved!");
+            }
+        });
 
 
-        //TODO get reset tactic to clear the pane apart from formation stuff
-        //TODO save tactic button... pop out?
         //TODO load tactic button... pop out? then fill all of the data
 
 
