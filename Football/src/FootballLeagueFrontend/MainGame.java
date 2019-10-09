@@ -200,6 +200,12 @@ public class MainGame extends Application {
         tacticContent.add(formation, 2, 1);
         Label formationLabel = new Label("Formation:");
         tacticContent.add(formationLabel, 1, 1);
+        //Adds the play style selector comboBox and adds it to the screen
+        ComboBox<String> playStyle = new ComboBox();
+        playStyle.getItems().addAll("Tiki Taka", "Gegenpress", "Counter Attack", "Park the bus");
+        tacticContent.add(playStyle, 4, 1);
+        Label playStyleLabel = new Label("Play style:");
+        tacticContent.add(playStyleLabel, 3, 1);
         //Creates labels for every possible position which will be added to the screen depending on the chosen formation
         Label gkLabel = new Label("GK:");
         Label rbLabel = new Label("RB:");
@@ -268,7 +274,7 @@ public class MainGame extends Application {
             if(!tacticContent.getChildren().contains(positionOneCB)){
                 tacticContent.addColumn(2,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
             }
-            String form = formation.getValue().toString();
+            String form = formation.getValue();
             if(form == "4-4-2"){
                 tacticContent.addColumn(1, gkLabel, rbLabel, rcbLabel, lcbLabel, lbLabel, rmLabel, rcmLabel, lcmLabel, lmLabel, rstLabel, lstLabel);
                 //Sets the positions on the right of the screen according to the formation
@@ -331,17 +337,62 @@ public class MainGame extends Application {
             }
         });
         //Replaces the * with player name when a player is selected in the combo box
-        positionOneCB.setOnAction(e -> p1.setText(positionOneCB.getValue().toString()));
-        positionTwoCB.setOnAction(e -> p2.setText(positionTwoCB.getValue().toString()));
-        positionThreeCB.setOnAction(e -> p3.setText(positionThreeCB.getValue().toString()));
-        positionFourCB.setOnAction(e -> p4.setText(positionFourCB.getValue().toString()));
-        positionFiveCB.setOnAction(e -> p5.setText(positionFiveCB.getValue().toString()));
-        positionSixCB.setOnAction(e -> p6.setText(positionSixCB.getValue().toString()));
-        positionSevenCB.setOnAction(e -> p7.setText(positionSevenCB.getValue().toString()));
-        positionEightCB.setOnAction(e -> p8.setText(positionEightCB.getValue().toString()));
-        positionNineCB.setOnAction(e -> p9.setText(positionNineCB.getValue().toString()));
-        positionTenCB.setOnAction(e -> p10.setText(positionTenCB.getValue().toString()));
-        positionElevenCB.setOnAction(e -> p11.setText(positionElevenCB.getValue().toString()));
+        //Checks that the value of the combo box is not null as this will cause an error
+        positionOneCB.setOnAction(e -> {
+            if(positionOneCB.getValue() != null){
+                p1.setText(positionOneCB.getValue().toString());
+            }
+        });
+        positionTwoCB.setOnAction(e -> {
+            if(positionTwoCB.getValue() != null){
+                p2.setText(positionTwoCB.getValue().toString());
+            }
+        });
+        positionThreeCB.setOnAction(e -> {
+            if(positionThreeCB.getValue() != null){
+                p3.setText(positionThreeCB.getValue().toString());
+            }
+        });
+        positionFourCB.setOnAction(e -> {
+            if(positionFourCB.getValue() != null){
+                p4.setText(positionFourCB.getValue().toString());
+            }
+        });
+        positionFiveCB.setOnAction(e -> {
+            if(positionFiveCB.getValue() != null){
+                p5.setText(positionFiveCB.getValue().toString());
+            }
+        });
+        positionSixCB.setOnAction(e -> {
+            if(positionSixCB.getValue() != null){
+                p6.setText(positionSixCB.getValue().toString());
+            }
+        });
+        positionSevenCB.setOnAction(e -> {
+            if(positionSevenCB.getValue() != null){
+                p7.setText(positionSevenCB.getValue().toString());
+            }
+        });
+        positionEightCB.setOnAction(e -> {
+            if(positionEightCB.getValue() != null){
+                p8.setText(positionEightCB.getValue().toString());
+            }
+        });
+        positionNineCB.setOnAction(e -> {
+            if(positionNineCB.getValue() != null){
+                p9.setText(positionNineCB.getValue().toString());
+            }
+        });
+        positionTenCB.setOnAction(e -> {
+            if(positionTenCB.getValue() != null){
+                p10.setText(positionTenCB.getValue().toString());
+            }
+        });
+        positionElevenCB.setOnAction(e -> {
+            if(positionElevenCB.getValue() != null){
+                p11.setText(positionElevenCB.getValue().toString());
+            }
+        });
         //Action listener for the reset tactic button
         newTacticButton.setOnAction(e -> {
             //Removes the labels from the right of the screen and sets the value back to *
@@ -365,7 +416,19 @@ public class MainGame extends Application {
             }
             //removes the comboboxes from the screen
             if(tacticContent.getChildren().contains(positionOneCB)){
-                //TODO figure out how to set the values of the combo boxes to null (including formation combobox)
+                //Resets the values of all of the comboboxes to null
+                positionOneCB.setValue(null);
+                positionTwoCB.setValue(null);
+                positionThreeCB.setValue(null);
+                positionFourCB.setValue(null);
+                positionFiveCB.setValue(null);
+                positionSixCB.setValue(null);
+                positionSevenCB.setValue(null);
+                positionEightCB.setValue(null);
+                positionNineCB.setValue(null);
+                positionTenCB.setValue(null);
+                positionElevenCB.setValue(null);
+                formation.setValue(null);
                 tacticContent.getChildren().removeAll(positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
             }
         });
@@ -384,7 +447,7 @@ public class MainGame extends Application {
                 //Reads what formation has been selected
                 String selectedFormation = formation.getValue();
                 //TODO just filled with dummy variables for now
-                Tactic tactic = new Tactic(startingXI.getStartingXICode(),0.5,0.5,selectedFormation,"Tiki Taka");
+                Tactic tactic = new Tactic(startingXI.getStartingXICode(),0.5,0.5,selectedFormation,playStyle.getValue());
                 //Write the tactic to the database
                 Database.writeTactic(tactic);
                 //Popout to say tactic saved
@@ -466,6 +529,7 @@ public class MainGame extends Application {
         //TODO This needs changing to the users team code
         ArrayList<Player> players = readPlayersTeam("006SPU");
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
+   //     playerList.add(null);
         return playerList;
     }
 }

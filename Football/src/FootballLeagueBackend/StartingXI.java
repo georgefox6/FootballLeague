@@ -21,6 +21,12 @@ public class StartingXI {
     public String sub6;
     public String sub7;
 
+    static int codeIteration;
+
+    static {
+        codeIteration = Database.countPlayers();
+    }
+
     public StartingXI(){
     }
 
@@ -46,9 +52,8 @@ public class StartingXI {
         this.sub7 = sub7;
     }
 
-    //TODO generate startingXI code (Unique ID)
     public StartingXI(String player1, String player2, String player3, String player4, String player5, String player6, String player7, String player8, String player9, String player10, String player11, String sub1, String sub2, String sub3, String sub4, String sub5, String sub6, String sub7) {
-        this.startingXICode = "001GFO";
+        this.startingXICode = (String.format("%03d", codeIteration) + player1.charAt(3) + player2.charAt(4) + player3.charAt(5)).toUpperCase();
         this.player1 = player1;
         this.player2 = player2;
         this.player3 = player3;
@@ -67,6 +72,7 @@ public class StartingXI {
         this.sub5 = sub5;
         this.sub6 = sub6;
         this.sub7 = sub7;
+        codeIteration++;
     }
 
     //Getters and setters

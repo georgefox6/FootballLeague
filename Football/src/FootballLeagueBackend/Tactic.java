@@ -52,6 +52,7 @@ public class Tactic {
         this.defenceScore = defenceScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        codeIteration++;
     }
 
     public Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){

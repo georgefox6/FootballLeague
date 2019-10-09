@@ -679,7 +679,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Count Tactics");
             Statement stmt = conn.createStatement();
-            String sql = "SELECT tacticCode FROM tactics;";
+            String sql = "SELECT tacticCode FROM tactic;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 count++;
@@ -725,6 +725,25 @@ public class Database {
         } catch (SQLException ex){
             System.out.println(ex);
         }finally{
+            close();
+        }
+        return count;
+    }
+
+    public static int countStartingXI(){
+        int count =0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count StartingXI");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT startingXICode FROM startingXI";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally {
             close();
         }
         return count;
