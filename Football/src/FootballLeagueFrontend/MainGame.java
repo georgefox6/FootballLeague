@@ -1,9 +1,6 @@
 package FootballLeagueFrontend;
 
-import FootballLeagueBackend.Database;
-import FootballLeagueBackend.Player;
-import FootballLeagueBackend.StartingXI;
-import FootballLeagueBackend.Tactic;
+import FootballLeagueBackend.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -162,6 +159,54 @@ public class MainGame extends Application {
         optionsPreferencesContent.add(themeCB, 3, 2);
         //Adds the action listener to perform function setTheme when value is chosen from the ComboBox(No need to confirm with button)
         themeCB.setOnAction(e -> setTheme(themeCB.getValue().toString()));
+
+        //Creates the content for *LEAGUE->LEAGUE TABLE*
+        //Creates the position column
+        TableColumn<LeaguePosition, Integer> positionColumn = new TableColumn<>("Position");
+        positionColumn.setMinWidth(50);
+        positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
+        //Creates the Team Name column
+        TableColumn<LeaguePosition, Integer> teamNameColumn = new TableColumn<>("Team Name");
+        teamNameColumn.setMinWidth(50);
+        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        //Creates the played column
+        TableColumn<LeaguePosition, Integer> playedColumn = new TableColumn<>("Played");
+        playedColumn.setMinWidth(50);
+        playedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
+        //Creates the won column
+        TableColumn<LeaguePosition, Integer> wonColumn = new TableColumn<>("Won");
+        wonColumn.setMinWidth(50);
+        wonColumn.setCellValueFactory(new PropertyValueFactory<>("won"));
+        //Creates the drawn column
+        TableColumn<LeaguePosition, Integer> drawnColumn = new TableColumn<>("Drawn");
+        drawnColumn.setMinWidth(50);
+        drawnColumn.setCellValueFactory(new PropertyValueFactory<>("drawn"));
+        //Creates the lost column
+        TableColumn<LeaguePosition, Integer> lostColumn = new TableColumn<>("Lost");
+        lostColumn.setMinWidth(50);
+        lostColumn.setCellValueFactory(new PropertyValueFactory<>("lost"));
+        //Creates the Goals Scored column
+        TableColumn<LeaguePosition, Integer> goalsScoredColumn = new TableColumn<>("Goals Scored");
+        goalsScoredColumn.setMinWidth(50);
+        goalsScoredColumn.setCellValueFactory(new PropertyValueFactory<>("goalsScored"));
+        //Creates the Goals Conceded column
+        TableColumn<LeaguePosition, Integer> goalsConcededColumn = new TableColumn<>("Goals Conceded");
+        goalsConcededColumn.setMinWidth(50);
+        goalsConcededColumn.setCellValueFactory(new PropertyValueFactory<>("goalsConceded"));
+        //Creates the Goal Difference column
+        TableColumn<LeaguePosition, Integer> goalDifferenceColumn = new TableColumn<>("Goal Difference");
+        goalDifferenceColumn.setMinWidth(50);
+        goalDifferenceColumn.setCellValueFactory(new PropertyValueFactory<>("goalDifference"));
+        //Creates the  column
+        TableColumn<LeaguePosition, Integer> pointsColumn = new TableColumn<>("Points");
+        pointsColumn.setMinWidth(50);
+        pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
+        //Creates the table view
+        TableView leagueTableView = new TableView();
+        //Populates the table from the database
+        leagueTableView.setItems(getLeagueTable());
+        //Adds all of the columns to the table
+        leagueTableView.getColumns().addAll(positionColumn, teamNameColumn, playedColumn, wonColumn, drawnColumn, lostColumn, goalsScoredColumn, goalsConcededColumn, goalDifferenceColumn, pointsColumn);
 
         //Creates the content for *TEAM->FIRST TEAM*
         //Creates the forename Column
@@ -477,6 +522,7 @@ public class MainGame extends Application {
         });
         leagueButton.setOnAction(e -> {
             borderPane.setLeft(leftMenuLeague);
+            borderPane.setCenter(leagueTableView);
         });
         tacticButton.setOnAction(e -> {
             borderPane.setLeft(leftMenuTactic);
@@ -531,5 +577,13 @@ public class MainGame extends Application {
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
    //     playerList.add(null);
         return playerList;
+    }
+
+    public ObservableList<LeaguePosition> getLeagueTable(){
+        //TODO This needs to be changed to the league that the player is in
+        ArrayList<LeaguePosition> leaguePositions = Database.readLeaguePositionLeague("Premier League");
+        ObservableList<LeaguePosition> leaguePositionsOL = FXCollections.observableArrayList(leaguePositions);
+        return leaguePositionsOL;
+
     }
 }
