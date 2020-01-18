@@ -22,6 +22,20 @@ import static FootballLeagueBackend.Database.readPlayersTeam;
 public class MainGame extends Application {
 
     Stage window;
+    TopMenu topMenu;
+    //LeftMenus
+    TeamMenu teamMenu;
+    LeagueMenu leagueMenu;
+    TacticMenu tacticMenu;
+    ScoutingMenu scoutingMenu;
+    TrainingMenu trainingMenu;
+    ClubMenu clubMenu;
+    OptionsMenu optionsMenu;
+    //Content
+    OptionsPreferencesContent optionsPreferencesContent;
+    LeagueTableContent leagueTableContent;
+
+
 
     public static void main(String[] args) {
         launch(args);
@@ -40,173 +54,42 @@ public class MainGame extends Application {
         //                  TOP MENU                //
         //////////////////////////////////////////////
         //Creates the menu at the top of the window
-        HBox topMenu = new HBox();
-        Button teamButton = new Button("Team");
-        Button leagueButton = new Button("League");
-        Button tacticButton = new Button("Tactics");
-        Button advanceButton = new Button("Advance");
-        Button scoutingButton = new Button("Scouting");
-        Button trainingButton = new Button("Training");
-        Button clubButton = new Button("Club");
-        Button optionsButton = new Button("Options");
-        Label gameWeek = new Label("Game Week 41");
-        //Adds the buttons to the menu
-        topMenu.getChildren().addAll(teamButton, leagueButton, tacticButton,  scoutingButton, gameWeek, trainingButton, clubButton, optionsButton, advanceButton);
-        //Sets the spacing for the top Menu
-        topMenu.setSpacing(10);
-        topMenu.setPadding(new Insets(15, 12, 15, 12));
+        topMenu = new TopMenu();
 
         //////////////////////////////////////////
         //               LEFT MENUS             //
         //////////////////////////////////////////
 
         //Creates the left menu *TEAM*
-        VBox leftMenuTeam = new VBox();
-        Button firstTeamButton = new Button("First Team");
-        Button youthTeamButton = new Button("Youth Team");
-        Button womenTeamButton = new Button("Women's Team");
-        //Adds the content to the left menu team
-        leftMenuTeam.getChildren().addAll(firstTeamButton, youthTeamButton, womenTeamButton);
-        leftMenuTeam.setSpacing(10);
-        leftMenuTeam.setPadding(new Insets(15, 12, 15, 12));
+        teamMenu = new TeamMenu();
 
         //Creates the left menu *LEAGUE*
-        VBox leftMenuLeague = new VBox();
-        Button leagueTableButton = new Button("League Table");
-        Button topScorersButton = new Button("Top Scorers");
-        Button resultsButton = new Button("Results");
-        Button fixturesButton = new Button("Fixtures");
-        //Adds the content to the left menu League
-        leftMenuLeague.getChildren().addAll(leagueTableButton, topScorersButton, resultsButton, fixturesButton);
-        leftMenuLeague.setSpacing(10);
-        leftMenuLeague.setPadding(new Insets(15, 12, 15, 12));
+        leagueMenu = new LeagueMenu();
 
         //Creates the left menu *TACTIC*
-        VBox leftMenuTactic = new VBox();
-        Button newTacticButton = new Button("Reset Tactic");
-        Button loadTacticButton = new Button("Load Tactic");
-        Button saveTacticButton = new Button("Save Tactic");
-        //Adds the content to the left menu Tactic
-        leftMenuTactic.getChildren().addAll(newTacticButton, saveTacticButton, loadTacticButton);
-        leftMenuTactic.setSpacing(10);
-        leftMenuTactic.setPadding(new Insets(15, 12, 15, 12));
-
-        //Creates the left menu *TRAINING*
-        VBox leftMenuTraining = new VBox();
-        //TODO change this button to something that makes sense
-        Button abcButton = new Button("ABC");
-        //Adds the content to the left menu Training
-        leftMenuTraining.getChildren().addAll(abcButton);
-        leftMenuTraining.setSpacing(10);
-        leftMenuTraining.setPadding(new Insets(15, 12, 15, 12));
+        tacticMenu = new TacticMenu();
 
         //Creates the left menu *SCOUTING*
-        VBox leftMenuScouting = new VBox();
-        Button viewPlayersButton = new Button("View Players");
-        Button shortlistButton = new Button("Shortlist");
-        Button scoutsButton = new Button("Scouts");
-        //Adds the content to the left menu Scouting
-        leftMenuScouting.getChildren().addAll(viewPlayersButton, shortlistButton, scoutsButton);
-        leftMenuScouting.setSpacing(10);
-        leftMenuScouting.setPadding(new Insets(15, 12, 15, 12));
+        scoutingMenu = new ScoutingMenu();
+
+        //Creates the left menu *TRAINING*
+        trainingMenu = new TrainingMenu();
 
         //Creates the left menu *CLUB*
-        VBox leftMenuClub = new VBox();
-        Button facilitiesButton = new Button("Facilities");
-        Button historyButton = new Button("History");
-        Button staffButton = new Button("Staff");
-        Button financesButton = new Button("Finances");
-        //Adds the content to the left menu Club
-        leftMenuClub.getChildren().addAll(facilitiesButton, historyButton, staffButton, financesButton);
-        leftMenuClub.setSpacing(10);
-        leftMenuClub.setPadding(new Insets(15, 12, 15, 12));
+        clubMenu = new ClubMenu();
 
         //Creates the left menu *OPTIONS*
-        VBox leftMenuOptions = new VBox();
-        Button optionsOptionsButton = new Button("Options");
-        Button saveGameOptionsButton = new Button("Save Game");
-        Button loadGameOptionsButton = new Button("Load Game");
-        Button quitButton = new Button("Quit Game");
-        //Adds the content to the left menu Options
-        leftMenuOptions.getChildren().addAll(optionsOptionsButton, saveGameOptionsButton, loadGameOptionsButton, quitButton);
-        leftMenuOptions.setSpacing(10);
-        leftMenuOptions.setPadding(new Insets(15, 12, 15, 12));
+        optionsMenu = new OptionsMenu();
 
         //////////////////////////////////////
         //             Content              //
         //////////////////////////////////////
 
         //Creates the content for the *OPTIONS->PREFERENCES*
-        GridPane optionsPreferencesContent = new GridPane();
-        optionsPreferencesContent.setHgap(10);
-        optionsPreferencesContent.setVgap(10);
-        optionsPreferencesContent.setPadding(new Insets(0, 10, 0, 10));
-        //Adds the resolution option label
-        Label resolutionLabel = new Label("Resolution:");
-        optionsPreferencesContent.add(resolutionLabel, 2, 1);
-        //Creates a comboBox for the resolution options
-        ComboBox resolutionCB = new ComboBox();
-        resolutionCB.getItems().addAll("800 x 400", "1020, 500", "1920 x 1080", "2560 x 1440");
-        optionsPreferencesContent.add(resolutionCB, 3, 1);
-        //Adds the action listener to perform function setResolution when value is chosen from the ComboBox(No need to confirm with button)
-        resolutionCB.setOnAction(e -> setResolution(resolutionCB.getValue().toString()));
-        //Adds the theme options
-        Label themeLabel = new Label("Theme:");
-        optionsPreferencesContent.add(themeLabel, 2, 2);
-        //Creates the comboBox to pick the theme
-        ComboBox themeCB = new ComboBox();
-        themeCB.getItems().addAll("Not Twitter", "Dark Theme", "Very Colourful");
-        optionsPreferencesContent.add(themeCB, 3, 2);
-        //Adds the action listener to perform function setTheme when value is chosen from the ComboBox(No need to confirm with button)
-        themeCB.setOnAction(e -> setTheme(themeCB.getValue().toString()));
+        optionsPreferencesContent = new OptionsPreferencesContent();
 
         //Creates the content for *LEAGUE->LEAGUE TABLE*
-        //Creates the position column
-        TableColumn<LeaguePosition, Integer> positionColumn = new TableColumn<>("Position");
-        positionColumn.setMinWidth(50);
-        positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
-        //Creates the Team Name column
-        TableColumn<LeaguePosition, Integer> teamNameColumn = new TableColumn<>("Team Name");
-        teamNameColumn.setMinWidth(50);
-        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamName"));
-        //Creates the played column
-        TableColumn<LeaguePosition, Integer> playedColumn = new TableColumn<>("Played");
-        playedColumn.setMinWidth(50);
-        playedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
-        //Creates the won column
-        TableColumn<LeaguePosition, Integer> wonColumn = new TableColumn<>("Won");
-        wonColumn.setMinWidth(50);
-        wonColumn.setCellValueFactory(new PropertyValueFactory<>("won"));
-        //Creates the drawn column
-        TableColumn<LeaguePosition, Integer> drawnColumn = new TableColumn<>("Drawn");
-        drawnColumn.setMinWidth(50);
-        drawnColumn.setCellValueFactory(new PropertyValueFactory<>("drawn"));
-        //Creates the lost column
-        TableColumn<LeaguePosition, Integer> lostColumn = new TableColumn<>("Lost");
-        lostColumn.setMinWidth(50);
-        lostColumn.setCellValueFactory(new PropertyValueFactory<>("lost"));
-        //Creates the Goals Scored column
-        TableColumn<LeaguePosition, Integer> goalsScoredColumn = new TableColumn<>("Goals Scored");
-        goalsScoredColumn.setMinWidth(50);
-        goalsScoredColumn.setCellValueFactory(new PropertyValueFactory<>("goalsScored"));
-        //Creates the Goals Conceded column
-        TableColumn<LeaguePosition, Integer> goalsConcededColumn = new TableColumn<>("Goals Conceded");
-        goalsConcededColumn.setMinWidth(50);
-        goalsConcededColumn.setCellValueFactory(new PropertyValueFactory<>("goalsConceded"));
-        //Creates the Goal Difference column
-        TableColumn<LeaguePosition, Integer> goalDifferenceColumn = new TableColumn<>("Goal Difference");
-        goalDifferenceColumn.setMinWidth(50);
-        goalDifferenceColumn.setCellValueFactory(new PropertyValueFactory<>("goalDifference"));
-        //Creates the  column
-        TableColumn<LeaguePosition, Integer> pointsColumn = new TableColumn<>("Points");
-        pointsColumn.setMinWidth(50);
-        pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
-        //Creates the table view
-        TableView leagueTableView = new TableView();
-        //Populates the table from the database
-        leagueTableView.setItems(getLeagueTable());
-        //Adds all of the columns to the table
-        leagueTableView.getColumns().addAll(positionColumn, teamNameColumn, playedColumn, wonColumn, drawnColumn, lostColumn, goalsScoredColumn, goalsConcededColumn, goalDifferenceColumn, pointsColumn);
+        leagueTableContent = new LeagueTableContent();
 
         //Creates the content for *TEAM->FIRST TEAM*
         //Creates the forename Column
@@ -439,7 +322,7 @@ public class MainGame extends Application {
             }
         });
         //Action listener for the reset tactic button
-        newTacticButton.setOnAction(e -> {
+        tacticMenu.newTacticButton.setOnAction(e -> {
             //Removes the labels from the right of the screen and sets the value back to *
             if(tacticContent.getChildren().contains(p1)){
                 p1.setText("*");
@@ -478,7 +361,7 @@ public class MainGame extends Application {
             }
         });
         //Save tactic button
-        saveTacticButton.setOnAction(e -> {
+        tacticMenu.saveTacticButton.setOnAction(e -> {
             //Check that each position contains a player
             if(positionOneCB.getValue() == null || positionTwoCB.getValue() == null || positionThreeCB.getValue() == null || positionFourCB.getValue() == null || positionFiveCB.getValue() == null || positionSixCB.getValue() == null || positionSevenCB.getValue() == null || positionEightCB.getValue() == null || positionNineCB.getValue() == null || positionTenCB.getValue() == null || positionElevenCB.getValue() == null){
                 //Team not filled out
@@ -509,42 +392,42 @@ public class MainGame extends Application {
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topMenu);
-        borderPane.setLeft(leftMenuClub);
+        borderPane.setLeft(clubMenu);
 
         //////////////////////////////////////
         //      Button action listeners     //
         //////////////////////////////////////
 
         //Depending on the button press it will set the left menu
-        teamButton.setOnAction(e -> {
-            borderPane.setLeft(leftMenuTeam);
+        topMenu.teamButton.setOnAction(e -> {
+            borderPane.setLeft(teamMenu);
             borderPane.setCenter(firstTeamTable);
         });
-        leagueButton.setOnAction(e -> {
-            borderPane.setLeft(leftMenuLeague);
-            borderPane.setCenter(leagueTableView);
+        topMenu.leagueButton.setOnAction(e -> {
+            borderPane.setLeft(leagueMenu);
+            borderPane.setCenter(leagueTableContent);
         });
-        tacticButton.setOnAction(e -> {
-            borderPane.setLeft(leftMenuTactic);
+        topMenu.tacticButton.setOnAction(e -> {
+            borderPane.setLeft(tacticMenu);
             borderPane.setCenter(tacticContent);
         });
-        advanceButton.setOnAction(e -> {
+        topMenu.advanceButton.setOnAction(e -> {
             //TODO add advance game function
         });
-        scoutingButton.setOnAction(e -> {
-            borderPane.setLeft(leftMenuScouting);
+        topMenu.scoutingButton.setOnAction(e -> {
+            borderPane.setLeft(scoutingMenu);
         });
-        trainingButton.setOnAction(e -> {
-            borderPane.setLeft(leftMenuTraining);
+        topMenu.trainingButton.setOnAction(e -> {
+            borderPane.setLeft(trainingMenu);
         });
-        clubButton.setOnAction((e -> {
-            borderPane.setLeft(leftMenuClub);
+        topMenu.clubButton.setOnAction((e -> {
+            borderPane.setLeft(clubMenu);
         }));
-        optionsButton.setOnAction((e -> {
-            borderPane.setLeft(leftMenuOptions);
+        topMenu.optionsButton.setOnAction((e -> {
+            borderPane.setLeft(optionsMenu);
             borderPane.setCenter(optionsPreferencesContent);
         }));
-        quitButton.setOnAction(e -> {
+        optionsMenu.quitButton.setOnAction(e -> {
             closeProgram();
         });
 
@@ -566,10 +449,7 @@ public class MainGame extends Application {
         System.out.println("Changed the resolution to " + res);
     }
 
-    public void setTheme(String selectedTheme){
-        //TODO Write function to change the theme (change the CSS)
-        System.out.println("Changed the theme to " + selectedTheme);
-    }
+
 
     public ObservableList<Player> getPlayersFromTeam(){
         //TODO This needs changing to the users team code
@@ -579,11 +459,5 @@ public class MainGame extends Application {
         return playerList;
     }
 
-    public ObservableList<LeaguePosition> getLeagueTable(){
-        //TODO This needs to be changed to the league that the player is in
-        ArrayList<LeaguePosition> leaguePositions = Database.readLeaguePositionLeague("Premier League");
-        ObservableList<LeaguePosition> leaguePositionsOL = FXCollections.observableArrayList(leaguePositions);
-        return leaguePositionsOL;
 
-    }
 }
