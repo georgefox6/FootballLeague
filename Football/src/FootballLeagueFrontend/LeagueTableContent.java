@@ -57,14 +57,13 @@ public class LeagueTableContent extends TableView {
         goalDifferenceColumn.setCellValueFactory(new PropertyValueFactory<>("goalDifference"));
         pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
 
-        this.setItems(getLeagueTable());
-        this.getColumns().addAll(positionColumn, teamNameColumn, playedColumn, wonColumn, drawnColumn, lostColumn, goalsScoredColumn, goalsConcededColumn, goalDifferenceColumn, pointsColumn);
+        setItems(getLeagueTable());
+        getColumns().addAll(positionColumn, teamNameColumn, playedColumn, wonColumn, drawnColumn, lostColumn, goalsScoredColumn, goalsConcededColumn, goalDifferenceColumn, pointsColumn);
     }
     public ObservableList<LeaguePosition> getLeagueTable(){
         //TODO This needs to be changed to the league that the player is in
         ArrayList<LeaguePosition> leaguePositions = Database.readLeaguePositionLeague("Premier League");
-        ObservableList<LeaguePosition> leaguePositionsOL = FXCollections.observableArrayList(leaguePositions);
-        return leaguePositionsOL;
+        return FXCollections.observableArrayList(leaguePositions);
 
     }
 }
