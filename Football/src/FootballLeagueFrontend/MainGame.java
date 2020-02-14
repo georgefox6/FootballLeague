@@ -2,18 +2,9 @@ package FootballLeagueFrontend;
 
 import FootballLeagueBackend.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-
-import static FootballLeagueBackend.Database.readPlayersTeam;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
@@ -146,11 +137,16 @@ public class MainGame extends Application {
             closeProgram();
         });
 
+        //Adds action listener for the resolution combo box
+        optionsPreferencesContent.resolutionCB.setOnAction(e -> setResolution(optionsPreferencesContent.resolutionCB.getValue()));
+
         //Creates the scene with the borderPane layout window size
         Scene scene = new Scene(borderPane, 1020, 500);
         scene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
         window.setScene(scene);
         window.show();
+
+
     }
 
     public void closeProgram(){
@@ -161,6 +157,24 @@ public class MainGame extends Application {
 
     public void setResolution(String res){
         //TODO Write function to change resolution
+        switch(res){
+            case "800 x 400":
+                window.setWidth(800);
+                window.setHeight(400);
+                break;
+            case "1020, 500":
+                window.setWidth(1020);
+                window.setHeight(500);
+                break;
+            case "1920 x 1080":
+                window.setWidth(1920);
+                window.setHeight(1080);
+                break;
+            case "2560 x 1440":
+                window.setWidth(2560);
+                window.setHeight(1440);
+                break;
+        }
         System.out.println("Changed the resolution to " + res);
     }
 
@@ -235,6 +249,8 @@ public class MainGame extends Application {
             }
         });
     }
+
+
 
 
 
