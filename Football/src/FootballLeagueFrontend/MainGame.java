@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 public class MainGame extends Application {
 
     Stage window;
+    Scene scene;
     TopMenu topMenu;
     //LeftMenus
     TeamMenu teamMenu;
@@ -139,10 +140,11 @@ public class MainGame extends Application {
 
         //Adds action listener for the resolution combo box
         optionsPreferencesContent.resolutionCB.setOnAction(e -> setResolution(optionsPreferencesContent.resolutionCB.getValue()));
+        optionsPreferencesContent.themeCB.setOnAction(e -> setTheme(optionsPreferencesContent.themeCB.getValue()));
 
         //Creates the scene with the borderPane layout window size
-        Scene scene = new Scene(borderPane, 1020, 500);
-        scene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
+        scene = new Scene(borderPane, 1020, 500);
+        scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
         window.setScene(scene);
         window.show();
 
@@ -176,6 +178,24 @@ public class MainGame extends Application {
                 break;
         }
         System.out.println("Changed the resolution to " + res);
+    }
+
+    public void setTheme(String selectedTheme){
+        switch(selectedTheme){
+            case "Not Twitter":
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+                break;
+            case "Dark Theme":
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/DarkTheme.css");
+                break;
+            case "Very Colourful":
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/VeryColourful.css");
+                break;
+        }
+        System.out.println("Changed the theme to " + selectedTheme);
     }
 
     //Add the action listeners for the reset tactic button

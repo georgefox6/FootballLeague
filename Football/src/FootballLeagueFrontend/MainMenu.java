@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -50,7 +49,7 @@ public class MainMenu extends Application {
 	 	borderPaneMainMenu.setCenter(mainMenu);
 
 	 	Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-		mainMenuScene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
+		mainMenuScene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
 
 		/////////////////////////////
 	 	//     NewGame Screen      //
@@ -76,7 +75,7 @@ public class MainMenu extends Application {
 	 	borderPaneNewGameScreen.setCenter(newGameMenu);
 
 	 	Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-		newGameScreenScene.getStylesheets().add("FootballLeagueFrontend/FootballLeagueThemeOne.css");
+		newGameScreenScene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
 
 		
 		/////////////////////////////

@@ -24,16 +24,9 @@ public class OptionsPreferencesContent extends GridPane {
         resolutionCB.getItems().addAll("800 x 400", "1020, 500", "1920 x 1080", "2560 x 1440");
         themeCB.getItems().addAll("Not Twitter", "Dark Theme", "Very Colourful");
 
-        themeCB.setOnAction(e -> setTheme(themeCB.getValue()));
-
         this.add(resolutionLabel, 2, 1);
         this.add(resolutionCB, 3, 1);
         this.add(themeLabel, 2, 2);
         this.add(themeCB, 3, 2);
-    }
-
-    public void setTheme(String selectedTheme){
-        //TODO Write function to change the theme (change the CSS)
-        System.out.println("Changed the theme to " + selectedTheme);
     }
 }
