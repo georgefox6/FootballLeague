@@ -116,6 +116,28 @@ public class Database {
         return players;
     }
 
+    //Returns all players
+    public static ArrayList<Player> readAllPlayers(){
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            connect();
+            System.out.println("Creating statement - Read All Players");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT playerCode FROM player;";
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(sql);
+            while (rs.next()) {
+                String playerCode = rs.getString("playerCode");
+                players.add(readPlayer(playerCode));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return players;
+    }
+
     ///////////////////////////////////////////////////
     //                TEAM MANAGEMENT                //
     ///////////////////////////////////////////////////
@@ -489,6 +511,101 @@ public class Database {
         }
     }
 
+    ///////////////////////////////////////////////////
+    //               LEAGUE POSITION                 //
+    ///////////////////////////////////////////////////
+
+    public static LeaguePosition readLeaguePosition(String leaguePositionCode){
+        LeaguePosition leaguePosition = new LeaguePosition();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read LeaguePosition");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM leaguePosition WHERE leaguePositionCode='" + leaguePositionCode + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String league = rs.getString("league");
+                int position = rs.getInt("position");
+                String teamCode = rs.getString("teamCode");
+                String teamName = rs.getString("teamName");
+                int played = rs.getInt("played");
+                int won = rs.getInt("won");
+                int drawn = rs.getInt("drawn");
+                int lost = rs.getInt("lost");
+                int goalsScored = rs.getInt("goalsScored");
+                int goalsConceded = rs.getInt("goalsConceded");
+                int goalDifference = rs.getInt("goalDifference");
+                int points = rs.getInt("points");
+                leaguePosition = new LeaguePosition(leaguePositionCode,league,position,teamCode,teamName,played,won,drawn,lost,goalsScored,goalsConceded,goalDifference,points);
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return leaguePosition;
+    }
+
+    public static void writeLeaguePosition(LeaguePosition leaguePosition){
+        try {
+            connect();
+            System.out.println("Creating statement - Write leaguePosition");
+            Statement stmt = conn.createStatement();
+            String sql = "INSERT INTO leaguePosition VALUES ('" + leaguePosition.getLeaguePositionCode() + "', '" + leaguePosition.getLeague() + "', '" + leaguePosition.getPosition() + "', '" + leaguePosition.getTeamCode() + "', '" + leaguePosition.getTeamName() + "', '" + leaguePosition.getPlayed() + "', '" + leaguePosition.getWon() +  "', '" + leaguePosition.getDrawn() + "', '" + leaguePosition.getLost() + "', '" + leaguePosition.getGoalsScored() + "', '" + leaguePosition.getGoalsConceded() + "', '" + leaguePosition.getGoalDifference() + "', '" + leaguePosition.getPoints() + "');";
+            stmt.executeUpdate(sql);
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+    }
+
+    public static void updateleaguePosition(LeaguePosition leaguePosition){
+        try{
+            connect();
+            System.out.println("Creating statement - Update leaguePosition");
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE leaguePosition SET leaguePositionCode='" + leaguePosition.getLeaguePositionCode() + "', league='" + leaguePosition.getLeague() + "', position='" + leaguePosition.getPosition() + "', teamCode='" + leaguePosition.getTeamCode() + "', teamName='" + leaguePosition.getTeamName() + "', played='" + leaguePosition.getPlayed() + "', won='" + leaguePosition.getWon() + "', drawn='" + leaguePosition.getDrawn() + "', lost='" + leaguePosition.getLost() + "', goalsScored='" + leaguePosition.getGoalsScored() + "', goalsConceded='" + leaguePosition.getGoalsConceded() + "', goalDifference='" + leaguePosition.getGoalDifference() + "', points='" + leaguePosition.getPoints() + "' WHERE leaguePositionCode='" + leaguePosition.getLeaguePositionCode() + "';";
+            stmt.executeUpdate(sql);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally{
+            close();
+        }
+    }
+
+    public static ArrayList<LeaguePosition> readLeaguePositionLeague(String league){
+        ArrayList<LeaguePosition> positionsArray = new ArrayList<>();
+        try {
+            connect();
+            System.out.println("Creating Statement - Read LeaguePosition");
+            Statement stmt = conn.createStatement();
+            String sql = " SELECT * FROM leaguePosition WHERE league='" + league + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String leaguePositionCode = rs.getString("leaguePositionCode");
+                int position = rs.getInt("position");
+                String teamCode = rs.getString("teamCode");
+                String teamName = rs.getString("teamName");
+                int played = rs.getInt("played");
+                int won = rs.getInt("won");
+                int drawn = rs.getInt("drawn");
+                int lost = rs.getInt("lost");
+                int goalsScored = rs.getInt("goalsScored");
+                int goalsConceded = rs.getInt("goalsConceded");
+                int goalDifference = rs.getInt("goalDifference");
+                int points = rs.getInt("points");
+                positionsArray.add(new LeaguePosition(leaguePositionCode,league,position,teamCode,teamName,played,won,drawn,lost,goalsScored,goalsConceded,goalDifference,points));
+            }
+        } catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return positionsArray;
+    }
+
+
 
     ///////////////////////////////////////////////////
     //                 LEAGUE TABLE                  //
@@ -679,7 +796,7 @@ public class Database {
             connect();
             System.out.println("Creating statement - Count Tactics");
             Statement stmt = conn.createStatement();
-            String sql = "SELECT tacticCode FROM tactics;";
+            String sql = "SELECT tacticCode FROM tactic;";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 count++;
@@ -730,6 +847,25 @@ public class Database {
         return count;
     }
 
+    public static int countStartingXI(){
+        int count =0;
+        try {
+            connect();
+            System.out.println("Creating statement - Count StartingXI");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT startingXICode FROM startingXI";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                count++;
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }finally {
+            close();
+        }
+        return count;
+    }
+
     public static int countMatches() {
         int count =0;
         try {
@@ -769,6 +905,5 @@ public class Database {
     }
 
     public static void main(String[] args){
-        
     }
 }

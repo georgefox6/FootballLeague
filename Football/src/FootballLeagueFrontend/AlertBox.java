@@ -8,11 +8,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ConfirmBox {
+public class AlertBox {
 
-    static Boolean answer;
-
-    public static Boolean display(String title, String message) {
+    public static void display(String title, String message) {
         Stage window = new Stage();
 
         window.setTitle(title);
@@ -23,26 +21,17 @@ public class ConfirmBox {
 
         //Creates the labels and button on the alert box
         Label label = new Label(message);
-        Button yesButton = new Button("Yes");
-        Button noButton = new Button("No");
+        Button okButton = new Button("OK");
 
-        //Action listeners for the buttons
-        yesButton.setOnAction(e ->{
-            answer = true;
-            window.close();
-        });
-        noButton.setOnAction(e ->{
-            answer = false;
-            window.close();
-        });
+        okButton.setOnAction(e -> window.close());
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, yesButton, noButton);
+        layout.getChildren().addAll(label, okButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
 
-        return answer;
     }
+
 }

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tactic {
+    //TODO tactic should probably have a name variable to users can name the tactics they create
     String tacticCode;
     String startingXICode;
     //Scale from 0 to 1 of how good the team is at scoring goals
@@ -44,16 +45,17 @@ public class Tactic {
     //Constructors
     Tactic(){}
 
-    Tactic(String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
         this.defenceScore = defenceScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        codeIteration++;
     }
 
-    Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
         this.tacticCode = tacticCode.toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
@@ -81,4 +83,5 @@ public class Tactic {
         }
         return StartingXI;
     }
+    //TODO add function to calculate attack/defence scores based on the other inputs (players, formation and playstyle)
 }
