@@ -28,6 +28,7 @@ public class MainGame extends Application {
     LeagueTableContent leagueTableContent;
     FirstTeamContent firstTeamContent;
     TacticContent tacticContent;
+    ScoutingContent scoutingContent;
 
 
 
@@ -94,6 +95,8 @@ public class MainGame extends Application {
         saveTacticButtonListener();
         resetTacticButtonListener();
 
+        scoutingContent = new ScoutingContent();
+
         //TODO load tactic button... pop out? then fill all of the data
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
@@ -123,6 +126,7 @@ public class MainGame extends Application {
         });
         topMenu.scoutingButton.setOnAction(e -> {
             borderPane.setLeft(scoutingMenu);
+            borderPane.setCenter(scoutingContent);
         });
         topMenu.trainingButton.setOnAction(e -> {
             borderPane.setLeft(trainingMenu);
@@ -134,9 +138,11 @@ public class MainGame extends Application {
             borderPane.setLeft(optionsMenu);
             borderPane.setCenter(optionsPreferencesContent);
         }));
+
         optionsMenu.quitButton.setOnAction(e -> {
             closeProgram();
         });
+
 
         //Adds action listener for the resolution combo box
         optionsPreferencesContent.resolutionCB.setOnAction(e -> setResolution(optionsPreferencesContent.resolutionCB.getValue()));

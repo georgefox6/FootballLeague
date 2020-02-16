@@ -116,6 +116,28 @@ public class Database {
         return players;
     }
 
+    //Returns all players
+    public static ArrayList<Player> readAllPlayers(){
+        ArrayList<Player> players = new ArrayList<>();
+        try {
+            connect();
+            System.out.println("Creating statement - Read All Players");
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT playerCode FROM player;";
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(sql);
+            while (rs.next()) {
+                String playerCode = rs.getString("playerCode");
+                players.add(readPlayer(playerCode));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        } finally {
+            close();
+        }
+        return players;
+    }
+
     ///////////////////////////////////////////////////
     //                TEAM MANAGEMENT                //
     ///////////////////////////////////////////////////
@@ -883,6 +905,5 @@ public class Database {
     }
 
     public static void main(String[] args){
-        
     }
 }
