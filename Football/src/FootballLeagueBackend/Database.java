@@ -3,6 +3,7 @@ import java.sql.*;
 import java.lang.*;
 import java.util.ArrayList;
 
+@Deprecated
 public class Database {
     static Connection conn;
     static Statement stmt = null;

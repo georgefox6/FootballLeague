@@ -1,6 +1,10 @@
 package FootballLeagueBackend;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Random;
+import static FootballLeagueBackend.DatabaseConnection.*;
+
 public class Player {
     //The player class fields
     String playerCode;
@@ -10,10 +14,10 @@ public class Player {
     String teamCode;
     static int codeIteration;
 
+    //This is used to auto increment the player code so that they are all unique
     static {
-        codeIteration = Database.countPlayers();
+        codeIteration = countPlayer();
     }
-
 
     //Constructors
     public Player(){}
@@ -54,19 +58,19 @@ public class Player {
     //Setters
     public void setForename(String forename){
         this.forename = forename;
-        Database.updatePlayer(this);
+        updatePlayer(this);
     }
     public void setSurname(String surname){
         this.surname = surname;
-        Database.updatePlayer(this);
+        updatePlayer(this);
     }
     public void setInjuryStatus(Boolean injuryStatus){
         this.injuryStatus = injuryStatus;
-        Database.updatePlayer(this);
+        updatePlayer(this);
     }
     public void setTeamCode(String teamCode){
         this.teamCode = teamCode;
-        Database.updatePlayer(this);
+        updatePlayer(this);
     }
 
     //Getters
@@ -91,41 +95,50 @@ public class Player {
         return forename + " " + surname;
     }
 
-    public static String genString(){
-        String alph = "ABCDEFGHIJKLMNOPQRSTVWXYZ";
-        String curString = "";
-        Random rand = new Random();
-        int length = rand.nextInt(5) + 5;
-        for (int i = 0; i < length; i++){
-            int charNum = rand.nextInt(25);
-            curString = curString + alph.charAt(charNum);
-        }
-        return curString;
-    }
-    public static String genStringInt(){
-        String num = "0123456789";
-        String curStringInt = "";
-        Random rand = new Random();
-        int length = rand.nextInt(4) + 4;
-        for (int i = 0; i < length; i++){
-            int charNum = rand.nextInt(9);
-            curStringInt = curStringInt + num.charAt(charNum);
-        }
-        return curStringInt;
+    public static Player readPlayer(String playerCode){
+        ResultSet result = DatabaseConnection.readQuery("player", "playerCode='" + playerCode);
+            try {
+                assert result != null;
+                if(result.next()){
+                    return new Player(playerCode, result.getString("forename"), result.getString("surname"), result.getString("injuryStatus").equals("true"), result.getString("teamCode"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DatabaseConnection.close();
+            }
+        return null;
     }
 
-    public static ArrayList<Player> genPlayer(int num){
-        ArrayList<Player> players = new ArrayList<Player>();
-        for (int i = 0; i < num; i++) {
-            players.add(new Player(genString(), genString(), false));
+    //For example use "WHERE teamCode='006SPU'" to get players from 006SPU or " " to get all players
+    public static ArrayList<Player> readAllPlayers(String clause){
+        ArrayList<Player> players = new ArrayList<>();
+        try{
+            ResultSet rs = readAllQuery("player", clause);
+            assert rs != null;
+            while(rs.next()){
+                players.add(new Player(rs.getString("playerCode"), rs.getString("forename"), rs.getString("surname"), rs.getString("injuryStatus").equals("true"), rs.getString("teamCode")));
+            }
+            System.out.println("Player Size : " + players.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
         }
         return players;
     }
 
-    //Main method
-    public static void main(String[] args) {
-        Player Billy =  Database.readPlayer("001GFO");
-        System.out.println(Billy.getPlayerCode());
-        Billy.setSurname("FOX");
+    public static boolean writePlayer(Player player){
+        String values = String.format("'%s', '%s', '%s', '%s', '%s'", player.getPlayerCode(), player.getForename(), player.getSurname(), player.getInjuryStatus(), player.getTeamCode());
+        return DatabaseConnection.writeQuery("player", values);
+    }
+
+    public static boolean updatePlayer(Player player){
+        String values = String.format("forename='%s', surname='%s', injuryStatus='%s', teamCode='%s' WHERE playerCode='%s'", player.getForename(), player.getSurname(), player.getInjuryStatus(), player.getTeamCode(), player.getPlayerCode());
+        return updateQuery("player", values);
+    }
+
+    public static int countPlayer(){
+        return countQuery("player", "playerCode");
     }
 }
