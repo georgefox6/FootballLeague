@@ -58,19 +58,15 @@ public class Player {
     //Setters
     public void setForename(String forename){
         this.forename = forename;
-        updatePlayer(this);
     }
     public void setSurname(String surname){
         this.surname = surname;
-        updatePlayer(this);
     }
     public void setInjuryStatus(Boolean injuryStatus){
         this.injuryStatus = injuryStatus;
-        updatePlayer(this);
     }
     public void setTeamCode(String teamCode){
         this.teamCode = teamCode;
-        updatePlayer(this);
     }
 
     //Getters
@@ -133,9 +129,9 @@ public class Player {
         return DatabaseConnection.writeQuery("player", values);
     }
 
-    public static boolean updatePlayer(Player player){
+    public static void updatePlayer(Player player){
         String values = String.format("forename='%s', surname='%s', injuryStatus='%s', teamCode='%s' WHERE playerCode='%s'", player.getForename(), player.getSurname(), player.getInjuryStatus(), player.getTeamCode(), player.getPlayerCode());
-        return updateQuery("player", values);
+        updateQuery("player", values);
     }
 
     public static int countPlayer(){

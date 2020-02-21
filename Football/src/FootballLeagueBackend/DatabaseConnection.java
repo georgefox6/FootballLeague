@@ -67,6 +67,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
+            System.out.println(sql);
             statement.executeUpdate(sql);
             return true;
         } catch (SQLException e) {

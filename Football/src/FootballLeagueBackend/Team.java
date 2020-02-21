@@ -1,6 +1,12 @@
 package FootballLeagueBackend;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import static FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeagueBackend.Player.readPlayer;
+import static FootballLeagueBackend.Player.updatePlayer;
+
 public class Team {
 
     //The Team class fields
@@ -11,7 +17,7 @@ public class Team {
     static int codeIteration;
 
     static {
-        codeIteration = Database.countTeams();
+        codeIteration = countTeam();
     }
 
     //Constructors
@@ -65,28 +71,64 @@ public class Team {
     }
 
 
-    public void addPlayer(String playerCode)throws SQLException{
-        Player player = Database.readPlayer(playerCode);
+    public void addPlayer(String playerCode) {
+        Player player = readPlayer(playerCode);
         player.setTeamCode(this.teamCode);
-        Database.updatePlayer(player);
+        updatePlayer(player);
     }
 
-    public void removePlayer(String playerCode)throws SQLException{
-        Player player = Database.readPlayer(playerCode);
+    public void removePlayer(String playerCode) {
+        Player player = readPlayer(playerCode);
         player.setTeamCode(null);
-        Database.updatePlayer(player);
+        updatePlayer(player);
     }
 
-    //Function to randomly generate num teams
-//    public static ArrayList<Team> genTeam(int num){
-//        ArrayList<Team> teams = new ArrayList<Team>();
-//        for (int i = 0; i < num; i++) {
-//            teams.add(new Team(Player.genString(), new Venue(Player.genString(), 500, 5)));
-//        }
-//        return teams;
-//    }
+    /* Database operations */
 
+    public static Team readTeam(String teamCode){
+        ResultSet result = DatabaseConnection.readQuery("team", "teamCode='" + teamCode);
+        try {
+            assert result != null;
+            if(result.next()){
+                return new Team(teamCode, result.getString("teamName"), result.getString("league"), result.getString("club"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return null;
+    }
 
-    public static void main(String[] args) {
+    //For example use "WHERE club='Watford'" to get teams from Watford or " " to get all teams
+    public static ArrayList<Team> readAllTeams(String clause){
+        ArrayList<Team> teams = new ArrayList<>();
+        try{
+            ResultSet rs = readAllQuery("team", clause);
+            assert rs != null;
+            while(rs.next()){
+                teams.add(new Team(rs.getString("teamCode"), rs.getString("teamName"), rs.getString("league"), rs.getString("club")));
+            }
+            System.out.println("Player Size : " + teams.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return teams;
+    }
+
+    public static boolean writeTeam(Team team){
+        String values = String.format("'%s', '%s', '%s', '%s'", team.getTeamCode(), team.getName(), team.getLeague(), team.getClubCode());
+        return DatabaseConnection.writeQuery("team", values);
+    }
+
+    public static void updateTeam(Team team){
+        String values = String.format("teamName='%s', league='%s', club='%s' WHERE teamCode='%s'", team.getName(), team.getLeague(), team.getClubCode(), team.getTeamCode());
+        updateQuery("team", values);
+    }
+
+    public static int countTeam(){
+        return countQuery("team", "teamCode");
     }
 }
