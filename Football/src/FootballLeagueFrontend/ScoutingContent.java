@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import java.util.ArrayList;
 
-import static FootballLeagueBackend.Database.readAllPlayers;
+import static FootballLeagueBackend.Player.readAllPlayers;
 
 public class ScoutingContent extends TableView {
     TableColumn<Player, String> forenameColumn;
@@ -46,7 +46,7 @@ public class ScoutingContent extends TableView {
     }
 
     public ObservableList<Player> getAllPlayers() {
-        ArrayList<Player> players = readAllPlayers();
+        ArrayList<Player> players = readAllPlayers(" ");
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         return playerList;
     }

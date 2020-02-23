@@ -8,10 +8,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
 
-import static FootballLeagueBackend.Database.readPlayersTeam;
+import static FootballLeagueBackend.Player.readAllPlayers;
 
 public class TacticContent extends GridPane {
     //Formation selector
@@ -308,7 +307,7 @@ public class TacticContent extends GridPane {
 
     public ObservableList<Player> getPlayersFromTeam(){
         //TODO This needs changing to the users team code from a config file or something
-        ArrayList<Player> players = readPlayersTeam("006SPU");
+        ArrayList<Player> players = readAllPlayers("WHERE teamCode='006SPU'");
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         return playerList;
     }
