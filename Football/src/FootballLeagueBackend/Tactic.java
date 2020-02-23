@@ -20,7 +20,7 @@ public class Tactic {
     static int codeIteration;
 
     static {
-        codeIteration = Database.countTactics();
+        codeIteration = countTactic();
     }
 
     //Getters
@@ -161,7 +161,7 @@ public class Tactic {
         updateQuery("tactic", values);
     }
 
-    public static int countMatch(){
+    public static int countTactic(){
         return countQuery("tactic", "tacticCode");
     }
 }
