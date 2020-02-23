@@ -1,7 +1,13 @@
 package FootballLeagueBackend;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.lang.Math;
+
+import static FootballLeagueBackend.DatabaseConnection.*;
+
 public class Match {
     //Match variables
     String matchCode;
@@ -150,6 +156,50 @@ public class Match {
 
     //TODO add function to organise the scheduling of matches (Create every match and set dates)
 
-    public static void main(String[] args) {
+    public static Match readMatch(String matchCode){
+        ResultSet result = DatabaseConnection.readQuery("match", "matchCode='" + matchCode);
+        try {
+            assert result != null;
+            if(result.next()){
+                return new Match(matchCode, result.getString("homeTeamCode"), result.getString("awayTeamCode"), result.getString("homeTacticCode"), result.getString("awayTacticCode"), result.getString("score"), result.getString("date"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return null;
+    }
+
+    //For example use "WHERE date='22'" to get matches on the 22nd game week or " " to get all matches
+    public static ArrayList<Match> readAllMatches(String clause){
+        ArrayList<Match> matches = new ArrayList<>();
+        try{
+            ResultSet rs = readAllQuery("match", clause);
+            assert rs != null;
+            while(rs.next()){
+                matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getString("date")));
+            }
+            System.out.println("Player Size : " + matches.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return matches;
+    }
+
+    public static boolean writeMatch(Match match){
+        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s'", match.getMatchCode(), match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate());
+        return DatabaseConnection.writeQuery("match", values);
+    }
+
+    public static void updateMatch(Match match){
+        String values = String.format("homeTeamCode='%s', awayTeamCode='%s', homeTacticCode='%s', awayTacticCode='%s', score='%s', date='%s' WHERE matchCode='%s'", match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate(), match.getMatchCode());
+        updateQuery("match", values);
+    }
+
+    public static int countMatch(){
+        return countQuery("match", "matchCode");
     }
 }

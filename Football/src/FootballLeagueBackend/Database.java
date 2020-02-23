@@ -3,6 +3,7 @@ import java.sql.*;
 import java.lang.*;
 import java.util.ArrayList;
 
+@Deprecated
 public class Database {
     static Connection conn;
     static Statement stmt = null;
@@ -446,6 +447,8 @@ public class Database {
     //            STARTING XI MANAGEMENT             //
     ///////////////////////////////////////////////////
 
+    /*
+
     public static StartingXI readStartingXI(String startingXICode){
         StartingXI startingXI = new StartingXI();
         try {
@@ -473,7 +476,7 @@ public class Database {
                 String sub5 = rs.getString(16);
                 String sub6 = rs.getString(17);
                 String sub7 = rs.getString(18);
-                startingXI = new StartingXI(startingXICode,player1,player2,player3,player4,player5,player6,player7,player8,player9,player10,player11,sub1,sub2,sub3,sub4,sub5,sub6,sub7);
+                startingXI = new StartingXI(startingXICode,player1,player2,player3,player4,player5,player6,player7,player8,player9,player10,player11);
             }
         } catch(SQLException ex){
             System.out.println(ex);
@@ -510,6 +513,8 @@ public class Database {
             close();
         }
     }
+
+     */
 
     ///////////////////////////////////////////////////
     //               LEAGUE POSITION                 //

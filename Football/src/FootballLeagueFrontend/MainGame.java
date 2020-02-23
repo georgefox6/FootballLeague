@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import static FootballLeagueBackend.StartingXI.writeStartingXI;
+import static FootballLeagueBackend.Tactic.writeTactic;
+
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
 //center for the main page content. These layouts are added to the different panels using the action listeners on the menu buttons
@@ -164,7 +167,6 @@ public class MainGame extends Application {
     }
 
     public void setResolution(String res){
-        //TODO Write function to change resolution
         switch(res){
             case "800 x 400":
                 window.setWidth(800);
@@ -261,16 +263,17 @@ public class MainGame extends Application {
             } else {
                 //Write the tactic to the database
                 System.out.println(tacticContent.positionTwoCB.getValue().getPlayerCode());
-                //TODO This currently just saves the goalkeeper as the 7 subs, change this to allow the user to pick subs or remove subs
-                StartingXI startingXI = new StartingXI(tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionTwoCB.getValue().getPlayerCode(), tacticContent.positionThreeCB.getValue().getPlayerCode(), tacticContent.positionFourCB.getValue().getPlayerCode(), tacticContent.positionFiveCB.getValue().getPlayerCode(), tacticContent.positionSixCB.getValue().getPlayerCode(), tacticContent.positionSevenCB.getValue().getPlayerCode(), tacticContent.positionEightCB.getValue().getPlayerCode(), tacticContent.positionNineCB.getValue().getPlayerCode(), tacticContent.positionTenCB.getValue().getPlayerCode(), tacticContent.positionElevenCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionOneCB.getValue().getPlayerCode());
-                Database.writestartingXI(startingXI);
+                StartingXI startingXI = new StartingXI(tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionTwoCB.getValue().getPlayerCode(), tacticContent.positionThreeCB.getValue().getPlayerCode(), tacticContent.positionFourCB.getValue().getPlayerCode(), tacticContent.positionFiveCB.getValue().getPlayerCode(), tacticContent.positionSixCB.getValue().getPlayerCode(), tacticContent.positionSevenCB.getValue().getPlayerCode(), tacticContent.positionEightCB.getValue().getPlayerCode(), tacticContent.positionNineCB.getValue().getPlayerCode(), tacticContent.positionTenCB.getValue().getPlayerCode(), tacticContent.positionElevenCB.getValue().getPlayerCode());
+                writeStartingXI(startingXI);
+
+
                 //Reads what formation has been selected
                 String selectedFormation = tacticContent.formation.getValue();
                 //TODO just filled with dummy variables for now
                 Tactic tactic = new Tactic(startingXI.getStartingXICode(),0.5,0.6,selectedFormation,tacticContent.playStyle.getValue());
                 //Write the tactic to the database
-                Database.writeTactic(tactic);
-                //Popout to say tactic saved
+                writeTactic(tactic);
+                //Pop out to say tactic saved
                 AlertBox.display("Tactic Saved", "Your tactic " + tactic.getTacticCode() + " has been saved!");
             }
         });

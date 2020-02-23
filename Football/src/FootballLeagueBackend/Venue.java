@@ -1,4 +1,11 @@
 package FootballLeagueBackend;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import static FootballLeagueBackend.DatabaseConnection.*;
+
 public class Venue {
     //Venue variables
     String venueCode;
@@ -8,7 +15,7 @@ public class Venue {
     static int codeIteration;
 
     static {
-        codeIteration = Database.countVenues();
+        codeIteration = countVenue();
     }
 
     //Getters
@@ -60,6 +67,50 @@ public class Venue {
         this.ticketPrice = ticketPrice;
     }
 
+    public static Venue readVenue(String venueCode){
+        ResultSet result = DatabaseConnection.readQuery("venue", "venueCode='" + venueCode);
+        try {
+            assert result != null;
+            if(result.next()){
+                return new Venue(venueCode, result.getString("venueName"), result.getInt("capacity"), result.getInt("ticketPrice"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return null;
+    }
 
+    //For example use "WHERE capacity<8000" to get venues with a capacity of less than 8000 or " " to get all venues
+    public static ArrayList<Venue> readAllVenues(String clause){
+        ArrayList<Venue> venues = new ArrayList<>();
+        try{
+            ResultSet rs = readAllQuery("venue", clause);
+            assert rs != null;
+            while(rs.next()){
+                venues.add(new Venue(rs.getString("venueCode"), rs.getString("venueName"), rs.getInt("capacity"), rs.getInt("ticketPrice")));
+            }
+            System.out.println("Venues Size : " + venues.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return venues;
+    }
 
+    public static boolean writeVenue(Venue venue){
+        String values = String.format("'%s', '%s', '%s', '%s'", venue.getVenueCode(), venue.getName(), venue.getCapacity(), venue.getTicketPrice());
+        return DatabaseConnection.writeQuery("venue", values);
+    }
+
+    public static void updateVenue(Venue venue){
+        String values = String.format("venueName='%s', capacity='%s', ticketPrice='%s' WHERE venueCode='%s'", venue.getName(), venue.getCapacity(), venue.getTicketPrice(), venue.getVenueCode());
+        updateQuery("venue", values);
+    }
+
+    public static int countVenue(){
+        return countQuery("venue", "venueCode");
+    }
 }

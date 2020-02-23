@@ -62,6 +62,7 @@ public class LeagueTableContent extends TableView {
     }
     public ObservableList<LeaguePosition> getLeagueTable(){
         //TODO This needs to be changed to the league that the player is in
+        //TODO this also needs changing to no longer use the database class
         ArrayList<LeaguePosition> leaguePositions = Database.readLeaguePositionLeague("Premier League");
         return FXCollections.observableArrayList(leaguePositions);
 

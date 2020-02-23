@@ -1,5 +1,11 @@
 package FootballLeagueBackend;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import static FootballLeagueBackend.DatabaseConnection.*;
+
 public class Club {
     //The club class fields
     String clubCode;
@@ -9,7 +15,7 @@ public class Club {
     static int codeIteration;
 
     static {
-        codeIteration = Database.countClubs();
+        codeIteration = countClub();
     }
 
     //Constructors
@@ -55,4 +61,50 @@ public class Club {
         this.venueCode = venueCode;
     }
 
+    public static Club readClub(String clubCode){
+        ResultSet result = DatabaseConnection.readQuery("club", "clubCode='" + clubCode);
+        try {
+            assert result != null;
+            if(result.next()){
+                return new Club(clubCode, result.getString("clubName"), result.getString("venue"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return null;
+    }
+
+    //For example use "WHERE venue='Old Trafford'" to get clubs that play at old Trafford or " " to get all Clubs
+    public static ArrayList<Club> readAllClubs(String clause){
+        ArrayList<Club> clubs = new ArrayList<>();
+        try{
+            ResultSet rs = readAllQuery("club", clause);
+            assert rs != null;
+            while(rs.next()){
+                clubs.add(new Club(rs.getString("clubCode"), rs.getString("clubName"), rs.getString("venue")));
+            }
+            System.out.println("Club Size : " + clubs.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return clubs;
+    }
+
+    public static boolean writeClub(Club club){
+        String values = String.format("'%s', '%s', '%s'", club.getClubCode(), club.getName(), club.getVenue());
+        return DatabaseConnection.writeQuery("club", values);
+    }
+
+    public static void updateClub(Club club){
+        String values = String.format("clubName='%s', venue='%s' WHERE clubCode='%s'", club.getName(), club.getVenue(), club.getClubCode());
+        updateQuery("club", values);
+    }
+
+    public static int countClub(){
+        return countQuery("club", "clubCode");
+    }
 }
