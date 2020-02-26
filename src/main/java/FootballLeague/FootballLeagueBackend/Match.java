@@ -1,4 +1,4 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.lang.Math;
 
-import static FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Match {
     //Match variables

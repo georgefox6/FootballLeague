@@ -1,10 +1,10 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class StartingXI {
     public String startingXICode;

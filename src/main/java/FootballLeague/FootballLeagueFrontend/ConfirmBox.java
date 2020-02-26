@@ -1,4 +1,4 @@
-package FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

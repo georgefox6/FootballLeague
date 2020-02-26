@@ -1,4 +1,4 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 
 public class LeaguePosition {
     String leaguePositionCode;

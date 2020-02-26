@@ -1,4 +1,4 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 
 import java.sql.*;
 
@@ -9,7 +9,7 @@ public class DatabaseConnection {
     static ResultSet results;
 
     public static void connect() throws SQLException {
-        connectionUrl = "jdbc:sqlite:Football/leagueTable.db";
+        connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
         connection = DriverManager.getConnection(connectionUrl);
     }
 

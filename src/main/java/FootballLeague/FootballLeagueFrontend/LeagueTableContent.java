@@ -1,7 +1,7 @@
-package FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeagueBackend.Database;
-import FootballLeagueBackend.LeaguePosition;
+import FootballLeague.FootballLeagueBackend.Database;
+import FootballLeague.FootballLeagueBackend.LeaguePosition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;

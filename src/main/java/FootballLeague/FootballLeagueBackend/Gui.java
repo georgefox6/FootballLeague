@@ -1,4 +1,4 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

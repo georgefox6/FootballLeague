@@ -1,10 +1,11 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Tactic {
     //TODO tactic should probably have a name variable to users can name the tactics they create

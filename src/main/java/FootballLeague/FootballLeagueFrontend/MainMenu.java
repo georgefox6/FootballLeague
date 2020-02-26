@@ -1,4 +1,4 @@
-package FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-
-import FootballLeagueBackend.FileHandler;
+import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class MainMenu extends Application {
 
@@ -49,7 +48,7 @@ public class MainMenu extends Application {
 	 	borderPaneMainMenu.setCenter(mainMenu);
 
 	 	Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-		mainMenuScene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+		mainMenuScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
 
 		/////////////////////////////
 	 	//     NewGame Screen      //
@@ -75,7 +74,7 @@ public class MainMenu extends Application {
 	 	borderPaneNewGameScreen.setCenter(newGameMenu);
 
 	 	Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-		newGameScreenScene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+		newGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
 
 		
 		/////////////////////////////

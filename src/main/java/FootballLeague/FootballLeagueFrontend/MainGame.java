@@ -1,13 +1,14 @@
-package FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeagueBackend.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import FootballLeague.FootballLeagueBackend.StartingXI;
+import FootballLeague.FootballLeagueBackend.Tactic;
 
-import static FootballLeagueBackend.StartingXI.writeStartingXI;
-import static FootballLeagueBackend.Tactic.writeTactic;
+import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
+import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
@@ -153,7 +154,7 @@ public class MainGame extends Application {
 
         //Creates the scene with the borderPane layout window size
         scene = new Scene(borderPane, 1020, 500);
-        scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
         window.setScene(scene);
         window.show();
 
@@ -192,15 +193,15 @@ public class MainGame extends Application {
         switch(selectedTheme){
             case "Not Twitter":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+                scene.getStylesheets().add("main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
                 break;
             case "Dark Theme":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/DarkTheme.css");
+                scene.getStylesheets().add("C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\java\\FootballLeague\\Stylesheets\\DarkTheme.css");
                 break;
             case "Very Colourful":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("FootballLeagueFrontend/Stylesheets/VeryColourful.css");
+                scene.getStylesheets().add("FootballLeague/src/main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/VeryColourful.css");
                 break;
         }
         System.out.println("Changed the theme to " + selectedTheme);

@@ -1,6 +1,6 @@
-package FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeagueBackend.Player;
+import FootballLeague.FootballLeagueBackend.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -8,8 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
-
-import static FootballLeagueBackend.Player.readAllPlayers;
 
 public class FirstTeamContent extends TableView {
     TableColumn<Player, String> forenameColumn;
@@ -36,7 +34,7 @@ public class FirstTeamContent extends TableView {
 
     public ObservableList<Player> getPlayersFromTeam() {
         //TODO This needs changing to the users team code
-        ArrayList<Player> players = readAllPlayers("WHERE teamCode='006SPU'");
+        ArrayList<Player> players = Player.readAllPlayers("WHERE teamCode='006SPU'");
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         //     playerList.add(null);
         return playerList;

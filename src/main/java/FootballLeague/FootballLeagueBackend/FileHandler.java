@@ -1,4 +1,4 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
 
 import java.io.File;
 import java.nio.file.Files;

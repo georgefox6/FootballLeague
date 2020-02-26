@@ -1,11 +1,12 @@
-package FootballLeagueBackend;
+package FootballLeague.FootballLeagueBackend;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static FootballLeagueBackend.DatabaseConnection.*;
-import static FootballLeagueBackend.Player.readPlayer;
-import static FootballLeagueBackend.Player.updatePlayer;
+import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.Player.readPlayer;
+import static FootballLeague.FootballLeagueBackend.Player.updatePlayer;
 
 public class Team {
 
