@@ -1,13 +1,11 @@
 Installation guide
 
-When using an IDE:
-1) Install jdk-11.0.2 (Others might be OK, I'm not sure)
-2) Install an IDE (I will be using Intellij but these instructions should work for others)
-3) Follow this installation guide to get the SQLite JBDC driver to allow you to connect to the DB http://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
-4) Download SQLite DB browser from the following link http://www.sqlitetutorial.net/download-install-sqlite/
-5) Open up your IDE and checkout project from version control. Select github and enter the url https://github.com/georgefox6/FootballLeague.git
-6) Add the SQLite JBDC driver to your library (In  FILE -> project structure -> Libraries for IntelliJ users)
-7) Navigate to FootballLeague/Football/src in the file explorer in the IDE
-8) Right click on FootballLeagueBackend.Gui.java and click run
-
-This is a temporary installation guide and will be updated after further testing
+Install git - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+add git to path
+Install java (Min version 11.0.0) - https://www.oracle.com/java/technologies/javase-jdk13-downloads.html
+add java to path
+install gradle following these instructions - https://gradle.org/install/
+add gradle to path
+run the command 'gradle -v' to check your java and gradle version
+get the most recent version of the project either by cloning or pulling from the repository - https://github.com/georgefox6/FootballLeague.git
+in the root FootballLeague directory run the command 'gradle run'
