@@ -4,14 +4,34 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class gameState {
+public class GameState {
 
     private static final String filePath = "src/main/resources/SaveGames/";
+
+    //This method is only used to write the json to store the current save name
+    public static void writeSaveName(String saveName) throws IOException {
+        JSONObject object = new JSONObject();
+
+        String fileName = "src/main/resources/SaveGames/currentSave.json";
+
+        object.put("saveName", saveName);
+
+        Files.write(Paths.get(fileName), object.toJSONString().getBytes());
+    }
+
+    public static String readSaveName() throws IOException, ParseException {
+        String filename = "src/main/resources/SaveGames/currentSave.json";
+        FileReader reader = new FileReader(filename);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject object = (JSONObject)jsonParser.parse(reader);
+        return object.get("saveName").toString();
+    }
 
     public static void initGameState(String team, String saveName) throws IOException {
         JSONObject object = new JSONObject();
@@ -66,6 +86,22 @@ public class gameState {
         Files.write(Paths.get(fileName), object.toJSONString().getBytes());
     }
 
+    public static void nextGameWeek(String saveName) throws IOException, ParseException {
+        JSONObject object = new JSONObject();
+
+        String fileName = filePath + saveName + ".json";
+
+        String nextGameWeek = String.valueOf(Integer.parseInt(readGameWeek(saveName)) + 1);
+
+        object.put("team", readTeam(saveName));
+        object.put("saveName", saveName);
+        object.put("databaseName", readDatabaseName(saveName));
+        object.put("gameWeek", nextGameWeek);
+        object.put("gameYear", readGameYear(saveName));
+
+        Files.write(Paths.get(fileName), object.toJSONString().getBytes());
+    }
+
     public static void updateGameYear(String saveName, String gameYear) throws IOException, ParseException {
         JSONObject object = new JSONObject();
 
@@ -76,6 +112,21 @@ public class gameState {
         object.put("databaseName", readDatabaseName(saveName));
         object.put("gameWeek", readGameWeek(saveName));
         object.put("gameYear", gameYear);
+        Files.write(Paths.get(fileName), object.toJSONString().getBytes());
+    }
+
+    public static void nextGameYear(String saveName) throws IOException, ParseException {
+        JSONObject object = new JSONObject();
+
+        String fileName = filePath + saveName + ".json";
+
+        String nextGameYear = String.valueOf(Integer.parseInt(readGameYear(saveName)) + 1);
+
+        object.put("team", readTeam(saveName));
+        object.put("saveName", saveName);
+        object.put("databaseName", readDatabaseName(saveName));
+        object.put("gameWeek", readGameWeek(saveName));
+        object.put("gameYear", nextGameYear);
         Files.write(Paths.get(fileName), object.toJSONString().getBytes());
     }
 
