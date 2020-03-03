@@ -1,8 +1,5 @@
 package FootballLeague.FootballLeagueBackend;
 
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -11,6 +8,7 @@ public class DatabaseConnection {
     static Statement statement;
     static ResultSet results;
 
+    //TODO add method to update league table in the database
     public static void connect() throws SQLException {
         connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
         //TODO Uncomment this when the main menu is sorted out

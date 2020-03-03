@@ -272,9 +272,6 @@ public class Database {
     //               TACTIC MANAGEMENT               //
     ///////////////////////////////////////////////////
 
-
-    //TODO test the read/write/update tactic functions
-
     public static Tactic readTactic(String tacticCode){
         Tactic tactic = new Tactic();
         try {
@@ -388,8 +385,6 @@ public class Database {
     ///////////////////////////////////////////////////
     //               MATCH MANAGEMENT                //
     ///////////////////////////////////////////////////
-
-    //TODO test the read/write/update match functions
 
     public static Match readMatch(String matchCode){
         Match match = new Match();
@@ -617,7 +612,6 @@ public class Database {
     //                 LEAGUE TABLE                  //
     ///////////////////////////////////////////////////
 
-    //TODO Test updateLeagueTableHome and updateLeagueTableAway
     //Function used to update the league table of the home team given a match as input
     public static void updateLeagueTableHome(Match match){
         Team homeTeam = readTeam(match.getHomeTeamCode());
@@ -726,8 +720,6 @@ public class Database {
         }
     }
 
-    //TODO Create a function which updates the position of the team depending on their points then goal difference
-
     ///////////////////////////////////////////////////
     //              SCHEDULE MANAGEMENT              //
     ///////////////////////////////////////////////////
@@ -742,7 +734,6 @@ public class Database {
             for (int matchNumber=0; matchNumber<numberOfMatches; matchNumber++){
                 System.out.println("Creating statement - Write Match");
                 Statement stmt = conn.createStatement();
-                // TODO add homeTeamTactic and awayTeamTactic
                 Match match = matches.get(matchNumber);
                 String sql = "INSERT INTO matches VALUES ('" + match.getMatchCode() + "' , '" + match.getHomeTeamCode() + "' , '" + match.getAwayTeamCode() + "' , '" + "homeTacticCode" + "' , '" + "awayTacticCode" + "' , '" + "score" + "' , '" + match.getDate() + "');";
                 stmt.executeUpdate(sql);
