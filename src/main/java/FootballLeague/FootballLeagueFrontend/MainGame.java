@@ -46,6 +46,7 @@ public class MainGame extends Application {
     //Used to store the name of the save game
     //TODO Figure out how to get this saveGameName to the DatabaseConnection class
     String saveGameName;
+    GameMenu gameMenu;
 
 
 
@@ -53,12 +54,14 @@ public class MainGame extends Application {
 //        launch(args);
 //    }
 
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
 
         //TODO only open the MainGame once the main menu has been closed (Either game created or game loaded)
         //Trying to get MainMenu integrated into the project
-        Stage stage = new Stage();
-        initUI(stage);
+//        Stage stage = new Stage();
+//        initUI(stage);
+
+        gameMenu = new GameMenu();
 
         window = primaryStage;
         window.setTitle("Football League");
@@ -176,6 +179,34 @@ public class MainGame extends Application {
         scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
         window.setScene(scene);
         window.show();
+
+        /////////////////////////////
+        //   Home Screen Actions   //
+        /////////////////////////////
+
+        gameMenu.newGameButton.setOnAction((ActionEvent event) -> {
+            pressedNewGameButton(gameMenu, gameMenu.newGameScreenScene);
+        });
+        gameMenu.loadGameButton.setOnAction((ActionEvent event) -> {
+            pressedLoadGameButton();
+        });
+        gameMenu.settingsButton.setOnAction((ActionEvent event) -> {
+            pressedSettingsButton();
+        });
+        gameMenu.quitButton.setOnAction((ActionEvent event) -> {
+            pressedQuitButton();
+        });
+
+        /////////////////////////////
+        // New Game Screen Actions //
+        /////////////////////////////
+
+        gameMenu.backButton.setOnAction((ActionEvent event) -> {
+            pressedBackButton(gameMenu, gameMenu.mainMenuScene);
+        });
+        gameMenu.createGameButton.setOnAction((ActionEvent event) -> {
+            pressedCreateGameButton(gameMenu.newGameName.getText());
+        });
 
 
     }
@@ -319,108 +350,6 @@ public class MainGame extends Application {
                 AlertBox.display("Tactic Saved", "Your tactic " + tactic.getTacticCode() + " has been saved!");
             }
         });
-    }
-
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////// MAIN MENU STUFF //////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void initUI(Stage stage) {
-
-        /////////////////////////////
-        //      Home Screen        //
-        /////////////////////////////
-
-        Button newGameButton = new Button();
-        Button loadGameButton = new Button();
-        Button settingsButton = new Button();
-        Button quitButton = new Button();
-
-        newGameButton.setText("New game");
-        loadGameButton.setText("Load game");
-        settingsButton.setText("Settings");
-        quitButton.setText("Quit");
-
-        VBox mainMenu = new VBox();
-        mainMenu.getChildren().addAll(newGameButton, loadGameButton, settingsButton, quitButton);
-        mainMenu.setSpacing(10);
-        mainMenu.setPadding(new Insets(25));
-
-        BorderPane borderPaneMainMenu = new BorderPane();
-        borderPaneMainMenu.setCenter(mainMenu);
-
-        Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-        mainMenuScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
-
-        /////////////////////////////
-        //     NewGame Screen      //
-        /////////////////////////////
-
-        TextField newGameName = new TextField();
-        Button backButton = new Button();
-        Button createGameButton = new Button();
-
-        backButton.setText("Back");
-        createGameButton.setText("Create game");
-
-        HBox newGameMenuButtons = new HBox();
-        newGameMenuButtons.getChildren().addAll(backButton, createGameButton);
-        newGameMenuButtons.setSpacing(10);
-
-        VBox newGameMenu = new VBox();
-        newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
-        newGameMenu.setSpacing(10);
-        newGameMenu.setPadding(new Insets(25));
-
-        BorderPane borderPaneNewGameScreen = new BorderPane();
-        borderPaneNewGameScreen.setCenter(newGameMenu);
-
-        Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-        newGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
-
-
-        /////////////////////////////
-        //   Home Screen Actions   //
-        /////////////////////////////
-
-        newGameButton.setOnAction((ActionEvent event) -> {
-            pressedNewGameButton(stage, newGameScreenScene);
-        });
-        loadGameButton.setOnAction((ActionEvent event) -> {
-            pressedLoadGameButton();
-        });
-        settingsButton.setOnAction((ActionEvent event) -> {
-            pressedSettingsButton();
-        });
-        quitButton.setOnAction((ActionEvent event) -> {
-            pressedQuitButton();
-        });
-
-        /////////////////////////////
-        // New Game Screen Actions //
-        /////////////////////////////
-
-        backButton.setOnAction((ActionEvent event) -> {
-            pressedBackButton(stage, mainMenuScene);
-        });
-        createGameButton.setOnAction((ActionEvent event) -> {
-            pressedCreateGameButton(newGameName.getText());
-        });
-
-        /////////////////////////////
-        //    Initialize Stage     //
-        /////////////////////////////
-
-        stage.setTitle("Main menu");
-        stage.setScene(mainMenuScene);
-        stage.setMaxHeight(230);
-        stage.setMaxWidth(260);
-        stage.setResizable(false);
-        // stage.setMaximized(true);
-        stage.show();
     }
 
     private void pressedNewGameButton(Stage stage, Scene newGameScreenScene) {
