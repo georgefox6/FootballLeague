@@ -23,6 +23,11 @@ public class DatabaseConnection {
         connection = DriverManager.getConnection(connectionUrl);
     }
 
+    public static void connectMain() throws SQLException {
+        connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
+        connection = DriverManager.getConnection(connectionUrl);
+    }
+
     public static void close(){
         System.out.println("DB is being closed by close()");
         if (results != null) {
@@ -107,6 +112,19 @@ public class DatabaseConnection {
     public static ResultSet readAllQuery(String table, String clause){
         try {
             connect();
+            statement = connection.createStatement();
+            String sql = "SELECT * FROM " + table + " " + clause + ";";
+            results = statement.executeQuery(sql);
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ResultSet readAllFromMainQuery(String table, String clause){
+        try {
+            connectMain();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
             results = statement.executeQuery(sql);

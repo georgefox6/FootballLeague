@@ -1,12 +1,15 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FirstTeamContent extends TableView {
@@ -33,8 +36,12 @@ public class FirstTeamContent extends TableView {
     }
 
     public ObservableList<Player> getPlayersFromTeam() {
-        //TODO This needs changing to the users team code
-        ArrayList<Player> players = Player.readAllPlayers("WHERE teamCode='006SPU'");
+        ArrayList<Player> players = null;
+        try {
+            players = Player.readAllPlayers("WHERE teamCode='" + GameState.readTeam(GameState.readSaveName()) + "'");
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         //     playerList.add(null);
         return playerList;

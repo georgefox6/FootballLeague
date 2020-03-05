@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import FootballLeague.FootballLeagueBackend.GameState;
+import FootballLeague.FootballLeagueBackend.Team;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -17,6 +21,8 @@ import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class GameMenu extends Application {
+
+    ComboBox<Team> teamSelector;
 
     @Override
     public void start(Stage stage) {
@@ -58,6 +64,8 @@ public class GameMenu extends Application {
         TextField newGameName = new TextField();
         Button backButton = new Button();
         Button createGameButton = new Button();
+        ObservableList<Team> teamList = getAllTeams();
+        teamSelector = new ComboBox<>(teamList);
 
         backButton.setText("Back");
         createGameButton.setText("Create game");
@@ -67,7 +75,8 @@ public class GameMenu extends Application {
         newGameMenuButtons.setSpacing(10);
 
         VBox newGameMenu = new VBox();
-        newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
+//        newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
+        newGameMenu.getChildren().addAll(newGameName, teamSelector, newGameMenuButtons);
         newGameMenu.setSpacing(10);
         newGameMenu.setPadding(new Insets(25));
 
@@ -115,7 +124,6 @@ public class GameMenu extends Application {
         stage.setMaxHeight(230);
         stage.setMaxWidth(260);
         stage.setResizable(false);
-        // stage.setMaximized(true);
         stage.show();
     }
     private void pressedNewGameButton(Stage stage, Scene newGameScreenScene) {
@@ -178,13 +186,18 @@ public class GameMenu extends Application {
         }
         //This will create the JSON file to keep track of the game state such as game week and team
         //TODO add a way to select the team from the main menu
-        GameState.initGameState("007SPU", saveGameName);
+        GameState.initGameState(teamSelector.getValue().getTeamCode(), saveGameName);
 
         //Used to store the save name
         GameState.writeSaveName(saveGameName);
 
         //Once the save has been created, an instance of the main game will be created
         new MainGame();
+    }
+
+    public ObservableList<Team> getAllTeams(){
+        ArrayList<Team> teams = Team.readAllTeamsMain("");
+        return FXCollections.observableArrayList(teams);
     }
 
     public static void main(String[] args) {

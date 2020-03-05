@@ -1,5 +1,6 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TacticContent extends GridPane {
@@ -305,8 +308,12 @@ public class TacticContent extends GridPane {
     }
 
     public ObservableList<Player> getPlayersFromTeam(){
-        //TODO This needs changing to the users team code from a config file or something
-        ArrayList<Player> players = Player.readAllPlayers("WHERE teamCode='006SPU'");
+        ArrayList<Player> players = null;
+        try {
+            players = Player.readAllPlayers("WHERE teamCode='" + GameState.readTeam(GameState.readSaveName()) + "'");
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         return playerList;
     }

@@ -39,6 +39,14 @@ public class Team {
         this.clubCode = clubCode;
     }
 
+    //To string method
+
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
     //Getters
     public String getTeamCode() {
         return teamCode;
@@ -131,5 +139,25 @@ public class Team {
 
     public static int countTeam(){
         return countQuery("team", "teamCode");
+    }
+
+
+    //For example use "WHERE club='Watford'" to get teams from Watford or " " to get all teams
+    //The difference between this and readAllTeams is that this reads from the default database
+    public static ArrayList<Team> readAllTeamsMain(String clause){
+        ArrayList<Team> teams = new ArrayList<>();
+        try{
+            ResultSet rs = readAllFromMainQuery("team", clause);
+            assert rs != null;
+            while(rs.next()){
+                teams.add(new Team(rs.getString("teamCode"), rs.getString("teamName"), rs.getString("league"), rs.getString("club")));
+            }
+            System.out.println("Player Size : " + teams.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.close();
+        }
+        return teams;
     }
 }

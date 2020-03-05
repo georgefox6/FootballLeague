@@ -172,14 +172,15 @@ public class MainGame extends Stage {
         //TODO Show all of the football results
 
         //Used to update the game week and year
+//        GameState.readTeam(GameState.readSaveName())
         try {
             //TODO replace all of the hard coded teams with values from the gamestate json
-            if(Integer.parseInt(GameState.readGameWeek("Everton1")) >= 52){
-                GameState.updateGameWeek("Everton1", "1");
-                GameState.nextGameYear("Everton1");
+            if(Integer.parseInt(GameState.readGameWeek(GameState.readSaveName())) >= 52){
+                GameState.updateGameWeek(GameState.readSaveName(), "1");
+                GameState.nextGameYear(GameState.readSaveName());
             }
             else{
-                GameState.nextGameWeek("Everton1");
+                GameState.nextGameWeek(GameState.readSaveName());
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
