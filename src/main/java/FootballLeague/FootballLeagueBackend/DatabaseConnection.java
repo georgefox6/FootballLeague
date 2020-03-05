@@ -1,5 +1,8 @@
 package FootballLeague.FootballLeagueBackend;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -10,10 +13,6 @@ public class DatabaseConnection {
 
     //TODO add method to update league table in the database
     public static void connect() throws SQLException {
-        connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
-        //TODO Uncomment this when the main menu is sorted out
-
-/*
         try {
             connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
         } catch (IOException e) {
@@ -21,9 +20,6 @@ public class DatabaseConnection {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-*/
-
-
         connection = DriverManager.getConnection(connectionUrl);
     }
 
@@ -65,7 +61,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "INSERT INTO " + table + " VALUES (" + values + ");";
-            System.out.println(sql);
             statement.executeUpdate(sql);
             return true;
         } catch(SQLException e) {
@@ -81,7 +76,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
-            System.out.println(sql);
             statement.executeUpdate(sql);
             return true;
         } catch (SQLException e) {

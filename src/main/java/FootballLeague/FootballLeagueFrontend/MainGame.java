@@ -1,12 +1,6 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeague.FootballLeagueBackend.FileHandler;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import FootballLeague.FootballLeagueBackend.StartingXI;
@@ -15,7 +9,6 @@ import FootballLeague.FootballLeagueBackend.GameState;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
@@ -24,9 +17,8 @@ import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
 //center for the main page content. These layouts are added to the different panels using the action listeners on the menu buttons
 
-public class MainGame extends Application {
+public class MainGame extends Stage {
 
-    Stage window;
     Scene scene;
     TopMenu topMenu;
     //LeftMenus
@@ -43,30 +35,13 @@ public class MainGame extends Application {
     FirstTeamContent firstTeamContent;
     TacticContent tacticContent;
     ScoutingContent scoutingContent;
-    //Used to store the name of the save game
-    //TODO Figure out how to get this saveGameName to the DatabaseConnection class
-    String saveGameName;
-    GameMenu gameMenu;
 
+    //Constructor for the main game stage
+    public MainGame(){
+        this.setTitle("Football League");
 
-
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
-
-    public void start(Stage primaryStage) {
-
-        //TODO only open the MainGame once the main menu has been closed (Either game created or game loaded)
-        //Trying to get MainMenu integrated into the project
-//        Stage stage = new Stage();
-//        initUI(stage);
-
-        gameMenu = new GameMenu();
-
-        window = primaryStage;
-        window.setTitle("Football League");
         //Replaces the default closing to instead close the program using our method
-        window.setOnCloseRequest(e -> {
+        this.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
         });
@@ -177,36 +152,8 @@ public class MainGame extends Application {
         //Creates the scene with the borderPane layout window size
         scene = new Scene(borderPane, 1020, 500);
         scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
-        window.setScene(scene);
-        window.show();
-
-        /////////////////////////////
-        //   Home Screen Actions   //
-        /////////////////////////////
-
-        gameMenu.newGameButton.setOnAction((ActionEvent event) -> {
-            pressedNewGameButton(gameMenu, gameMenu.newGameScreenScene);
-        });
-        gameMenu.loadGameButton.setOnAction((ActionEvent event) -> {
-            pressedLoadGameButton();
-        });
-        gameMenu.settingsButton.setOnAction((ActionEvent event) -> {
-            pressedSettingsButton();
-        });
-        gameMenu.quitButton.setOnAction((ActionEvent event) -> {
-            pressedQuitButton();
-        });
-
-        /////////////////////////////
-        // New Game Screen Actions //
-        /////////////////////////////
-
-        gameMenu.backButton.setOnAction((ActionEvent event) -> {
-            pressedBackButton(gameMenu, gameMenu.mainMenuScene);
-        });
-        gameMenu.createGameButton.setOnAction((ActionEvent event) -> {
-            pressedCreateGameButton(gameMenu.newGameName.getText());
-        });
+        this.setScene(scene);
+        this.show();
 
 
     }
@@ -214,7 +161,7 @@ public class MainGame extends Application {
     public void closeProgram(){
         Boolean answer = ConfirmBox.display("Quit?", "Are you sure you want to close the game?");
         if(answer)
-            window.close();
+            this.close();
     }
 
     public void advanceGame(){
@@ -226,6 +173,7 @@ public class MainGame extends Application {
 
         //Used to update the game week and year
         try {
+            //TODO replace all of the hard coded teams with values from the gamestate json
             if(Integer.parseInt(GameState.readGameWeek("Everton1")) >= 52){
                 GameState.updateGameWeek("Everton1", "1");
                 GameState.nextGameYear("Everton1");
@@ -242,20 +190,20 @@ public class MainGame extends Application {
     public void setResolution(String res){
         switch(res){
             case "800 x 400":
-                window.setWidth(800);
-                window.setHeight(400);
+                this.setWidth(800);
+                this.setHeight(400);
                 break;
             case "1020, 500":
-                window.setWidth(1020);
-                window.setHeight(500);
+                this.setWidth(1020);
+                this.setHeight(500);
                 break;
             case "1920 x 1080":
-                window.setWidth(1920);
-                window.setHeight(1080);
+                this.setWidth(1920);
+                this.setHeight(1080);
                 break;
             case "2560 x 1440":
-                window.setWidth(2560);
-                window.setHeight(1440);
+                this.setWidth(2560);
+                this.setHeight(1440);
                 break;
         }
         System.out.println("Changed the resolution to " + res);
@@ -350,72 +298,5 @@ public class MainGame extends Application {
                 AlertBox.display("Tactic Saved", "Your tactic " + tactic.getTacticCode() + " has been saved!");
             }
         });
-    }
-
-    private void pressedNewGameButton(Stage stage, Scene newGameScreenScene) {
-        stage.setTitle("New game");
-        stage.setScene(newGameScreenScene);
-    }
-
-    private void pressedLoadGameButton() {
-        //TODO get list of all save games, allow user to pick save game then set the save name to the selected one
-    }
-
-    private void pressedSettingsButton() {
-
-    }
-
-    private void pressedQuitButton() {
-        // stage.close();
-    }
-
-    private void pressedCreateGameButton(String saveGameName) {
-        System.out.println("Create game");
-        if (checkGameExists(saveGameName)) {
-            Boolean answer = ConfirmBox.display("Game already exists:", "Are you sure you want to overwrite this game?");
-            if (answer) {
-                try {
-                    createNewGame(saveGameName, true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            try {
-                createNewGame(saveGameName, false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void pressedBackButton(Stage stage, Scene mainMenuScene) {
-        System.out.println("Back");
-        stage.setTitle("Main menu");
-        stage.setScene(mainMenuScene);
-    }
-
-    private boolean checkGameExists(String saveGameName) {
-        FileHandler f = new FileHandler();
-        ArrayList<String> saveGameNames = f.getSaveGameNames();
-        boolean gameExists = saveGameNames.contains(saveGameName);
-        return gameExists;
-    }
-
-    private void createNewGame(String saveGameName, Boolean overwrite) throws IOException {
-        FileHandler f = new FileHandler();
-        String mainGameName = "mainGame";
-        try {
-            f.copyBaseSaveGame(mainGameName, saveGameName, overwrite);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        this.saveGameName = saveGameName;
-        //This will create the JSON file to keep track of the game state such as game week and team
-        //TODO add a way to select the team from the main menu
-        GameState.initGameState("007SPU", saveGameName);
-
-        //Used to store the save name
-        GameState.writeSaveName(saveGameName);
     }
 }
