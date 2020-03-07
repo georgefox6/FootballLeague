@@ -1,13 +1,13 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.InnerMenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 public class TacticMenu extends VBox {
-    Button newTacticButton;
+    public Button newTacticButton;
     Button loadTacticButton;
-    Button saveTacticButton;
+    public Button saveTacticButton;
 
     public TacticMenu(){
         newTacticButton = new Button("Reset Tactic");

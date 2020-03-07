@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.Content;
 
 import FootballLeague.FootballLeagueBackend.Database;
 import FootballLeague.FootballLeagueBackend.LeaguePosition;

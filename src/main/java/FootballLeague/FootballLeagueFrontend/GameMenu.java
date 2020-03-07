@@ -23,6 +23,7 @@ import FootballLeague.FootballLeagueBackend.FileHandler;
 public class GameMenu extends Application {
 
     ComboBox<Team> teamSelector;
+    Stage stage;
 
     @Override
     public void start(Stage stage) {
@@ -86,6 +87,34 @@ public class GameMenu extends Application {
         Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
         newGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
 
+        /////////////////////////////
+        //    LoadGame Screen      //
+        /////////////////////////////
+
+        ObservableList<String> saveList = getAllSaves();
+        ComboBox<String> saveGameSelector = new ComboBox<>(saveList);
+
+        Button loadBackButton = new Button();
+        loadBackButton.setText("Back");
+
+        Button loadLoadButton = new Button();
+        loadLoadButton.setText("Load Game");
+
+        HBox loadGameMenuButtons = new HBox();
+        loadGameMenuButtons.getChildren().addAll(loadBackButton, loadLoadButton);
+        loadGameMenuButtons.setSpacing(10);
+
+        VBox loadGameMenu = new VBox();
+        loadGameMenu.getChildren().addAll(saveGameSelector, loadGameMenuButtons);
+        loadGameMenu.setSpacing(10);
+        loadGameMenu.setPadding(new Insets(25));
+
+        BorderPane borderPaneLoadGameScreen = new BorderPane();
+        borderPaneLoadGameScreen.setCenter(loadGameMenu);
+
+        Scene loadGameScreenScene = new Scene(borderPaneLoadGameScreen, 280, 200);
+        loadGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+
 
         /////////////////////////////
         //   Home Screen Actions   //
@@ -95,7 +124,7 @@ public class GameMenu extends Application {
             pressedNewGameButton(stage, newGameScreenScene);
         });
         loadGameButton.setOnAction((ActionEvent event) -> {
-            pressedLoadGameButton();
+            pressedLoadGameButton(stage, loadGameScreenScene);
         });
         settingsButton.setOnAction((ActionEvent event) -> {
             pressedSettingsButton();
@@ -115,6 +144,21 @@ public class GameMenu extends Application {
             pressedCreateGameButton(newGameName.getText());
         });
 
+        //////////////////////////////
+        // Load Game Screen Actions //
+        //////////////////////////////
+
+        loadBackButton.setOnAction((ActionEvent event) -> {
+            pressedBackButton(stage, mainMenuScene);
+        });
+
+        loadLoadButton.setOnAction((ActionEvent event) -> {
+            String saveName = saveGameSelector.getValue();
+            loadGame(saveName);
+        });
+
+
+
         /////////////////////////////
         //    Initialize Stage     //
         /////////////////////////////
@@ -131,8 +175,9 @@ public class GameMenu extends Application {
         stage.setScene(newGameScreenScene);
     }
 
-    private void pressedLoadGameButton() {
-        //TODO get list of all save games, allow user to pick save game then set the save name to the selected one
+    private void pressedLoadGameButton(Stage stage, Scene loadGameScreenScene) {
+        stage.setTitle("Load Game");
+        stage.setScene(loadGameScreenScene);
     }
 
     private void pressedSettingsButton() {
@@ -185,7 +230,6 @@ public class GameMenu extends Application {
             e.printStackTrace();
         }
         //This will create the JSON file to keep track of the game state such as game week and team
-        //TODO add a way to select the team from the main menu
         GameState.initGameState(teamSelector.getValue().getTeamCode(), saveGameName);
 
         //Used to store the save name
@@ -198,6 +242,21 @@ public class GameMenu extends Application {
     public ObservableList<Team> getAllTeams(){
         ArrayList<Team> teams = Team.readAllTeamsMain("");
         return FXCollections.observableArrayList(teams);
+    }
+
+    public ObservableList<String> getAllSaves(){
+        FileHandler f = new FileHandler();
+        return FXCollections.observableArrayList(f.getSaveGameNamesDB());
+
+    }
+
+    private void loadGame(String saveGameName){
+        try {
+            GameState.writeSaveName(saveGameName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new MainGame();
     }
 
     public static void main(String[] args) {

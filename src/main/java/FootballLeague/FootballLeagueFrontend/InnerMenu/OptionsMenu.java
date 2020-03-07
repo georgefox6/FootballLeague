@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.InnerMenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -8,7 +8,7 @@ public class OptionsMenu extends VBox {
     Button optionsOptionsButton;
     Button saveGameOptionsButton;
     Button loadGameOptionsButton;
-    Button quitButton;
+    public Button quitButton;
 
     public OptionsMenu(){
         optionsOptionsButton = new Button("Options");

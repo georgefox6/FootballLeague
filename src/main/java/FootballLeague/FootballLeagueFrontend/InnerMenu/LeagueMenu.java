@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.InnerMenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

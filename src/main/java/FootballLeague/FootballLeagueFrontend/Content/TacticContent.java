@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.Content;
 
 import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Player;
@@ -16,25 +16,25 @@ import java.util.ArrayList;
 
 public class TacticContent extends GridPane {
     //Formation selector
-    ComboBox<String> formation;
-    Label formationLabel;
+    public ComboBox<String> formation;
+    public Label formationLabel;
 
     //Play style selector
-    ComboBox<String> playStyle;
-    Label playStyleLabel;
+    public ComboBox<String> playStyle;
+    public Label playStyleLabel;
 
     //Adds all of the ComboBoxes to select the players for each position
-    ComboBox<Player> positionOneCB;
-    ComboBox<Player> positionTwoCB;
-    ComboBox<Player> positionThreeCB;
-    ComboBox<Player> positionFourCB;
-    ComboBox<Player> positionFiveCB;
-    ComboBox<Player> positionSixCB;
-    ComboBox<Player> positionSevenCB;
-    ComboBox<Player> positionEightCB;
-    ComboBox<Player> positionNineCB;
-    ComboBox<Player> positionTenCB;
-    ComboBox<Player> positionElevenCB;
+    public ComboBox<Player> positionOneCB;
+    public ComboBox<Player> positionTwoCB;
+    public ComboBox<Player> positionThreeCB;
+    public ComboBox<Player> positionFourCB;
+    public ComboBox<Player> positionFiveCB;
+    public ComboBox<Player> positionSixCB;
+    public ComboBox<Player> positionSevenCB;
+    public ComboBox<Player> positionEightCB;
+    public ComboBox<Player> positionNineCB;
+    public ComboBox<Player> positionTenCB;
+    public ComboBox<Player> positionElevenCB;
 
     //Creates labels for every possible position which will be added to the screen depending on the chosen formation
     Label gkLabel = new Label("GK:");
@@ -55,17 +55,17 @@ public class TacticContent extends GridPane {
     Label stLabel = new Label("ST:");
 
     //Creates the labels for the right hand side of the screen
-    Label p1;
-    Label p2;
-    Label p3;
-    Label p4;
-    Label p5;
-    Label p6;
-    Label p7;
-    Label p8;
-    Label p9;
-    Label p10;
-    Label p11;
+    public Label p1;
+    public Label p2;
+    public Label p3;
+    public Label p4;
+    public Label p5;
+    public Label p6;
+    public Label p7;
+    public Label p8;
+    public Label p9;
+    public Label p10;
+    public Label p11;
 
     //Constructor for the tactic content
     public TacticContent(){

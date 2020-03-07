@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.InnerMenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -7,14 +7,14 @@ import javafx.scene.layout.HBox;
 
 public class TopMenu extends HBox {
     //Declaring elements of TopMenu
-    Button teamButton;
-    Button leagueButton;
-    Button tacticButton;
-    Button advanceButton;
-    Button scoutingButton;
-    Button trainingButton;
-    Button clubButton;
-    Button optionsButton;
+    public Button teamButton;
+    public Button leagueButton;
+    public Button tacticButton;
+    public Button advanceButton;
+    public Button scoutingButton;
+    public Button trainingButton;
+    public Button clubButton;
+    public Button optionsButton;
     Label gameWeek;
 
     //Constructor

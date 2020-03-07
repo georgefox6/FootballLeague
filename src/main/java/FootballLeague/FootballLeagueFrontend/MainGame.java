@@ -1,5 +1,7 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import FootballLeague.FootballLeagueFrontend.Content.*;
+import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;

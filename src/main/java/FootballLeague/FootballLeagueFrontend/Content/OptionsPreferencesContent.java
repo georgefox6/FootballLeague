@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.Content;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
@@ -7,9 +7,9 @@ import javafx.scene.layout.GridPane;
 
 public class OptionsPreferencesContent extends GridPane {
     Label resolutionLabel;
-    ComboBox<String> resolutionCB;
+    public ComboBox<String> resolutionCB;
     Label themeLabel;
-    ComboBox<String> themeCB;;
+    public ComboBox<String> themeCB;;
 
     public OptionsPreferencesContent(){
         resolutionLabel = new Label("Resolution:");

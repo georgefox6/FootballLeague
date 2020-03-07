@@ -1,4 +1,4 @@
-package FootballLeague.FootballLeagueFrontend;
+package FootballLeague.FootballLeagueFrontend.Content;
 
 import FootballLeague.FootballLeagueBackend.Player;
 import javafx.collections.FXCollections;

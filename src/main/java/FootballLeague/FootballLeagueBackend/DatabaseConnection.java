@@ -15,9 +15,7 @@ public class DatabaseConnection {
     public static void connect() throws SQLException {
         try {
             connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         connection = DriverManager.getConnection(connectionUrl);
@@ -76,16 +74,14 @@ public class DatabaseConnection {
         }
     }
 
-    public static boolean updateQuery(String table, String values){
+    public static void updateQuery(String table, String values){
         try {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
             statement.executeUpdate(sql);
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         } finally {
             close();
         }

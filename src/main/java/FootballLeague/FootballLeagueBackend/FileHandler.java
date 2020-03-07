@@ -43,6 +43,20 @@ public class FileHandler {
 		return saveGameTitles;
 	}
 
+	public ArrayList<String> getSaveGameNamesDB() {
+		String saveGamesDirectoryPath = "src/main/resources/SaveGames/";
+		ArrayList<String> saveGameTitles = new ArrayList<String>();
+		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
+		for (File file : saveGamesTitlesRaw) {
+			if (file.isFile()) {
+				if(file.getName().contains(".db") && !file.getName().contains("mainGame.db")){
+					saveGameTitles.add(file.getName().split("\\.")[0]);
+				}
+			}
+		}
+		return saveGameTitles;
+	}
+
 	public static void main(String[] args) {
 	}
 }
