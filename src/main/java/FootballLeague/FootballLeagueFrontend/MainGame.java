@@ -1,11 +1,16 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import javafx.application.Application;
+import FootballLeague.FootballLeagueFrontend.Content.*;
+import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import FootballLeague.FootballLeagueBackend.StartingXI;
 import FootballLeague.FootballLeagueBackend.Tactic;
+import FootballLeague.FootballLeagueBackend.GameState;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
@@ -14,9 +19,8 @@ import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
 //center for the main page content. These layouts are added to the different panels using the action listeners on the menu buttons
 
-public class MainGame extends Application {
+public class MainGame extends Stage {
 
-    Stage window;
     Scene scene;
     TopMenu topMenu;
     //LeftMenus
@@ -34,17 +38,12 @@ public class MainGame extends Application {
     TacticContent tacticContent;
     ScoutingContent scoutingContent;
 
+    //Constructor for the main game stage
+    public MainGame(){
+        this.setTitle("Football League");
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void start(Stage primaryStage){
-        window = primaryStage;
-        window.setTitle("Football League");
         //Replaces the default closing to instead close the program using our method
-        window.setOnCloseRequest(e -> {
+        this.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
         });
@@ -126,7 +125,7 @@ public class MainGame extends Application {
             borderPane.setCenter(tacticContent);
         });
         topMenu.advanceButton.setOnAction(e -> {
-            //TODO add advance game function
+            advanceGame();
         });
         topMenu.scoutingButton.setOnAction(e -> {
             borderPane.setLeft(scoutingMenu);
@@ -155,8 +154,8 @@ public class MainGame extends Application {
         //Creates the scene with the borderPane layout window size
         scene = new Scene(borderPane, 1020, 500);
         scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
-        window.setScene(scene);
-        window.show();
+        this.setScene(scene);
+        this.show();
 
 
     }
@@ -164,26 +163,50 @@ public class MainGame extends Application {
     public void closeProgram(){
         Boolean answer = ConfirmBox.display("Quit?", "Are you sure you want to close the game?");
         if(answer)
-            window.close();
+            this.close();
+    }
+
+    public void advanceGame(){
+        //TODO simulate all the games for this game week
+        //TODO update label for game week
+        //TODO update league table
+        //TODO show the user's team result (With goal scorers?)
+        //TODO Show all of the football results
+
+        //Used to update the game week and year
+//        GameState.readTeam(GameState.readSaveName())
+        try {
+            //TODO replace all of the hard coded teams with values from the gamestate json
+            if(Integer.parseInt(GameState.readGameWeek(GameState.readSaveName())) >= 52){
+                GameState.updateGameWeek(GameState.readSaveName(), "1");
+                GameState.nextGameYear(GameState.readSaveName());
+            }
+            else{
+                GameState.nextGameWeek(GameState.readSaveName());
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setResolution(String res){
         switch(res){
             case "800 x 400":
-                window.setWidth(800);
-                window.setHeight(400);
+                this.setWidth(800);
+                this.setHeight(400);
                 break;
             case "1020, 500":
-                window.setWidth(1020);
-                window.setHeight(500);
+                this.setWidth(1020);
+                this.setHeight(500);
                 break;
             case "1920 x 1080":
-                window.setWidth(1920);
-                window.setHeight(1080);
+                this.setWidth(1920);
+                this.setHeight(1080);
                 break;
             case "2560 x 1440":
-                window.setWidth(2560);
-                window.setHeight(1440);
+                this.setWidth(2560);
+                this.setHeight(1440);
                 break;
         }
         System.out.println("Changed the resolution to " + res);
@@ -279,11 +302,4 @@ public class MainGame extends Application {
             }
         });
     }
-
-
-
-
-
-
-
 }

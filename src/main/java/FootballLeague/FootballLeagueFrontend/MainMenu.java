@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
+@Deprecated
 public class MainMenu extends Application {
 
 	 @Override

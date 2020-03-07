@@ -1,5 +1,8 @@
 package FootballLeague.FootballLeagueBackend;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -8,7 +11,17 @@ public class DatabaseConnection {
     static Statement statement;
     static ResultSet results;
 
+    //TODO add method to update league table in the database
     public static void connect() throws SQLException {
+        try {
+            connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        connection = DriverManager.getConnection(connectionUrl);
+    }
+
+    public static void connectMain() throws SQLException {
         connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
         connection = DriverManager.getConnection(connectionUrl);
     }
@@ -51,7 +64,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "INSERT INTO " + table + " VALUES (" + values + ");";
-            System.out.println(sql);
             statement.executeUpdate(sql);
             return true;
         } catch(SQLException e) {
@@ -62,17 +74,14 @@ public class DatabaseConnection {
         }
     }
 
-    public static boolean updateQuery(String table, String values){
+    public static void updateQuery(String table, String values){
         try {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
-            System.out.println(sql);
             statement.executeUpdate(sql);
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         } finally {
             close();
         }
@@ -99,6 +108,19 @@ public class DatabaseConnection {
     public static ResultSet readAllQuery(String table, String clause){
         try {
             connect();
+            statement = connection.createStatement();
+            String sql = "SELECT * FROM " + table + " " + clause + ";";
+            results = statement.executeQuery(sql);
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ResultSet readAllFromMainQuery(String table, String clause){
+        try {
+            connectMain();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
             results = statement.executeQuery(sql);
