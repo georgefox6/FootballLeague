@@ -1,9 +1,13 @@
 package FootballLeague.FootballLeagueFrontend.InnerMenu;
 
+import FootballLeague.FootballLeagueBackend.GameState;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 public class TopMenu extends HBox {
     //Declaring elements of TopMenu
@@ -15,7 +19,7 @@ public class TopMenu extends HBox {
     public Button trainingButton;
     public Button clubButton;
     public Button optionsButton;
-    Label gameWeek;
+    public Label gameWeek;
 
     //Constructor
     public TopMenu(){
@@ -27,7 +31,13 @@ public class TopMenu extends HBox {
         trainingButton = new Button("Training");
         clubButton = new Button("Club");
         optionsButton = new Button("Options");
-        gameWeek = new Label("Game Week 41");
+        gameWeek = new Label("Game Week ");
+
+        try {
+            gameWeek.setText("Game Week " + GameState.readGameWeek(GameState.readSaveName()));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
         //Adds the buttons to the menu
         this.getChildren().addAll(teamButton, leagueButton, tacticButton,  scoutingButton, gameWeek, trainingButton, clubButton, optionsButton, advanceButton);

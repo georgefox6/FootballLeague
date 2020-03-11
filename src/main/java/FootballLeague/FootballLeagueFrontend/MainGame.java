@@ -1,17 +1,19 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeague.FootballLeagueFrontend.Content.*;
-import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.io.IOException;
+import java.util.ArrayList;
+import FootballLeague.FootballLeagueBackend.Match;
+import FootballLeague.FootballLeagueFrontend.Content.*;
+import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import FootballLeague.FootballLeagueBackend.StartingXI;
 import FootballLeague.FootballLeagueBackend.Tactic;
 import FootballLeague.FootballLeagueBackend.GameState;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-
+import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 
@@ -167,16 +169,26 @@ public class MainGame extends Stage {
     }
 
     public void advanceGame(){
-        //TODO simulate all the games for this game week
-        //TODO update label for game week
-        //TODO update league table
+        //Creates the clause to search for matches
+        String clause = "";
+        try {
+            clause = "WHERE date='" + GameState.readGameWeek(GameState.readSaveName()) + "'";
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Used to simulate all of the matches for that week
+        ArrayList<Match> matchesThisWeek = readAllMatches(clause);
+
+        for(Match match : matchesThisWeek){
+            match.playMatch();
+        }
+
         //TODO show the user's team result (With goal scorers?)
         //TODO Show all of the football results
 
         //Used to update the game week and year
-//        GameState.readTeam(GameState.readSaveName())
         try {
-            //TODO replace all of the hard coded teams with values from the gamestate json
             if(Integer.parseInt(GameState.readGameWeek(GameState.readSaveName())) >= 52){
                 GameState.updateGameWeek(GameState.readSaveName(), "1");
                 GameState.nextGameYear(GameState.readSaveName());
@@ -184,10 +196,10 @@ public class MainGame extends Stage {
             else{
                 GameState.nextGameWeek(GameState.readSaveName());
             }
+            topMenu.gameWeek.setText("Game Week " + GameState.readGameWeek(GameState.readSaveName()));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     public void setResolution(String res){

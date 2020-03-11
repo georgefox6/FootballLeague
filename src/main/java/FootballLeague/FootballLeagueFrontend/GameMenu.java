@@ -56,7 +56,7 @@ public class GameMenu extends Application {
         borderPaneMainMenu.setCenter(mainMenu);
 
         Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-        mainMenuScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        mainMenuScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
         /////////////////////////////
         //     NewGame Screen      //
@@ -85,7 +85,7 @@ public class GameMenu extends Application {
         borderPaneNewGameScreen.setCenter(newGameMenu);
 
         Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-        newGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        newGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
         /////////////////////////////
         //    LoadGame Screen      //
@@ -113,7 +113,7 @@ public class GameMenu extends Application {
         borderPaneLoadGameScreen.setCenter(loadGameMenu);
 
         Scene loadGameScreenScene = new Scene(borderPaneLoadGameScreen, 280, 200);
-        loadGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        loadGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
 
         /////////////////////////////

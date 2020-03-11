@@ -157,7 +157,7 @@ public class Match {
     //TODO add function to organise the scheduling of matches (Create every match and set dates)
 
     public static Match readMatch(String matchCode){
-        ResultSet result = DatabaseConnection.readQuery("match", "matchCode='" + matchCode);
+        ResultSet result = DatabaseConnection.readQuery("matches", "matchCode='" + matchCode);
         try {
             assert result != null;
             if(result.next()){
@@ -175,7 +175,7 @@ public class Match {
     public static ArrayList<Match> readAllMatches(String clause){
         ArrayList<Match> matches = new ArrayList<>();
         try{
-            ResultSet rs = readAllQuery("match", clause);
+            ResultSet rs = readAllQuery("matches", clause);
             assert rs != null;
             while(rs.next()){
                 matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getString("date")));
@@ -191,12 +191,12 @@ public class Match {
 
     public static boolean writeMatch(Match match){
         String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s'", match.getMatchCode(), match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate());
-        return DatabaseConnection.writeQuery("match", values);
+        return DatabaseConnection.writeQuery("matches", values);
     }
 
     public static void updateMatch(Match match){
         String values = String.format("homeTeamCode='%s', awayTeamCode='%s', homeTacticCode='%s', awayTacticCode='%s', score='%s', date='%s' WHERE matchCode='%s'", match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate(), match.getMatchCode());
-        updateQuery("match", values);
+        updateQuery("matches", values);
     }
 
     public static int countMatch(){
