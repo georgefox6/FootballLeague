@@ -16,7 +16,7 @@ public class Match {
     String homeTacticCode;
     String awayTacticCode;
     String score;
-    // Date is gameweek
+    // Date is game week
     String date;
 
     //Constructors
@@ -121,11 +121,10 @@ public class Match {
         this.date = date;
     }
 
-    //TODO Test the playMatch method
     //Match Engine method
     public void playMatch(){
-        Tactic homeTactic = Database.readTactic(this.homeTacticCode);
-        Tactic awayTactic = Database.readTactic(this.awayTacticCode);
+        Tactic homeTactic = Tactic.readTactic(this.homeTacticCode);
+        Tactic awayTactic = Tactic.readTactic(this.awayTacticCode);
 
         //                      HOME TEAM GOALS
         //Generate amount of chances home team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
@@ -133,7 +132,7 @@ public class Match {
         double chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
         //Generate conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
         rand = new Random();
-        double conversionRate = homeTactic.getAttackScore() * (rand.nextInt(100)/200);
+        double conversionRate = homeTactic.getAttackScore() * (rand.nextDouble()/2);
         //The final number of goals scored by the home team
         int homeGoals = (int)Math.round(chancesCreated * conversionRate);
 
@@ -143,15 +142,17 @@ public class Match {
         chancesCreated = Math.round(rand.nextInt(40) * (1 - homeTactic.getDefenceScore()));
         //Generate conversion rate away team will get (Dependant on the away team attack score) - Average in the premier league is 8% - 22%
         rand = new Random();
-        conversionRate = awayTactic.getAttackScore() * (rand.nextInt(100)/200);
+        conversionRate = awayTactic.getAttackScore() * (rand.nextDouble()/2);
         //The final number of goals scored by the away team
         int awayGoals = (int)Math.round(chancesCreated * conversionRate);
-
         this.setScore(homeGoals + "-" + awayGoals);
 
+        //TODO this needs to be updated with a new databaseConnection method otherwise there are locking issues
         //These functions are used to update the league table for both the home and away teams
-        Database.updateLeagueTableHome(this);
-        Database.updateLeagueTableAway(this);
+//        Database.updateLeagueTableHome(this);
+//        Database.updateLeagueTableAway(this);
+
+        updateMatch(this);
     }
 
     //TODO add function to organise the scheduling of matches (Create every match and set dates)

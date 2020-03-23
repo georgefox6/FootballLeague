@@ -39,6 +39,8 @@ public class MainGame extends Stage {
     FirstTeamContent firstTeamContent;
     TacticContent tacticContent;
     ScoutingContent scoutingContent;
+    AdvanceFixturesContent advanceFixturesContent;
+    AdvanceResultsContent advanceResultsContent;
 
     //Constructor for the main game stage
     public MainGame(){
@@ -94,6 +96,12 @@ public class MainGame extends Stage {
         //Creates the content for *TEAM->FIRST TEAM*
         firstTeamContent = new FirstTeamContent();
 
+        //Creates the content for *ADVANCE->FIXTURES*
+        advanceFixturesContent = new AdvanceFixturesContent();
+
+        //Creates the content for *ADVANCE->RESULTS*
+        advanceResultsContent = new AdvanceResultsContent();
+
         //Creates the content for *TACTIC*
 
         tacticContent = new TacticContent();
@@ -127,7 +135,9 @@ public class MainGame extends Stage {
             borderPane.setCenter(tacticContent);
         });
         topMenu.advanceButton.setOnAction(e -> {
-            advanceGame();
+            borderPane.setCenter(advanceFixturesContent);
+            this.advanceFixturesContent.update();
+            //TODO the left pane needs clearing
         });
         topMenu.scoutingButton.setOnAction(e -> {
             borderPane.setLeft(scoutingMenu);
@@ -147,6 +157,19 @@ public class MainGame extends Stage {
         optionsMenu.quitButton.setOnAction(e -> {
             closeProgram();
         });
+
+        advanceFixturesContent.nextButton.setOnAction(e -> {
+            advanceGame();
+            borderPane.setCenter(advanceResultsContent);
+            advanceResultsContent.update();
+            advanceGameWeek();
+        });
+
+        advanceResultsContent.doneButton.setOnAction(e -> {
+            borderPane.setCenter(leagueTableContent);
+        });
+
+        //TODO make the done button on advanceResultsContent do something (Maybe return you to home / show league table)
 
 
         //Adds action listener for the resolution combo box
@@ -181,12 +204,12 @@ public class MainGame extends Stage {
         ArrayList<Match> matchesThisWeek = readAllMatches(clause);
 
         for(Match match : matchesThisWeek){
+            //TODO match simulations don't currently work - nothing been written to the score in match table of DB
             match.playMatch();
         }
+    }
 
-        //TODO show the user's team result (With goal scorers?)
-        //TODO Show all of the football results
-
+    public void advanceGameWeek(){
         //Used to update the game week and year
         try {
             if(Integer.parseInt(GameState.readGameWeek(GameState.readSaveName())) >= 52){

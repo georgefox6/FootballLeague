@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore the save games but keep the main database
+src/main/resources/SaveGames
