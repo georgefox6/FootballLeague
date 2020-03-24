@@ -44,6 +44,9 @@ public class MainGame extends Stage {
 
     //Constructor for the main game stage
     public MainGame(){
+        //Schedule all matches for the league
+        Match.scheduleMatches();
+
         this.setTitle("Football League");
 
         //Replaces the default closing to instead close the program using our method

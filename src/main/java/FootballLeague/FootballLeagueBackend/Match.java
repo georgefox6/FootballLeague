@@ -1,5 +1,9 @@
 package FootballLeague.FootballLeagueBackend;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,6 +11,7 @@ import java.util.Random;
 import java.lang.Math;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
 public class Match {
     //Match variables
@@ -38,6 +43,9 @@ public class Match {
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
+        //TODO this is just used to set a default value to the tactic codes
+        this.homeTacticCode = "01";
+        this.awayTacticCode = "02";
         this.date = date;
     }
 
@@ -156,6 +164,31 @@ public class Match {
     }
 
     //TODO add function to organise the scheduling of matches (Create every match and set dates)
+    public static void scheduleMatches() {
+        //First need to get the league that your team is playing in
+        String teamCode = null;
+        try {
+            teamCode = GameState.readTeam(GameState.readSaveName());
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        String league = Team.readTeam(teamCode).getLeague();
+
+        //Return a list of all teams from that league
+        ArrayList<Team> allTeams = readAllTeams("WHERE league='" + league + "'");
+        int week = 1;
+        for(Team team1 : allTeams){
+            for(Team team2 : allTeams){
+                //Write each match to the database if they are not playing themselves
+                if(!team1.getTeamCode().equals(team2.getTeamCode())){
+                    writeMatch(new Match(team1.getTeamCode(), team2.getTeamCode(), String.valueOf(week)));
+                    writeMatch(new Match(team2.getTeamCode(), team1.getTeamCode(), String.valueOf(allTeams.size() - week + 1)));
+                }
+            }
+            week++;
+        }
+        //TODO all of the matches need tactic codes adding -- Default to begin with?
+    }
 
     public static Match readMatch(String matchCode){
         ResultSet result = DatabaseConnection.readQuery("matches", "matchCode='" + matchCode);
