@@ -11,7 +11,6 @@ public class DatabaseConnection {
     static Statement statement;
     static ResultSet results;
 
-    //TODO add method to update league table in the database
     public static void connect() throws SQLException {
         try {
             connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";

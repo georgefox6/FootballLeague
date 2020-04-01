@@ -20,6 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
+import static FootballLeague.FootballLeagueFrontend.MainGame.initNewGame;
+
 public class GameMenu extends Application {
 
     ComboBox<Team> teamSelector;
@@ -76,7 +78,6 @@ public class GameMenu extends Application {
         newGameMenuButtons.setSpacing(10);
 
         VBox newGameMenu = new VBox();
-//        newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
         newGameMenu.getChildren().addAll(newGameName, teamSelector, newGameMenuButtons);
         newGameMenu.setSpacing(10);
         newGameMenu.setPadding(new Insets(25));
@@ -234,6 +235,9 @@ public class GameMenu extends Application {
 
         //Used to store the save name
         GameState.writeSaveName(saveGameName);
+
+        //Initialises the new game: sets up the league tables and schedules all matches for the year
+        initNewGame();
 
         //Once the save has been created, an instance of the main game will be created
         new MainGame();

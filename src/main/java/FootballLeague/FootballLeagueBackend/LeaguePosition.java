@@ -1,5 +1,5 @@
 package FootballLeague.FootballLeagueBackend;
-
+@Deprecated
 public class LeaguePosition {
     String leaguePositionCode;
     String league;

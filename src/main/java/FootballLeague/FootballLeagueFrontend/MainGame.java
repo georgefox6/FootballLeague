@@ -1,18 +1,17 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import FootballLeague.FootballLeagueBackend.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
-import FootballLeague.FootballLeagueBackend.Match;
+
 import FootballLeague.FootballLeagueFrontend.Content.*;
 import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
-import FootballLeague.FootballLeagueBackend.StartingXI;
-import FootballLeague.FootballLeagueBackend.Tactic;
-import FootballLeague.FootballLeagueBackend.GameState;
 import org.json.simple.parser.ParseException;
 
+import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readUniqueLeagues;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
@@ -44,9 +43,6 @@ public class MainGame extends Stage {
 
     //Constructor for the main game stage
     public MainGame(){
-        //Schedule all matches for the league
-        Match.scheduleMatches();
-
         this.setTitle("Football League");
 
         //Replaces the default closing to instead close the program using our method
@@ -131,6 +127,7 @@ public class MainGame extends Stage {
         });
         topMenu.leagueButton.setOnAction(e -> {
             borderPane.setLeft(leagueMenu);
+            leagueTableContent.updateLeagueTable();
             borderPane.setCenter(leagueTableContent);
         });
         topMenu.tacticButton.setOnAction(e -> {
@@ -169,11 +166,9 @@ public class MainGame extends Stage {
         });
 
         advanceResultsContent.doneButton.setOnAction(e -> {
+            leagueTableContent.updateLeagueTable();
             borderPane.setCenter(leagueTableContent);
         });
-
-        //TODO make the done button on advanceResultsContent do something (Maybe return you to home / show league table)
-
 
         //Adds action listener for the resolution combo box
         optionsPreferencesContent.resolutionCB.setOnAction(e -> setResolution(optionsPreferencesContent.resolutionCB.getValue()));
@@ -184,8 +179,6 @@ public class MainGame extends Stage {
         scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
         this.setScene(scene);
         this.show();
-
-
     }
 
     public void closeProgram(){
@@ -207,7 +200,6 @@ public class MainGame extends Stage {
         ArrayList<Match> matchesThisWeek = readAllMatches(clause);
 
         for(Match match : matchesThisWeek){
-            //TODO match simulations don't currently work - nothing been written to the score in match table of DB
             match.playMatch();
         }
     }
@@ -312,6 +304,17 @@ public class MainGame extends Stage {
             tacticContent.add(tacticContent.playStyleLabel, 2, 1);
             tacticContent.add(tacticContent.playStyle, 3, 1);
         });
+    }
+
+    public static void initNewGame(){
+        //Schedule all matches for the league
+        LeagueTableEntry.initLeagueTable();
+
+        for(String league : readUniqueLeagues()){
+            Schedule schedule = new Schedule(league);
+            schedule.createSchedule();
+            schedule.writeMatches();
+        }
     }
 
     //Adds the action listeners for the save tactic button

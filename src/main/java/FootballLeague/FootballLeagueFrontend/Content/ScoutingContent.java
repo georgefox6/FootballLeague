@@ -23,7 +23,6 @@ public class ScoutingContent extends TableView {
         forenameColumn = new TableColumn<>("Forename");
         surnameColumn = new TableColumn<>("Surname");
         injuryColumn = new TableColumn<>("Injury Status");
-        //TODO lookup table to convert to team name
         teamCode = new TableColumn<>("Team Code");
 
         //Set the size of each column
@@ -35,7 +34,7 @@ public class ScoutingContent extends TableView {
         forenameColumn.setCellValueFactory(new PropertyValueFactory<>("forename"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         injuryColumn.setCellValueFactory(new PropertyValueFactory<>("injuryStatus"));
-        teamCode.setCellValueFactory(new PropertyValueFactory<>("teamCode"));
+        teamCode.setCellValueFactory(new PropertyValueFactory<>("teamName"));
 
         setItems(getAllPlayers());
         getColumns().addAll(forenameColumn, surnameColumn, injuryColumn, teamCode);

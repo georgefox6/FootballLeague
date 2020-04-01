@@ -1,7 +1,6 @@
 package FootballLeague.FootballLeagueFrontend.Content;
 
-import FootballLeague.FootballLeagueBackend.Database;
-import FootballLeague.FootballLeagueBackend.LeaguePosition;
+import FootballLeague.FootballLeagueBackend.LeagueTableEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -10,17 +9,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
 
+import static FootballLeague.FootballLeagueBackend.GameState.readTeamLeague;
+import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readAllLeagueTableEntries;
+
 public class LeagueTableContent extends TableView {
-    TableColumn<LeaguePosition, Integer> positionColumn;
-    TableColumn<LeaguePosition, Integer> teamNameColumn;
-    TableColumn<LeaguePosition, Integer> playedColumn;
-    TableColumn<LeaguePosition, Integer> wonColumn;
-    TableColumn<LeaguePosition, Integer> drawnColumn;
-    TableColumn<LeaguePosition, Integer> lostColumn;
-    TableColumn<LeaguePosition, Integer> goalsScoredColumn;
-    TableColumn<LeaguePosition, Integer> goalsConcededColumn;
-    TableColumn<LeaguePosition, Integer> goalDifferenceColumn;
-    TableColumn<LeaguePosition, Integer> pointsColumn;
+
+    TableColumn<LeagueTableEntry, Integer> positionColumn;
+    TableColumn<LeagueTableEntry, Integer> teamNameColumn;
+    TableColumn<LeagueTableEntry, Integer> playedColumn;
+    TableColumn<LeagueTableEntry, Integer> wonColumn;
+    TableColumn<LeagueTableEntry, Integer> drawnColumn;
+    TableColumn<LeagueTableEntry, Integer> lostColumn;
+    TableColumn<LeagueTableEntry, Integer> goalsScoredColumn;
+    TableColumn<LeagueTableEntry, Integer> goalsConcededColumn;
+    TableColumn<LeagueTableEntry, Integer> goalDifferenceColumn;
+    TableColumn<LeagueTableEntry, Integer> pointsColumn;
 
     public LeagueTableContent(){
         positionColumn = new TableColumn<>("Position");
@@ -47,7 +50,7 @@ public class LeagueTableContent extends TableView {
         pointsColumn.setMinWidth(50);
 
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
-        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamCode"));
         playedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
         wonColumn.setCellValueFactory(new PropertyValueFactory<>("won"));
         drawnColumn.setCellValueFactory(new PropertyValueFactory<>("drawn"));
@@ -59,12 +62,20 @@ public class LeagueTableContent extends TableView {
 
         setItems(getLeagueTable());
         getColumns().addAll(positionColumn, teamNameColumn, playedColumn, wonColumn, drawnColumn, lostColumn, goalsScoredColumn, goalsConcededColumn, goalDifferenceColumn, pointsColumn);
+        getSortOrder().add(positionColumn);
     }
-    public ObservableList<LeaguePosition> getLeagueTable(){
-        //TODO This needs to be changed to the league that the player is in
-        //TODO this also needs changing to no longer use the database class
-        ArrayList<LeaguePosition> leaguePositions = Database.readLeaguePositionLeague("Premier League");
-        return FXCollections.observableArrayList(leaguePositions);
 
+    public ObservableList<LeagueTableEntry> getLeagueTable(){
+        String league = readTeamLeague();
+
+        ArrayList<LeagueTableEntry> leaguePositions = readAllLeagueTableEntries("WHERE league='" + league + "'");
+        return FXCollections.observableArrayList(leaguePositions);
+    }
+
+
+
+    public void updateLeagueTable(){
+        setItems(getLeagueTable());
+        getSortOrder().add(positionColumn);
     }
 }

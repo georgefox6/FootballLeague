@@ -157,7 +157,23 @@ public class GameState {
         return object.get("team").toString();
     }
 
+    public static String readTeamName() throws IOException, ParseException {
+        String filename = readSaveName();
+        JSONObject object = (JSONObject) readJson(filename);
+        String teamCode = object.get("team").toString();
+        return Team.readTeam(teamCode).getName();
+    }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static String readTeamLeague() {
+        String filename = null;
+        try {
+            filename = readSaveName();
+            JSONObject object = (JSONObject) readJson(filename);
+            String teamCode = object.get("team").toString();
+            return Team.readTeam(teamCode).getLeague();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

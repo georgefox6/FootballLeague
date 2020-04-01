@@ -45,8 +45,8 @@ public class AdvanceFixturesContent extends GridPane {
         for(Match match : currentFixtures){
             HBox temp = new HBox();
             //TODO this should probably be changed to the team name rather than the team code
-            temp.getChildren().add(new Label(match.getHomeTeamCode() + " VS " + match.getAwayTeamCode()));
-            temp.setPrefWidth(100);
+            temp.getChildren().add(new Label((match.getHomeTeamCode() + "\n" + " VS \n" + match.getAwayTeamCode() + "\n")));
+            temp.setPrefWidth(120);
             fixtureLabels.getChildren().add(temp);
         }
     }

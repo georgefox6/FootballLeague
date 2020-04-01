@@ -1,9 +1,5 @@
 package FootballLeague.FootballLeagueBackend;
 
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +7,7 @@ import java.util.Random;
 import java.lang.Math;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
-import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
+import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.*;
 
 public class Match {
     //Match variables
@@ -155,39 +151,41 @@ public class Match {
         int awayGoals = (int)Math.round(chancesCreated * conversionRate);
         this.setScore(homeGoals + "-" + awayGoals);
 
-        //TODO this needs to be updated with a new databaseConnection method otherwise there are locking issues
-        //These functions are used to update the league table for both the home and away teams
-//        Database.updateLeagueTableHome(this);
-//        Database.updateLeagueTableAway(this);
-
+        //Writes the match to the database
         updateMatch(this);
-    }
 
-    //TODO add function to organise the scheduling of matches (Create every match and set dates)
-    public static void scheduleMatches() {
-        //First need to get the league that your team is playing in
-        String teamCode = null;
-        try {
-            teamCode = GameState.readTeam(GameState.readSaveName());
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        String league = Team.readTeam(teamCode).getLeague();
+        //These methods are used to update the league table
+        LeagueTableEntry homeEntry = readLeagueTableEntryByTeam(this.homeTeamCode);
+        LeagueTableEntry awayEntry = readLeagueTableEntryByTeam(this.awayTeamCode);
 
-        //Return a list of all teams from that league
-        ArrayList<Team> allTeams = readAllTeams("WHERE league='" + league + "'");
-        int week = 1;
-        for(Team team1 : allTeams){
-            for(Team team2 : allTeams){
-                //Write each match to the database if they are not playing themselves
-                if(!team1.getTeamCode().equals(team2.getTeamCode())){
-                    writeMatch(new Match(team1.getTeamCode(), team2.getTeamCode(), String.valueOf(week)));
-                    writeMatch(new Match(team2.getTeamCode(), team1.getTeamCode(), String.valueOf(allTeams.size() - week + 1)));
-                }
-            }
-            week++;
+        //Make changes to the league entry based on the match
+        //If the home team wins
+        if(homeGoals > awayGoals){
+            homeEntry.setWon(homeEntry.getWon() + 1);
+            awayEntry.setLost(awayEntry.getLost() + 1);
         }
-        //TODO all of the matches need tactic codes adding -- Default to begin with?
+        //If the away team wins
+        else if(homeGoals < awayGoals){
+            awayEntry.setWon(awayEntry.getWon() + 1);
+            homeEntry.setLost(homeEntry.getLost() + 1);
+        }
+        //If it is a draw
+        else {
+            homeEntry.setDrawn(homeEntry.getDrawn() + 1);
+            awayEntry.setDrawn(awayEntry.getDrawn() + 1);
+        }
+
+        homeEntry.setGoalsScored(homeEntry.getGoalsScored() + homeGoals);
+        homeEntry.setGoalsConceded(homeEntry.getGoalsConceded() + awayGoals);
+
+        awayEntry.setGoalsScored(awayEntry.getGoalsScored() + awayGoals);
+        awayEntry.setGoalsConceded(awayEntry.getGoalsConceded() + homeGoals);
+
+        //Update the league entry to the database
+        updateLeagueTableEntry(homeEntry);
+        updateLeagueTableEntry(awayEntry);
+
+        updatePositions();
     }
 
     public static Match readMatch(String matchCode){

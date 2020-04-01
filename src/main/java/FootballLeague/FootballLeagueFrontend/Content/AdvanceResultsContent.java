@@ -45,7 +45,8 @@ public class AdvanceResultsContent extends GridPane {
         for(Match match : currentFixtures){
             VBox temp = new VBox();
             //TODO this should probably be changed to the team name rather than the team code
-            temp.getChildren().addAll(new Label(match.getHomeTeamCode() + " " + match.getScore() + " " + match.getAwayTeamCode()));
+            temp.getChildren().addAll(new Label(match.getHomeTeamCode() + "\n " + match.getScore() +  "\n " + match.getAwayTeamCode()+ "\n"));
+            temp.setPrefWidth(120);
             resultsLabels.getChildren().add(temp);
         }
     }
