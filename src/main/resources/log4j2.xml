@@ -7,9 +7,8 @@
             </PatternLayout>
         </File>
     </Appenders>
-    <Loggers>
-        <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="com.mkyong" level="debug" additivity="false">
+    <Loggers>      
+        <Logger name="com.josh" level="debug" additivity="false">
             <AppenderRef ref="LogToFile"/>
         </Logger>
         <Root level="error">
