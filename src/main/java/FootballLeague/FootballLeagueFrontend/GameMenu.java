@@ -1,6 +1,8 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import FootballLeague.FootballLeagueBackend.GameState;
@@ -58,7 +60,7 @@ public class GameMenu extends Application {
         borderPaneMainMenu.setCenter(mainMenu);
 
         Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-        mainMenuScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
+        mainMenuScene.getStylesheets().add("FootballLeague/src/main/Stylesheets/NotTwitter.css");
 
         /////////////////////////////
         //     NewGame Screen      //

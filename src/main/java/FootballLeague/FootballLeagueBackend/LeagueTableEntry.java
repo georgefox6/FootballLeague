@@ -1,11 +1,15 @@
 package FootballLeague.FootballLeagueBackend;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.GameState.readTeam;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
 public class LeagueTableEntry implements Comparable<LeagueTableEntry> {
@@ -93,6 +97,11 @@ public class LeagueTableEntry implements Comparable<LeagueTableEntry> {
 
     public int getGoalDifference(){
         return goalsScored - goalsConceded;
+    }
+
+    public String getTeamName(){
+        Team team = Team.readTeam(teamCode);
+        return team.getName();
     }
 
     public void setLeagueTableEntryCode(String leagueTableEntryCode) {

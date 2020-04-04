@@ -96,6 +96,16 @@ public class Match {
         return date;
     }
 
+    public String getHomeTeamName(){
+        Team team = Team.readTeam(homeTeamCode);
+        return team.getName();
+    }
+
+    public String getAwayTeamName(){
+        Team team = Team.readTeam(awayTeamCode);
+        return team.getName();
+    }
+
     //Setters
     public void setMatchCode(String matchCode) {
         this.matchCode = matchCode;

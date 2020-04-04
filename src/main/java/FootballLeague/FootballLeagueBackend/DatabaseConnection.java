@@ -26,7 +26,6 @@ public class DatabaseConnection {
     }
 
     public static void close(){
-        System.out.println("DB is being closed by close()");
         if (results != null) {
             try {
                 results.close();
@@ -50,7 +49,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " WHERE " + condition + "';";
-            System.out.println(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {
@@ -64,7 +62,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "INSERT INTO " + table + " VALUES (" + values + ");";
-            System.out.println(sql);
             statement.executeUpdate(sql);
             return true;
         } catch(SQLException e) {
@@ -80,7 +77,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
-            System.out.println(sql);
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +91,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT " + id + " FROM " + table + " ;";
-            System.out.println(sql);
             results = statement.executeQuery(sql);
             while(results.next()){
                 counter++;
@@ -113,7 +108,6 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
-            System.out.println(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {
@@ -127,7 +121,6 @@ public class DatabaseConnection {
             connectMain();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
-            System.out.println(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {

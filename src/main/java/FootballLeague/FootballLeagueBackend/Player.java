@@ -3,10 +3,8 @@ package FootballLeague.FootballLeagueBackend;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
-import static FootballLeague.FootballLeagueBackend.Team.readTeam;
 
 public class Player {
     //The player class fields
@@ -85,9 +83,6 @@ public class Player {
     public Boolean getInjuryStatus() {
         return injuryStatus;
     }
-    public String getTeamName(){
-        return Objects.requireNonNull(readTeam(this.getTeamCode())).getName();
-    }
 
     public String getTeamCode() {
         return teamCode;
@@ -95,6 +90,15 @@ public class Player {
 
     public String getFullName() {
         return forename + " " + surname;
+    }
+
+    public String getTeamName(){
+        Team team = Team.readTeam(teamCode);
+        if(team == null){
+            return "Free Agent";
+        } else {
+            return team.getName();
+        }
     }
 
     public static Player readPlayer(String playerCode){

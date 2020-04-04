@@ -50,7 +50,7 @@ public class LeagueTableContent extends TableView {
         pointsColumn.setMinWidth(50);
 
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
-        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamCode"));
+        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("teamName"));
         playedColumn.setCellValueFactory(new PropertyValueFactory<>("played"));
         wonColumn.setCellValueFactory(new PropertyValueFactory<>("won"));
         drawnColumn.setCellValueFactory(new PropertyValueFactory<>("drawn"));

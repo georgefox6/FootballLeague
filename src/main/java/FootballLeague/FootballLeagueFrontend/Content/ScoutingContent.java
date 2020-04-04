@@ -17,27 +17,27 @@ public class ScoutingContent extends TableView {
     TableColumn<Player, String> forenameColumn;
     TableColumn<Player, String> surnameColumn;
     TableColumn<Player, Boolean> injuryColumn;
-    TableColumn<Player, String> teamCode;
+    TableColumn<Player, String> teamName;
 
     public ScoutingContent() {
         forenameColumn = new TableColumn<>("Forename");
         surnameColumn = new TableColumn<>("Surname");
         injuryColumn = new TableColumn<>("Injury Status");
-        teamCode = new TableColumn<>("Team Code");
+        teamName = new TableColumn<>("Team Name");
 
         //Set the size of each column
         forenameColumn.setMinWidth(180);
         surnameColumn.setMinWidth(180);
         injuryColumn.setMinWidth(180);
-        teamCode.setMinWidth(180);
+        teamName.setMinWidth(180);
 
         forenameColumn.setCellValueFactory(new PropertyValueFactory<>("forename"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         injuryColumn.setCellValueFactory(new PropertyValueFactory<>("injuryStatus"));
-        teamCode.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        teamName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
 
         setItems(getAllPlayers());
-        getColumns().addAll(forenameColumn, surnameColumn, injuryColumn, teamCode);
+        getColumns().addAll(forenameColumn, surnameColumn, injuryColumn, teamName);
         addShortlistButton();
 
 
