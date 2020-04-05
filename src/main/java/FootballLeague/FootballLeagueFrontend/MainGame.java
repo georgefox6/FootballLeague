@@ -40,6 +40,7 @@ public class MainGame extends Stage {
     ScoutingContent scoutingContent;
     AdvanceFixturesContent advanceFixturesContent;
     AdvanceResultsContent advanceResultsContent;
+    LeagueResultsContent leagueResultsContent;
 
     //Constructor for the main game stage
     public MainGame(){
@@ -109,6 +110,8 @@ public class MainGame extends Stage {
 
         scoutingContent = new ScoutingContent();
 
+        leagueResultsContent= new LeagueResultsContent();
+
         //TODO load tactic button... pop out? then fill all of the data
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
@@ -129,6 +132,11 @@ public class MainGame extends Stage {
             borderPane.setLeft(leagueMenu);
             leagueTableContent.updateLeagueTable();
             borderPane.setCenter(leagueTableContent);
+        });
+        leagueMenu.resultsButton.setOnAction(e -> {
+            System.out.println("Displaying the results");
+            leagueResultsContent.updateContent();
+            borderPane.setCenter(leagueResultsContent);
         });
         topMenu.tacticButton.setOnAction(e -> {
             borderPane.setLeft(tacticMenu);
@@ -190,11 +198,7 @@ public class MainGame extends Stage {
     public void advanceGame(){
         //Creates the clause to search for matches
         String clause = "";
-        try {
-            clause = "WHERE date='" + GameState.readGameWeek(GameState.readSaveName()) + "'";
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        clause = "WHERE date='" + GameState.readGameWeek(GameState.readSaveName()) + "'";
 
         //Used to simulate all of the matches for that week
         ArrayList<Match> matchesThisWeek = readAllMatches(clause);

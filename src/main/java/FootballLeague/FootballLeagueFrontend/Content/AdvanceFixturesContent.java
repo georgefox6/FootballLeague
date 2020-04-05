@@ -7,11 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
+//TODO maybe this shouldn't be GridPane
 public class AdvanceFixturesContent extends GridPane {
     Label gameWeek;
     public Button nextButton;
@@ -33,14 +31,9 @@ public class AdvanceFixturesContent extends GridPane {
         fixtureLabels.getChildren().clear();
 
         ArrayList<Match> currentFixtures = new ArrayList<>();
-        try {
-            String currentGameWeek =  GameState.readGameWeek(GameState.readSaveName());
-            gameWeek.setText("Week " + currentGameWeek + " fixtures: ");
-            currentFixtures = Match.readAllMatches("WHERE date='" + currentGameWeek + "'");
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-            System.out.println("Couldn't find the current game week");
-        }
+        String currentGameWeek =  GameState.readGameWeek(GameState.readSaveName());
+        gameWeek.setText("Week " + currentGameWeek + " fixtures: ");
+        currentFixtures = Match.readAllMatches("WHERE date='" + currentGameWeek + "'");
 
         for(Match match : currentFixtures){
             HBox temp = new HBox();

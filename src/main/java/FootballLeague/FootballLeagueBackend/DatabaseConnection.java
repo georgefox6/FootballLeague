@@ -12,11 +12,7 @@ public class DatabaseConnection {
     static ResultSet results;
 
     public static void connect() throws SQLException {
-        try {
-            connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
         connection = DriverManager.getConnection(connectionUrl);
     }
 

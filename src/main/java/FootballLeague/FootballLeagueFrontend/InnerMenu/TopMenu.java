@@ -5,9 +5,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public class TopMenu extends HBox {
     //Declaring elements of TopMenu
@@ -33,11 +30,7 @@ public class TopMenu extends HBox {
         optionsButton = new Button("Options");
         gameWeek = new Label("Game Week ");
 
-        try {
-            gameWeek.setText("Game Week " + GameState.readGameWeek(GameState.readSaveName()));
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        gameWeek.setText("Game Week " + GameState.readGameWeek(GameState.readSaveName()));
 
         //Adds the buttons to the menu
         this.getChildren().addAll(teamButton, leagueButton, tacticButton,  scoutingButton, gameWeek, trainingButton, clubButton, optionsButton, advanceButton);
