@@ -1,17 +1,18 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import FootballLeague.FootballLeagueFrontend.Content.*;
-import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
+import FootballLeague.FootballLeagueBackend.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import FootballLeague.FootballLeagueBackend.StartingXI;
-import FootballLeague.FootballLeagueBackend.Tactic;
-import FootballLeague.FootballLeagueBackend.GameState;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import FootballLeague.FootballLeagueFrontend.Content.*;
+import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-
+import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readUniqueLeagues;
+import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 
@@ -37,6 +38,9 @@ public class MainGame extends Stage {
     FirstTeamContent firstTeamContent;
     TacticContent tacticContent;
     ScoutingContent scoutingContent;
+    AdvanceFixturesContent advanceFixturesContent;
+    AdvanceResultsContent advanceResultsContent;
+    LeagueResultsContent leagueResultsContent;
 
     //Constructor for the main game stage
     public MainGame(){
@@ -92,6 +96,12 @@ public class MainGame extends Stage {
         //Creates the content for *TEAM->FIRST TEAM*
         firstTeamContent = new FirstTeamContent();
 
+        //Creates the content for *ADVANCE->FIXTURES*
+        advanceFixturesContent = new AdvanceFixturesContent();
+
+        //Creates the content for *ADVANCE->RESULTS*
+        advanceResultsContent = new AdvanceResultsContent();
+
         //Creates the content for *TACTIC*
 
         tacticContent = new TacticContent();
@@ -99,6 +109,8 @@ public class MainGame extends Stage {
         resetTacticButtonListener();
 
         scoutingContent = new ScoutingContent();
+
+        leagueResultsContent= new LeagueResultsContent();
 
         //TODO load tactic button... pop out? then fill all of the data
 
@@ -118,14 +130,22 @@ public class MainGame extends Stage {
         });
         topMenu.leagueButton.setOnAction(e -> {
             borderPane.setLeft(leagueMenu);
+            leagueTableContent.updateLeagueTable();
             borderPane.setCenter(leagueTableContent);
+        });
+        leagueMenu.resultsButton.setOnAction(e -> {
+            System.out.println("Displaying the results");
+            leagueResultsContent.updateContent();
+            borderPane.setCenter(leagueResultsContent);
         });
         topMenu.tacticButton.setOnAction(e -> {
             borderPane.setLeft(tacticMenu);
             borderPane.setCenter(tacticContent);
         });
         topMenu.advanceButton.setOnAction(e -> {
-            advanceGame();
+            borderPane.setCenter(advanceFixturesContent);
+            this.advanceFixturesContent.update();
+            //TODO the left pane needs clearing
         });
         topMenu.scoutingButton.setOnAction(e -> {
             borderPane.setLeft(scoutingMenu);
@@ -146,6 +166,17 @@ public class MainGame extends Stage {
             closeProgram();
         });
 
+        advanceFixturesContent.nextButton.setOnAction(e -> {
+            advanceGame();
+            borderPane.setCenter(advanceResultsContent);
+            advanceResultsContent.update();
+            advanceGameWeek();
+        });
+
+        advanceResultsContent.doneButton.setOnAction(e -> {
+            leagueTableContent.updateLeagueTable();
+            borderPane.setCenter(leagueTableContent);
+        });
 
         //Adds action listener for the resolution combo box
         optionsPreferencesContent.resolutionCB.setOnAction(e -> setResolution(optionsPreferencesContent.resolutionCB.getValue()));
@@ -156,8 +187,6 @@ public class MainGame extends Stage {
         scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
         this.setScene(scene);
         this.show();
-
-
     }
 
     public void closeProgram(){
@@ -167,16 +196,21 @@ public class MainGame extends Stage {
     }
 
     public void advanceGame(){
-        //TODO simulate all the games for this game week
-        //TODO update label for game week
-        //TODO update league table
-        //TODO show the user's team result (With goal scorers?)
-        //TODO Show all of the football results
+        //Creates the clause to search for matches
+        String clause = "";
+        clause = "WHERE date='" + GameState.readGameWeek(GameState.readSaveName()) + "'";
 
+        //Used to simulate all of the matches for that week
+        ArrayList<Match> matchesThisWeek = readAllMatches(clause);
+
+        for(Match match : matchesThisWeek){
+            match.playMatch();
+        }
+    }
+
+    public void advanceGameWeek(){
         //Used to update the game week and year
-//        GameState.readTeam(GameState.readSaveName())
         try {
-            //TODO replace all of the hard coded teams with values from the gamestate json
             if(Integer.parseInt(GameState.readGameWeek(GameState.readSaveName())) >= 52){
                 GameState.updateGameWeek(GameState.readSaveName(), "1");
                 GameState.nextGameYear(GameState.readSaveName());
@@ -184,10 +218,10 @@ public class MainGame extends Stage {
             else{
                 GameState.nextGameWeek(GameState.readSaveName());
             }
+            topMenu.gameWeek.setText("Game Week " + GameState.readGameWeek(GameState.readSaveName()));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     public void setResolution(String res){
@@ -274,6 +308,17 @@ public class MainGame extends Stage {
             tacticContent.add(tacticContent.playStyleLabel, 2, 1);
             tacticContent.add(tacticContent.playStyle, 3, 1);
         });
+    }
+
+    public static void initNewGame(){
+        //Schedule all matches for the league
+        LeagueTableEntry.initLeagueTable();
+
+        for(String league : readUniqueLeagues()){
+            Schedule schedule = new Schedule(league);
+            schedule.createSchedule();
+            schedule.writeMatches();
+        }
     }
 
     //Adds the action listeners for the save tactic button

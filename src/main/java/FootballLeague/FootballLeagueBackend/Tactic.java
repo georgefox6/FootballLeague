@@ -113,7 +113,7 @@ public class Tactic {
         ArrayList<Player> StartingXI = new ArrayList<>();
         ArrayList<String> playerCodesList = (ArrayList<String>) Arrays.asList(playerCodes.split(","));
         for(int i = 0; i < playerCodesList.size(); i++){
-            StartingXI.add(Database.readPlayer(playerCodesList.get(i)));
+            StartingXI.add(Player.readPlayer(playerCodesList.get(i)));
         }
         return StartingXI;
     }

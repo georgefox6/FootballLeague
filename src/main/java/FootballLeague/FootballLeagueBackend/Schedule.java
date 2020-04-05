@@ -2,6 +2,9 @@ package FootballLeague.FootballLeagueBackend;
 
 import java.util.ArrayList;
 
+import static FootballLeague.FootballLeagueBackend.Match.writeMatch;
+import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
+
 public class Schedule {
 	String scheduleCode;
 	ArrayList<String> teamCodes;
@@ -13,8 +16,12 @@ public class Schedule {
 	Schedule(){}
 
 	// Construct from league string
-	Schedule(String league) {
-		this.teamCodes = Database.readTeamsFromLeague(league);
+	public Schedule(String league) {
+		matches = new ArrayList<>();
+		teamCodes = new ArrayList<>();
+		for(Team team : readAllTeams("WHERE league ='" + league + "';")){
+			teamCodes.add(team.getTeamCode());
+		}
 		this.numberOfTeams = teamCodes.size();
 		// Each team needs to play every other team, twice
 		this.gameWeeks = (numberOfTeams - 1);
@@ -28,19 +35,13 @@ public class Schedule {
 		this.matches = new ArrayList<Match>();
 	}
 
-	// TODO add dummy team in case of odd number of teams
 	public void createSchedule() {
 		System.out.println("Begin schedule creation.");
-		// ArrayList<ArrayList> schedule = new ArrayList<ArrayList>();
 		int subTeamsLength = numberOfTeams / 2;
-		ArrayList<String> subTeamCodesA = new ArrayList<String>(teamCodes.subList(0, subTeamsLength));
-		ArrayList<String> subTeamCodesB = new ArrayList<String>(teamCodes.subList(subTeamsLength, numberOfTeams));
+		ArrayList<String> subTeamCodesA = new ArrayList<>(teamCodes.subList(0, subTeamsLength));
+		ArrayList<String> subTeamCodesB = new ArrayList<>(teamCodes.subList(subTeamsLength, numberOfTeams));
 
 		for (int gameWeek=1; gameWeek<gameWeeks+1; gameWeek++) {
-
-			System.out.println(subTeamCodesA);
-			System.out.println(subTeamCodesB);
-			System.out.println("---------");
 
 			ArrayList<String> subTeamCodesC = new ArrayList<String>();
 			ArrayList<String> subTeamCodesD = new ArrayList<String>();
@@ -66,8 +67,9 @@ public class Schedule {
 			for (int m=0; m<subTeamsLength; m++) {
 				String gameWeekString = Integer.toString(gameWeek);
 				String gameWeekStringReverse = Integer.toString(gameWeeks+gameWeek);
-				Match match = new Match(subTeamCodesA.get(m)+subTeamCodesB.get(m)+gameWeekString, subTeamCodesA.get(m), subTeamCodesB.get(m), gameWeekString);
-				Match matchReverse = new Match(subTeamCodesB.get(m)+subTeamCodesA.get(m)+gameWeekStringReverse, subTeamCodesB.get(m), subTeamCodesA.get(m), gameWeekStringReverse);
+				Match match = new Match(subTeamCodesA.get(m), subTeamCodesB.get(m), gameWeekString);
+				Match matchReverse = new Match(subTeamCodesB.get(m), subTeamCodesA.get(m), gameWeekStringReverse);
+
 				matches.add(match);
 				matches.add(matchReverse);
 			}
@@ -75,11 +77,13 @@ public class Schedule {
 		}
 	}
 
-	// TODO can use this technique to write to database
 	public void printMatches() {
 		matches.forEach(match -> System.out.println(match.getMatchCode()));
 	}
 
-	public static void main(String[] args) {
-    }
+	public void writeMatches(){
+		for(Match match : matches){
+			writeMatch(match);
+		}
+	}
 }

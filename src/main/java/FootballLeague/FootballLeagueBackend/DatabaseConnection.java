@@ -11,13 +11,8 @@ public class DatabaseConnection {
     static Statement statement;
     static ResultSet results;
 
-    //TODO add method to update league table in the database
     public static void connect() throws SQLException {
-        try {
-            connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
         connection = DriverManager.getConnection(connectionUrl);
     }
 
@@ -27,7 +22,6 @@ public class DatabaseConnection {
     }
 
     public static void close(){
-        System.out.println("DB is being closed by close()");
         if (results != null) {
             try {
                 results.close();

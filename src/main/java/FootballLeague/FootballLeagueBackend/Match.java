@@ -7,6 +7,7 @@ import java.util.Random;
 import java.lang.Math;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.*;
 
 public class Match {
     //Match variables
@@ -16,7 +17,7 @@ public class Match {
     String homeTacticCode;
     String awayTacticCode;
     String score;
-    // Date is gameweek
+    // Date is game week
     String date;
 
     //Constructors
@@ -38,6 +39,9 @@ public class Match {
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
+        //TODO this is just used to set a default value to the tactic codes
+        this.homeTacticCode = "01";
+        this.awayTacticCode = "02";
         this.date = date;
     }
 
@@ -92,6 +96,16 @@ public class Match {
         return date;
     }
 
+    public String getHomeTeamName(){
+        Team team = Team.readTeam(homeTeamCode);
+        return team.getName();
+    }
+
+    public String getAwayTeamName(){
+        Team team = Team.readTeam(awayTeamCode);
+        return team.getName();
+    }
+
     //Setters
     public void setMatchCode(String matchCode) {
         this.matchCode = matchCode;
@@ -121,11 +135,10 @@ public class Match {
         this.date = date;
     }
 
-    //TODO Test the playMatch method
     //Match Engine method
     public void playMatch(){
-        Tactic homeTactic = Database.readTactic(this.homeTacticCode);
-        Tactic awayTactic = Database.readTactic(this.awayTacticCode);
+        Tactic homeTactic = Tactic.readTactic(this.homeTacticCode);
+        Tactic awayTactic = Tactic.readTactic(this.awayTacticCode);
 
         //                      HOME TEAM GOALS
         //Generate amount of chances home team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
@@ -133,7 +146,7 @@ public class Match {
         double chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
         //Generate conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
         rand = new Random();
-        double conversionRate = homeTactic.getAttackScore() * (rand.nextInt(100)/200);
+        double conversionRate = homeTactic.getAttackScore() * (rand.nextDouble()/2);
         //The final number of goals scored by the home team
         int homeGoals = (int)Math.round(chancesCreated * conversionRate);
 
@@ -143,21 +156,50 @@ public class Match {
         chancesCreated = Math.round(rand.nextInt(40) * (1 - homeTactic.getDefenceScore()));
         //Generate conversion rate away team will get (Dependant on the away team attack score) - Average in the premier league is 8% - 22%
         rand = new Random();
-        conversionRate = awayTactic.getAttackScore() * (rand.nextInt(100)/200);
+        conversionRate = awayTactic.getAttackScore() * (rand.nextDouble()/2);
         //The final number of goals scored by the away team
         int awayGoals = (int)Math.round(chancesCreated * conversionRate);
-
         this.setScore(homeGoals + "-" + awayGoals);
 
-        //These functions are used to update the league table for both the home and away teams
-        Database.updateLeagueTableHome(this);
-        Database.updateLeagueTableAway(this);
+        //Writes the match to the database
+        updateMatch(this);
+
+        //These methods are used to update the league table
+        LeagueTableEntry homeEntry = readLeagueTableEntryByTeam(this.homeTeamCode);
+        LeagueTableEntry awayEntry = readLeagueTableEntryByTeam(this.awayTeamCode);
+
+        //Make changes to the league entry based on the match
+        //If the home team wins
+        if(homeGoals > awayGoals){
+            homeEntry.setWon(homeEntry.getWon() + 1);
+            awayEntry.setLost(awayEntry.getLost() + 1);
+        }
+        //If the away team wins
+        else if(homeGoals < awayGoals){
+            awayEntry.setWon(awayEntry.getWon() + 1);
+            homeEntry.setLost(homeEntry.getLost() + 1);
+        }
+        //If it is a draw
+        else {
+            homeEntry.setDrawn(homeEntry.getDrawn() + 1);
+            awayEntry.setDrawn(awayEntry.getDrawn() + 1);
+        }
+
+        homeEntry.setGoalsScored(homeEntry.getGoalsScored() + homeGoals);
+        homeEntry.setGoalsConceded(homeEntry.getGoalsConceded() + awayGoals);
+
+        awayEntry.setGoalsScored(awayEntry.getGoalsScored() + awayGoals);
+        awayEntry.setGoalsConceded(awayEntry.getGoalsConceded() + homeGoals);
+
+        //Update the league entry to the database
+        updateLeagueTableEntry(homeEntry);
+        updateLeagueTableEntry(awayEntry);
+
+        updatePositions();
     }
 
-    //TODO add function to organise the scheduling of matches (Create every match and set dates)
-
     public static Match readMatch(String matchCode){
-        ResultSet result = DatabaseConnection.readQuery("match", "matchCode='" + matchCode);
+        ResultSet result = DatabaseConnection.readQuery("matches", "matchCode='" + matchCode);
         try {
             assert result != null;
             if(result.next()){
@@ -175,7 +217,7 @@ public class Match {
     public static ArrayList<Match> readAllMatches(String clause){
         ArrayList<Match> matches = new ArrayList<>();
         try{
-            ResultSet rs = readAllQuery("match", clause);
+            ResultSet rs = readAllQuery("matches", clause);
             assert rs != null;
             while(rs.next()){
                 matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getString("date")));
@@ -191,12 +233,12 @@ public class Match {
 
     public static boolean writeMatch(Match match){
         String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s'", match.getMatchCode(), match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate());
-        return DatabaseConnection.writeQuery("match", values);
+        return DatabaseConnection.writeQuery("matches", values);
     }
 
     public static void updateMatch(Match match){
         String values = String.format("homeTeamCode='%s', awayTeamCode='%s', homeTacticCode='%s', awayTacticCode='%s', score='%s', date='%s' WHERE matchCode='%s'", match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate(), match.getMatchCode());
-        updateQuery("match", values);
+        updateQuery("matches", values);
     }
 
     public static int countMatch(){

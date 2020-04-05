@@ -1,6 +1,8 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import FootballLeague.FootballLeagueBackend.GameState;
@@ -19,6 +21,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
+
+import static FootballLeague.FootballLeagueFrontend.MainGame.initNewGame;
 
 public class GameMenu extends Application {
 
@@ -56,7 +60,7 @@ public class GameMenu extends Application {
         borderPaneMainMenu.setCenter(mainMenu);
 
         Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-        mainMenuScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        mainMenuScene.getStylesheets().add("FootballLeague/src/main/Stylesheets/NotTwitter.css");
 
         /////////////////////////////
         //     NewGame Screen      //
@@ -76,7 +80,6 @@ public class GameMenu extends Application {
         newGameMenuButtons.setSpacing(10);
 
         VBox newGameMenu = new VBox();
-//        newGameMenu.getChildren().addAll(newGameName, newGameMenuButtons);
         newGameMenu.getChildren().addAll(newGameName, teamSelector, newGameMenuButtons);
         newGameMenu.setSpacing(10);
         newGameMenu.setPadding(new Insets(25));
@@ -85,7 +88,7 @@ public class GameMenu extends Application {
         borderPaneNewGameScreen.setCenter(newGameMenu);
 
         Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-        newGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        newGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
         /////////////////////////////
         //    LoadGame Screen      //
@@ -113,7 +116,7 @@ public class GameMenu extends Application {
         borderPaneLoadGameScreen.setCenter(loadGameMenu);
 
         Scene loadGameScreenScene = new Scene(borderPaneLoadGameScreen, 280, 200);
-        loadGameScreenScene.getStylesheets().add("FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        loadGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
 
         /////////////////////////////
@@ -234,6 +237,9 @@ public class GameMenu extends Application {
 
         //Used to store the save name
         GameState.writeSaveName(saveGameName);
+
+        //Initialises the new game: sets up the league tables and schedules all matches for the year
+        initNewGame();
 
         //Once the save has been created, an instance of the main game will be created
         new MainGame();

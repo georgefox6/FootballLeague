@@ -8,7 +8,7 @@ public class LeagueMenu extends VBox {
     //Declaring elements of League Menu
     Button leagueTableButton;
     Button topScorersButton;
-    Button resultsButton;
+    public Button resultsButton;
     Button fixturesButton;
 
     //Constructor

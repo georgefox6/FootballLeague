@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,11 +25,21 @@ public class GameState {
         Files.write(Paths.get(fileName), object.toJSONString().getBytes());
     }
 
-    public static String readSaveName() throws IOException, ParseException {
+    public static String readSaveName() {
         String filename = "src/main/resources/SaveGames/currentSave.json";
-        FileReader reader = new FileReader(filename);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JSONParser jsonParser = new JSONParser();
-        JSONObject object = (JSONObject)jsonParser.parse(reader);
+        JSONObject object = null;
+        try {
+            object = (JSONObject)jsonParser.parse(reader);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         return object.get("saveName").toString();
     }
 
@@ -142,8 +153,13 @@ public class GameState {
         return object.get("databaseName").toString();
     }
 
-    public static String readGameWeek(String filename) throws IOException, ParseException {
-        JSONObject object = (JSONObject) readJson(filename);
+    public static String readGameWeek(String filename)  {
+        JSONObject object = null;
+        try {
+            object = (JSONObject) readJson(filename);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         return object.get("gameWeek").toString();
     }
 
@@ -157,7 +173,23 @@ public class GameState {
         return object.get("team").toString();
     }
 
+    public static String readTeamName() throws IOException, ParseException {
+        String filename = readSaveName();
+        JSONObject object = (JSONObject) readJson(filename);
+        String teamCode = object.get("team").toString();
+        return Team.readTeam(teamCode).getName();
+    }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static String readTeamLeague() {
+        String filename = null;
+        try {
+            filename = readSaveName();
+            JSONObject object = (JSONObject) readJson(filename);
+            String teamCode = object.get("team").toString();
+            return Team.readTeam(teamCode).getLeague();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
