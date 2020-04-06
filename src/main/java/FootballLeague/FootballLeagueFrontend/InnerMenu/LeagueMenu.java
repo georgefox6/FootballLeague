@@ -9,7 +9,7 @@ public class LeagueMenu extends VBox {
     Button leagueTableButton;
     Button topScorersButton;
     public Button resultsButton;
-    Button fixturesButton;
+    public Button fixturesButton;
 
     //Constructor
     public LeagueMenu(){

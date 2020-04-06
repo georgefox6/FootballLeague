@@ -106,6 +106,7 @@ public class Match {
         return team.getName();
     }
 
+
     //Setters
     public void setMatchCode(String matchCode) {
         this.matchCode = matchCode;
@@ -196,6 +197,16 @@ public class Match {
         updateLeagueTableEntry(awayEntry);
 
         updatePositions();
+    }
+
+    public static int getNumWeeks(){
+        int max = 0;
+        for(Match match : readAllMatches("")){
+            if(Integer.parseInt(match.getDate()) > max){
+                max = Integer.parseInt(match.getDate());
+            }
+        }
+        return max;
     }
 
     public static Match readMatch(String matchCode){

@@ -11,31 +11,32 @@ import javafx.scene.layout.VBox;
 
 import static FootballLeague.FootballLeagueBackend.GameState.readSaveName;
 import static FootballLeague.FootballLeagueBackend.GameState.readGameWeek;
+import static FootballLeague.FootballLeagueBackend.Match.getNumWeeks;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
-public class LeagueResultsContent extends VBox {
+public class LeagueFixturesContent extends VBox {
     ComboBox<Integer> gameWeek;
     ComboBox<Team> team;
-    VBox results;
+    VBox fixtures;
 
-    public LeagueResultsContent(){
+    public LeagueFixturesContent(){
 
         //Sets some spacing to make the screen look better
         setPadding(new Insets(0, 10, 0, 10));
 
         gameWeek = new ComboBox<>();
         team = new ComboBox<>();
-        results = new VBox();
+        fixtures = new VBox();
         updateContent();
 
         gameWeek.setOnAction(e -> {
             if(gameWeek.getValue() != null){
-                results.getChildren().clear();
+                fixtures.getChildren().clear();
                 for(Match result : readAllMatches("WHERE date='" + gameWeek.getValue() + "';")){
                     String labelContents = padRight(result.getHomeTeamName(), 20) + result.getScore() +  " " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    results.getChildren().add(label);
+                    fixtures.getChildren().add(label);
                 }
                 team.setValue(null);
             }
@@ -44,12 +45,12 @@ public class LeagueResultsContent extends VBox {
 
         team.setOnAction(e -> {
             if(team.getValue() != null){
-                results.getChildren().clear();
-                //TODO Order the results by game week
-                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' and score <> 'null' or awayTeamCode='" + team.getValue().getTeamCode() + "' and score <> 'null';")){
+                fixtures.getChildren().clear();
+                //TODO order the fixtures by game week
+                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' or awayTeamCode='" + team.getValue().getTeamCode() + "' and score <> null;")){
                     String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + result.getScore() + " " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    results.getChildren().add(label);
+                    fixtures.getChildren().add(label);
                 }
                 gameWeek.setValue(null);
             }
@@ -66,7 +67,7 @@ public class LeagueResultsContent extends VBox {
         resultSelector.getChildren().addAll(gameWeekLabel, gameWeek, teamLabel, team);
 
         this.getChildren().add(resultSelector);
-        this.getChildren().add(results);
+        this.getChildren().add(fixtures);
     }
 
     public void updateContent(){
@@ -75,9 +76,12 @@ public class LeagueResultsContent extends VBox {
         //Remove the existing teams from the combo box
         team.getItems().clear();
         //Remove the existing results from the screen
-        results.getChildren().clear();
+        fixtures.getChildren().clear();
         //Fill the combo box with all of the game weeks containing results
         for(int i = 1; i < Integer.parseInt(readGameWeek(readSaveName())); i++){
+            gameWeek.getItems().add(i);
+        }
+        for(int i = getNumWeeks(); i > Integer.parseInt(readGameWeek(readSaveName())); i--){
             gameWeek.getItems().add(i);
         }
         gameWeek.getItems().add(null);
