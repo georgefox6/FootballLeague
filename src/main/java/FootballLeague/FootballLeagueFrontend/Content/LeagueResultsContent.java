@@ -9,8 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import static FootballLeague.FootballLeagueBackend.GameState.readSaveName;
-import static FootballLeague.FootballLeagueBackend.GameState.readGameWeek;
+import static FootballLeague.FootballLeagueBackend.GameState.*;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
@@ -35,7 +34,9 @@ public class LeagueResultsContent extends VBox {
                 for(Match result : readAllMatches("WHERE date='" + gameWeek.getValue() + "';")){
                     String labelContents = padRight(result.getHomeTeamName(), 20) + result.getScore() +  " " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    results.getChildren().add(label);
+                    if(Team.readTeam(result.getHomeTeamCode()).getLeague().equals(readTeamLeague())){
+                        results.getChildren().add(label);
+                    }
                 }
                 team.setValue(null);
             }
@@ -45,11 +46,13 @@ public class LeagueResultsContent extends VBox {
         team.setOnAction(e -> {
             if(team.getValue() != null){
                 results.getChildren().clear();
-                //TODO Order the results by game week
-                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' and score <> 'null' or awayTeamCode='" + team.getValue().getTeamCode() + "' and score <> 'null';")){
+                System.out.println("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' ORDER BY date ASC;");
+                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' ORDER BY date ASC;")){
                     String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + result.getScore() + " " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    results.getChildren().add(label);
+                    if(team.getValue().getLeague().equals(readTeamLeague())){
+                        results.getChildren().add(label);
+                    }
                 }
                 gameWeek.setValue(null);
             }

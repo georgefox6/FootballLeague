@@ -1,6 +1,5 @@
 package FootballLeague.FootballLeagueFrontend.Content;
 
-import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Match;
 import FootballLeague.FootballLeagueBackend.Team;
 import javafx.geometry.Insets;
@@ -9,8 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import static FootballLeague.FootballLeagueBackend.GameState.readSaveName;
-import static FootballLeague.FootballLeagueBackend.GameState.readGameWeek;
+import static FootballLeague.FootballLeagueBackend.GameState.*;
 import static FootballLeague.FootballLeagueBackend.Match.getNumWeeks;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
@@ -34,7 +32,7 @@ public class LeagueFixturesContent extends VBox {
             if(gameWeek.getValue() != null){
                 fixtures.getChildren().clear();
                 for(Match result : readAllMatches("WHERE date='" + gameWeek.getValue() + "';")){
-                    String labelContents = padRight(result.getHomeTeamName(), 20) + result.getScore() +  " " + padRight(result.getAwayTeamName(), 20);
+                    String labelContents = padRight(result.getHomeTeamName(), 20) + " VS " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
                     fixtures.getChildren().add(label);
                 }
@@ -46,11 +44,12 @@ public class LeagueFixturesContent extends VBox {
         team.setOnAction(e -> {
             if(team.getValue() != null){
                 fixtures.getChildren().clear();
-                //TODO order the fixtures by game week
-                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' or awayTeamCode='" + team.getValue().getTeamCode() + "' and score <> null;")){
-                    String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + result.getScore() + " " + padRight(result.getAwayTeamName(), 20);
+                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score == 'null'  OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score == 'null' ORDER BY date ASC;")){
+                    String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + " VS " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    fixtures.getChildren().add(label);
+                    if(team.getValue().getLeague().equals(readTeamLeague())){
+                        fixtures.getChildren().add(label);
+                    }
                 }
                 gameWeek.setValue(null);
             }
@@ -86,7 +85,7 @@ public class LeagueFixturesContent extends VBox {
         }
         gameWeek.getItems().add(null);
         //Fill the team combo box with all of the teams
-        for(Team t : readAllTeams("WHERE league='" + GameState.readTeamLeague() + "';")){
+        for(Team t : readAllTeams("WHERE league='" + readTeamLeague() + "';")){
             team.getItems().add(t);
         }
         team.getItems().add(null);

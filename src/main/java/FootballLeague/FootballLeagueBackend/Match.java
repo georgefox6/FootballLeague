@@ -18,13 +18,13 @@ public class Match {
     String awayTacticCode;
     String score;
     // Date is game week
-    String date;
+    int date;
 
     //Constructors
     public Match(){}
 
     //Constructor used to create complete match
-    public Match(String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, String date) {
+    public Match(String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, int date) {
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
@@ -35,7 +35,7 @@ public class Match {
     }
 
     //Constructor used to create future match
-    public Match(String homeTeamCode, String awayTeamCode, String date){
+    public Match(String homeTeamCode, String awayTeamCode, int date){
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
@@ -46,7 +46,7 @@ public class Match {
     }
 
     //Constructor used to create complete match with matchCode for creation of match object from DB so match code remains consistent
-    public Match(String matchCode, String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, String date) {
+    public Match(String matchCode, String homeTeamCode, String awayTeamCode,String homeTacticCode, String awayTacticCode, String score, int date) {
         this.matchCode = matchCode;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
@@ -58,7 +58,7 @@ public class Match {
 
     //Constructor used to create future match with matchCode for creation of match object from DB so match code remains consistent
     //Constructor used in Schedule creation
-    public Match(String matchCode, String homeTeamCode, String awayTeamCode, String date){
+    public Match(String matchCode, String homeTeamCode, String awayTeamCode, int date){
         this.matchCode = matchCode;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
@@ -92,7 +92,7 @@ public class Match {
         return score;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
@@ -132,7 +132,7 @@ public class Match {
         this.score = score;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 
@@ -202,8 +202,8 @@ public class Match {
     public static int getNumWeeks(){
         int max = 0;
         for(Match match : readAllMatches("")){
-            if(Integer.parseInt(match.getDate()) > max){
-                max = Integer.parseInt(match.getDate());
+            if(match.getDate() > max){
+                max = match.getDate();
             }
         }
         return max;
@@ -214,7 +214,7 @@ public class Match {
         try {
             assert result != null;
             if(result.next()){
-                return new Match(matchCode, result.getString("homeTeamCode"), result.getString("awayTeamCode"), result.getString("homeTacticCode"), result.getString("awayTacticCode"), result.getString("score"), result.getString("date"));
+                return new Match(matchCode, result.getString("homeTeamCode"), result.getString("awayTeamCode"), result.getString("homeTacticCode"), result.getString("awayTacticCode"), result.getString("score"), result.getInt("date"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -231,7 +231,7 @@ public class Match {
             ResultSet rs = readAllQuery("matches", clause);
             assert rs != null;
             while(rs.next()){
-                matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getString("date")));
+                matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getInt("date")));
             }
             System.out.println("Player Size : " + matches.size());
         } catch (SQLException e) {
@@ -243,12 +243,12 @@ public class Match {
     }
 
     public static boolean writeMatch(Match match){
-        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s'", match.getMatchCode(), match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate());
+        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', %d", match.getMatchCode(), match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate());
         return DatabaseConnection.writeQuery("matches", values);
     }
 
     public static void updateMatch(Match match){
-        String values = String.format("homeTeamCode='%s', awayTeamCode='%s', homeTacticCode='%s', awayTacticCode='%s', score='%s', date='%s' WHERE matchCode='%s'", match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate(), match.getMatchCode());
+        String values = String.format("homeTeamCode='%s', awayTeamCode='%s', homeTacticCode='%s', awayTacticCode='%s', score='%s', date=%d WHERE matchCode='%s'", match.getHomeTeamCode(), match.getAwayTeamCode(), match.getHomeTacticCode(), match.getAwayTacticCode(), match.getScore(), match.getDate(), match.getMatchCode());
         updateQuery("matches", values);
     }
 
