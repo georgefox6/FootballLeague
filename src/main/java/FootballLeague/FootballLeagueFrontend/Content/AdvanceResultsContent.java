@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class AdvanceResultsContent extends GridPane {
+
     Label gameWeek;
     public Button doneButton;
     HBox resultsLabels;

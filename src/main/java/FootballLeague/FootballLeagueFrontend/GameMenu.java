@@ -22,9 +22,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueFrontend.MainGame.initNewGame;
 
 public class GameMenu extends Application {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
 
     ComboBox<Team> teamSelector;
     Stage stage;
@@ -192,7 +197,7 @@ public class GameMenu extends Application {
     }
 
     private void pressedCreateGameButton(String saveGameName) {
-        System.out.println("Create game");
+        logger.info("Create game");
         if (checkGameExists(saveGameName)) {
             Boolean answer = ConfirmBox.display("Game already exists:", "Are you sure you want to overwrite this game?");
             if (answer) {
@@ -212,7 +217,7 @@ public class GameMenu extends Application {
     }
 
     private void pressedBackButton(Stage stage, Scene mainMenuScene) {
-        System.out.println("Back");
+        logger.info("Back");
         stage.setTitle("Main menu");
         stage.setScene(mainMenuScene);
     }

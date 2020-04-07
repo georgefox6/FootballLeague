@@ -15,8 +15,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 @Deprecated
 public class MainMenu extends Application {
+
+	public static Logger logger = LogManager.getLogger("com.josh");
 
 	 @Override
 	 public void start(Stage stage) {

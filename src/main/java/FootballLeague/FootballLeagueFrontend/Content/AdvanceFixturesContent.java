@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 //TODO maybe this shouldn't be GridPane
 public class AdvanceFixturesContent extends GridPane {
+    
     Label gameWeek;
     public Button nextButton;
     HBox fixtureLabels;

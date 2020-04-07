@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class OptionsPreferencesContent extends GridPane {
+    
     Label resolutionLabel;
     public ComboBox<String> resolutionCB;
     Label themeLabel;

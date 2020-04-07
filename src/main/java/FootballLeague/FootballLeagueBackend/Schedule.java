@@ -2,10 +2,16 @@ package FootballLeague.FootballLeagueBackend;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.Match.writeMatch;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
 public class Schedule {
+
+	public static Logger logger = LogManager.getLogger("com.josh");
+
 	String scheduleCode;
 	ArrayList<String> teamCodes;
 	ArrayList<Match> matches;
@@ -36,7 +42,7 @@ public class Schedule {
 	}
 
 	public void createSchedule() {
-		System.out.println("Begin schedule creation.");
+		logger.info("Begin schedule creation.");
 		int subTeamsLength = numberOfTeams / 2;
 		ArrayList<String> subTeamCodesA = new ArrayList<>(teamCodes.subList(0, subTeamsLength));
 		ArrayList<String> subTeamCodesB = new ArrayList<>(teamCodes.subList(subTeamsLength, numberOfTeams));
@@ -78,7 +84,7 @@ public class Schedule {
 	}
 
 	public void printMatches() {
-		matches.forEach(match -> System.out.println(match.getMatchCode()));
+		matches.forEach(match -> logger.info(match.getMatchCode()));
 	}
 
 	public void writeMatches(){

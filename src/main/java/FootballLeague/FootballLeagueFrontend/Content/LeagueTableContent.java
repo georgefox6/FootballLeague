@@ -14,6 +14,7 @@ import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readAllLeagu
 
 public class LeagueTableContent extends TableView {
 
+
     TableColumn<LeagueTableEntry, Integer> positionColumn;
     TableColumn<LeagueTableEntry, Integer> teamNameColumn;
     TableColumn<LeagueTableEntry, Integer> playedColumn;
