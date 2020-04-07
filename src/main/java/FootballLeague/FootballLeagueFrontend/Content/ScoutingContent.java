@@ -10,10 +10,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class ScoutingContent extends TableView {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+    
     TableColumn<Player, String> forenameColumn;
     TableColumn<Player, String> surnameColumn;
     TableColumn<Player, Boolean> injuryColumn;
@@ -62,7 +67,7 @@ public class ScoutingContent extends TableView {
                         btn.setOnAction((ActionEvent event) -> {
                             Player player = getTableView().getItems().get(getIndex());
                             //TODO add player to shortlist
-                            System.out.println("selectedPlayer: " + player);
+                            logger.info("selectedPlayer: " + player);
                         });
                     }
 

@@ -5,9 +5,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Tactic {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+    
     //TODO tactic should probably have a name variable to users can name the tactics they create
     String tacticCode;
     String startingXICode;
@@ -143,7 +149,7 @@ public class Tactic {
             while(rs.next()){
                 tactics.add(new Tactic(rs.getString("tacticCode"), rs.getString("startingXICode"), rs.getDouble("attackScore"), rs.getDouble("defenceScore"), rs.getString("formation"), rs.getString("playStyle")));
             }
-            System.out.println("Tactic Size : " + tactics.size());
+            logger.info("Tactic Size : " + tactics.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

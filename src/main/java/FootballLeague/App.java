@@ -21,6 +21,7 @@ public class App {
         System.out.println(new App().getGreeting());
 
         logger.info("App started.");
+        logger.error("App started.");
 
         Application.launch(GameMenu.class, null);
 

@@ -4,9 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Club {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+
     //The club class fields
     String clubCode;
     String name;
@@ -85,7 +91,7 @@ public class Club {
             while(rs.next()){
                 clubs.add(new Club(rs.getString("clubCode"), rs.getString("clubName"), rs.getString("venue")));
             }
-            System.out.println("Club Size : " + clubs.size());
+            logger.info("Club Size : " + clubs.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

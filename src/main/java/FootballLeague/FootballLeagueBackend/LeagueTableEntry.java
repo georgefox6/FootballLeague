@@ -13,6 +13,7 @@ import static FootballLeague.FootballLeagueBackend.GameState.readTeam;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
 public class LeagueTableEntry implements Comparable<LeagueTableEntry> {
+
     //leagueTableEntryCode is teamCode+league
     String leagueTableEntryCode;
     String league;

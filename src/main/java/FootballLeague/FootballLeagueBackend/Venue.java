@@ -4,9 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Venue {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+    
     //Venue variables
     String venueCode;
     String name;
@@ -92,7 +98,7 @@ public class Venue {
             while(rs.next()){
                 venues.add(new Venue(rs.getString("venueCode"), rs.getString("venueName"), rs.getInt("capacity"), rs.getInt("ticketPrice")));
             }
-            System.out.println("Venues Size : " + venues.size());
+            logger.info("Venues Size : " + venues.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

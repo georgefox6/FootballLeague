@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FirstTeamContent extends TableView {
+    
     TableColumn<Player, String> forenameColumn;
     TableColumn<Player, String> surnameColumn;
     TableColumn<Player, Boolean> injuryColumn;

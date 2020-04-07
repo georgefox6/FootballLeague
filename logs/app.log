@@ -1,0 +1,68 @@
+2020-04-07 22:50:47,994 INFO c.josh [main] App started.
+2020-04-07 22:50:47,995 ERROR c.josh [main] App started.
+2020-04-07 22:50:48,582 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:51:51,404 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:51:51,406 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 22:51:51,416 INFO c.josh [JavaFX Application Thread] Player Size : 11
+2020-04-07 22:51:51,491 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 22:51:51,499 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:51:51,502 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 22:51:51,502 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 22:51:51,504 INFO c.josh [JavaFX Application Thread] Player Size : 11
+2020-04-07 22:51:51,504 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 22:51:52,176 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 22:51:52,176 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 22:52:42,219 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:42,297 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:42,377 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:42,465 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:42,544 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:45,647 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:45,713 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:45,776 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:45,845 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:45,918 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:48,534 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:48,585 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:48,647 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:48,712 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 22:52:48,780 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:09:49,703 INFO c.josh [main] App started.
+2020-04-07 23:09:49,704 ERROR c.josh [main] App started.
+2020-04-07 23:09:50,293 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:02,872 INFO c.josh [JavaFX Application Thread] Create game
+2020-04-07 23:10:02,894 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:02,897 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 23:10:02,906 INFO c.josh [JavaFX Application Thread] Player Size : 11
+2020-04-07 23:10:02,984 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 23:10:02,992 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:02,995 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 23:10:02,995 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 23:10:02,997 INFO c.josh [JavaFX Application Thread] Player Size : 11
+2020-04-07 23:10:02,997 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 23:10:03,654 INFO c.josh [JavaFX Application Thread] Player Size : 1
+2020-04-07 23:10:03,654 INFO c.josh [JavaFX Application Thread] Begin schedule creation.
+2020-04-07 23:10:03,694 INFO c.josh [JavaFX Application Thread] Player Size : 4
+2020-04-07 23:10:03,698 INFO c.josh [JavaFX Application Thread] Player Size : 0
+2020-04-07 23:10:03,701 INFO c.josh [JavaFX Application Thread] Player Size : 0
+2020-04-07 23:10:03,707 INFO c.josh [JavaFX Application Thread] Player Size : 4
+2020-04-07 23:10:03,711 INFO c.josh [JavaFX Application Thread] Player Size : 12
+2020-04-07 23:10:10,632 INFO c.josh [JavaFX Application Thread] Player Size : 0
+2020-04-07 23:10:11,699 INFO c.josh [JavaFX Application Thread] Player Size : 0
+2020-04-07 23:10:11,701 INFO c.josh [JavaFX Application Thread] Player Size : 0
+2020-04-07 23:10:38,067 INFO c.josh [JavaFX Application Thread] Player Size : 5
+2020-04-07 23:10:40,409 INFO c.josh [JavaFX Application Thread] Player Size : 5
+2020-04-07 23:10:40,437 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:40,508 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:40,582 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:40,660 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:40,745 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:10:40,811 INFO c.josh [JavaFX Application Thread] Player Size : 5
+2020-04-07 23:11:19,321 INFO c.josh [JavaFX Application Thread] Player Size : 5
+2020-04-07 23:11:20,030 INFO c.josh [JavaFX Application Thread] Player Size : 5
+2020-04-07 23:11:20,055 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:11:20,137 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:11:20,213 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:11:20,280 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:11:20,322 INFO c.josh [JavaFX Application Thread] Player Size : 13
+2020-04-07 23:11:20,365 INFO c.josh [JavaFX Application Thread] Player Size : 5

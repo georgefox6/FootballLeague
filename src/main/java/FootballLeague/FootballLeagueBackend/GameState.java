@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class GameState {
-
+    
     private static final String filePath = "src/main/resources/SaveGames/";
 
     //This method is only used to write the json to store the current save name
