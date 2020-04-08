@@ -20,11 +20,13 @@ public class DatabaseConnection {
     public static void connect() throws SQLException {
         connectionUrl = "jdbc:sqlite:src/main/resources/SaveGames/" + GameState.readSaveName() + ".db";
         connection = DriverManager.getConnection(connectionUrl);
+        logger.info("Connecting to " + GameState.readSaveName() + ".db");
     }
 
     public static void connectMain() throws SQLException {
         connectionUrl = "jdbc:sqlite:src/main/resources/leagueTable.db";
         connection = DriverManager.getConnection(connectionUrl);
+        logger.info("Connecting to leagueTable.db");
     }
 
     public static void close(){
@@ -43,7 +45,7 @@ public class DatabaseConnection {
                 connection.close();
             } catch (SQLException e) { /* ignored */}
         }
-
+        logger.info("Closing database connection");
     }
 
     public static ResultSet readQuery(String table, String condition) {
@@ -51,6 +53,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " WHERE " + condition + "';";
+            logger.info(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {
@@ -64,6 +67,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "INSERT INTO " + table + " VALUES (" + values + ");";
+            logger.info(sql);
             statement.executeUpdate(sql);
             return true;
         } catch(SQLException e) {
@@ -79,6 +83,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "UPDATE " + table + " SET " + values;
+            logger.info(sql);
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,6 +98,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT " + id + " FROM " + table + " ;";
+            logger.info(sql);
             results = statement.executeQuery(sql);
             while(results.next()){
                 counter++;
@@ -110,6 +116,7 @@ public class DatabaseConnection {
             connect();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
+            logger.info(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {
@@ -123,6 +130,7 @@ public class DatabaseConnection {
             connectMain();
             statement = connection.createStatement();
             String sql = "SELECT * FROM " + table + " " + clause + ";";
+            logger.info(sql);
             results = statement.executeQuery(sql);
             return results;
         } catch (SQLException e) {
