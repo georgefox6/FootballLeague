@@ -14,7 +14,7 @@
         <Routing name="RoutingAppender">
             <Routes>
                 <pattern>$${marker:}</pattern>
-                <Route key="EXCEPTION" ref="DatabaseExceptionLogToFile" ref="MasterLogToFile"/>
+                <Route key="EXCEPTION" ref="DatabaseExceptionLogToFile"/>
                 <Route key="DEFAULT" ref="MasterLogToFile"/>
             </Routes>
         </Routing>
