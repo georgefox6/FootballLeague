@@ -9,3 +9,6 @@ src/main/resources/SaveGames
 
 # Ignore the log files
 logs
+
+# Ignore all log files
+*.log
