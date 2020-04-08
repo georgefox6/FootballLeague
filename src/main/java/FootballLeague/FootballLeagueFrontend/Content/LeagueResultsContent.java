@@ -19,7 +19,6 @@ public class LeagueResultsContent extends VBox {
     VBox results;
 
     public LeagueResultsContent(){
-
         //Sets some spacing to make the screen look better
         setPadding(new Insets(0, 10, 0, 10));
 
@@ -28,6 +27,7 @@ public class LeagueResultsContent extends VBox {
         results = new VBox();
         updateContent();
 
+        //This is the action listener for the combo box, so when a game week is selected then it will display the corresponding results on the screen
         gameWeek.setOnAction(e -> {
             if(gameWeek.getValue() != null){
                 results.getChildren().clear();
@@ -43,6 +43,7 @@ public class LeagueResultsContent extends VBox {
 
         });
 
+        //This is the action listener for the combo box, so when a team is selected it will display the corresponding results on the screen
         team.setOnAction(e -> {
             if(team.getValue() != null){
                 results.getChildren().clear();
@@ -72,6 +73,7 @@ public class LeagueResultsContent extends VBox {
         this.getChildren().add(results);
     }
 
+    //this function updates the variables in the combo boxes and clears the screen
     public void updateContent(){
         //Remove the existing numbers from the combo box
         gameWeek.getItems().clear();

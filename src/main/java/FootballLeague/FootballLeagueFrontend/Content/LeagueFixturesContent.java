@@ -19,7 +19,6 @@ public class LeagueFixturesContent extends VBox {
     VBox fixtures;
 
     public LeagueFixturesContent(){
-
         //Sets some spacing to make the screen look better
         setPadding(new Insets(0, 10, 0, 10));
 
@@ -28,6 +27,7 @@ public class LeagueFixturesContent extends VBox {
         fixtures = new VBox();
         updateContent();
 
+        //This is the action listener for the combo box, so when a game week is selected then it will display the corresponding fixtures on the screen
         gameWeek.setOnAction(e -> {
             if(gameWeek.getValue() != null){
                 fixtures.getChildren().clear();
@@ -41,6 +41,7 @@ public class LeagueFixturesContent extends VBox {
 
         });
 
+        //This is the action listener for the combo box, so when a team is selected it will display the corresponding fixtures on the screen
         team.setOnAction(e -> {
             if(team.getValue() != null){
                 fixtures.getChildren().clear();
@@ -69,6 +70,7 @@ public class LeagueFixturesContent extends VBox {
         this.getChildren().add(fixtures);
     }
 
+    //this function updates the variables in the combo boxes and clears the screen
     public void updateContent(){
         //Remove the existing numbers from the combo box
         gameWeek.getItems().clear();
@@ -77,10 +79,7 @@ public class LeagueFixturesContent extends VBox {
         //Remove the existing results from the screen
         fixtures.getChildren().clear();
         //Fill the combo box with all of the game weeks containing results
-        for(int i = 1; i < Integer.parseInt(readGameWeek(readSaveName())); i++){
-            gameWeek.getItems().add(i);
-        }
-        for(int i = getNumWeeks(); i > Integer.parseInt(readGameWeek(readSaveName())); i--){
+        for(int i = Integer.parseInt(readGameWeek(readSaveName())); i < getNumWeeks(); i++){
             gameWeek.getItems().add(i);
         }
         gameWeek.getItems().add(null);
