@@ -5,7 +5,13 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.sql.*;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class DatabaseConnection {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+
     static String connectionUrl;
     static Connection connection;
     static Statement statement;

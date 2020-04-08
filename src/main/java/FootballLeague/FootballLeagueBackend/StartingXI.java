@@ -4,9 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class StartingXI {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+    
     public String startingXICode;
     public String player1;
     public String player2;
@@ -181,7 +187,7 @@ public class StartingXI {
             while(rs.next()){
                 StartingXIs.add(new StartingXI(rs.getString("startingXICode"), rs.getString("player1"), rs.getString("player2"), rs.getString("player3"), rs.getString("player4"), rs.getString("player5"), rs.getString("player6"), rs.getString("player7"), rs.getString("player8"), rs.getString("player9"), rs.getString("player10"), rs.getString("player11")));
             }
-            System.out.println("StartingXIs Size : " + StartingXIs.size());
+            logger.info("StartingXIs Size : " + StartingXIs.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -206,6 +212,6 @@ public class StartingXI {
 
     public static void main(String[] args) {
 
-        System.out.println(countStartingXI());
+        logger.info(countStartingXI());
     }
 }

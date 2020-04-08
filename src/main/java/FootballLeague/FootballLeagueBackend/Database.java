@@ -4,15 +4,21 @@ import java.sql.*;
 import java.lang.*;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 @Deprecated
 public class Database {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+
     static Connection conn;
     static Statement stmt = null;
     static ResultSet rs = null;
     public static void connect()throws SQLException{
         String url = "jdbc:sqlite:src/main/resources/leagueTable.db";
         conn = DriverManager.getConnection(url);
-        System.out.println("Connection to the db was successful!");
+        logger.info("Connection to the db was successful!");
     }
 
     ///////////////////////////////////////////////////
@@ -20,7 +26,7 @@ public class Database {
     ///////////////////////////////////////////////////
 
     public static void close(){
-        System.out.println("DB is being closed by close()");
+        logger.info("DB is being closed by close()");
         if (rs != null) {
             try {
                 rs.close();
@@ -47,7 +53,7 @@ public class Database {
         Player player = new Player();
         try {
             connect();
-            System.out.println("Creating statement - Read Player");
+            logger.info("Creating statement - Read Player");
             Statement stmt = conn.createStatement();
             String sql = "SELECT * FROM player WHERE playerCode='" + playerCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -60,7 +66,7 @@ public class Database {
                 player = new Player(playerCode, forename, surname, injuryStatus, teamCode);
                 //}
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -70,12 +76,12 @@ public class Database {
     public static void writePlayer(Player player){
         try {
             connect();
-            System.out.println("Creating statement - Write Player");
+            logger.info("Creating statement - Write Player");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO player VALUES ('" + player.getPlayerCode() + "', '" + player.getForename() + "', '" + player.getSurname() + "', '" + player.getInjuryStatus() + "', '" + player.getTeamCode() + "');";
             stmt.executeUpdate(sql);
         }catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -84,13 +90,13 @@ public class Database {
     public static void updatePlayer(Player player){
         try {
             connect();
-            System.out.println("Creating statement - Update Player");
+            logger.info("Creating statement - Update Player");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE player SET forename='" + player.getForename() + "', surname='" + player.getSurname() + "', injuryStatus='" + player.getInjuryStatus() + "',teamCode='" + player.getTeamCode() + "' WHERE playerCode='" + player.getPlayerCode() + "';";
-            System.out.println(sql);
+            logger.info(sql);
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally {
             close();
         }
@@ -101,17 +107,17 @@ public class Database {
         ArrayList<Player> players = new ArrayList<>();
         try {
             connect();
-            System.out.println("Creating statement - Read Players Team");
+            logger.info("Creating statement - Read Players Team");
             Statement stmt = conn.createStatement();
             String sql = "SELECT playerCode FROM player WHERE teamCode='" + teamCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println(sql);
+            logger.info(sql);
             while (rs.next()) {
                 String playerCode = rs.getString("playerCode");
                 players.add(readPlayer(playerCode));
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -123,17 +129,17 @@ public class Database {
         ArrayList<Player> players = new ArrayList<>();
         try {
             connect();
-            System.out.println("Creating statement - Read All Players");
+            logger.info("Creating statement - Read All Players");
             Statement stmt = conn.createStatement();
             String sql = "SELECT playerCode FROM player;";
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println(sql);
+            logger.info(sql);
             while (rs.next()) {
                 String playerCode = rs.getString("playerCode");
                 players.add(readPlayer(playerCode));
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -148,7 +154,7 @@ public class Database {
         Team team = new Team();
         try {
             connect();
-            System.out.println("Creating Statement - Read Team");
+            logger.info("Creating Statement - Read Team");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM team WHERE teamCode='" + teamCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -159,7 +165,7 @@ public class Database {
                 team = new Team(teamCode, teamName, league, clubCode);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -170,7 +176,7 @@ public class Database {
         ArrayList<String> teamList = new ArrayList<String>();
         try {
             connect();
-            System.out.println("Creating Statement - Read Teams From League");
+            logger.info("Creating Statement - Read Teams From League");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM team WHERE league='" + league + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -179,7 +185,7 @@ public class Database {
                 teamList.add(teamCode);
             }
         } catch(SQLException ex) {
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -189,12 +195,12 @@ public class Database {
     public static void writeTeam(Team team){
         try {
             connect();
-            System.out.println("Creating statement - Write Team");
+            logger.info("Creating statement - Write Team");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO team VALUES ('" + team.getTeamCode() + "', '" + team.getName() + "', '" + team.getLeague() + "', '" + team.getClubCode() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -203,12 +209,12 @@ public class Database {
     public static void updateTeam(Team team){
         try{
             connect();
-            System.out.println("Creating statement - Update Team");
+            logger.info("Creating statement - Update Team");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE team SET teamName='" + team.getName() + "', league='" + team.getLeague() + "', club='" + team.getClubCode() + "' WHERE teamCode='" + team.getTeamCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -222,7 +228,7 @@ public class Database {
         Venue venue = new Venue();
         try {
             connect();
-            System.out.println("Creating Statement - Read Venue");
+            logger.info("Creating Statement - Read Venue");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM venue WHERE venueCode='" + venueCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -233,7 +239,7 @@ public class Database {
                 venue = new Venue(venueCode, venueName, capacity, ticketPrice);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -243,12 +249,12 @@ public class Database {
     public static void writeVenue(Venue venue){
         try {
             connect();
-            System.out.println("Creating statement - Write Venue");
+            logger.info("Creating statement - Write Venue");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO venue VALUES ('" + venue.getVenueCode() + "', '" + venue.getName() + "', '" + venue.getCapacity() + "', '" + venue.getTicketPrice() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -257,12 +263,12 @@ public class Database {
     public static void updateVenue(Venue venue){
         try{
             connect();
-            System.out.println("Creating statement - Update Venue");
+            logger.info("Creating statement - Update Venue");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE venue SET venueName='" + venue.getName() + "', capacity='" + venue.getCapacity() + "', ticketPrice='" + venue.getTicketPrice() + "' WHERE venueCode='" + venue.getVenueCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -276,7 +282,7 @@ public class Database {
         Tactic tactic = new Tactic();
         try {
             connect();
-            System.out.println("Creating Statement - Read Tactic");
+            logger.info("Creating Statement - Read Tactic");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM tactic WHERE tacticCode='" + tacticCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -292,7 +298,7 @@ public class Database {
                 tactic = new Tactic(startingXICode, attackScore, defenceScore, formation, playStyle);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -302,14 +308,14 @@ public class Database {
     public static void writeTactic(Tactic tactic){
         try {
             connect();
-            System.out.println("Creating statement - Write Tactic");
+            logger.info("Creating statement - Write Tactic");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO tactic VALUES ('" + tactic.getTacticCode() + "', '" + tactic.getStartingXICode() +
                     "', '" + tactic.getAttackScore() + "', '" + tactic.getDefenceScore() +
                     "', '" + tactic.getFormation() + "', '" + tactic.getPlayStyle() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -318,14 +324,14 @@ public class Database {
     public static void updateTactic(Tactic tactic){
         try{
             connect();
-            System.out.println("Creating statement - Update Tactic");
+            logger.info("Creating statement - Update Tactic");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE tactic SET startingXI='" + tactic.getStartingXICode()  + "', attackScore='" + tactic.getAttackScore() + "', defenseScore='" +
                     tactic.getDefenceScore() + "', formation='" + tactic.getFormation() + "', playStyle='" + tactic.getPlayStyle()
                     + "' WHERE tacticCode='" + tactic.getTacticCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -338,7 +344,7 @@ public class Database {
         Club club = new Club();
         try {
             connect();
-            System.out.println("Creating Statement - Read Club");
+            logger.info("Creating Statement - Read Club");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM club WHERE clubCode='" + clubCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -348,7 +354,7 @@ public class Database {
                 club = new Club(clubCode, clubName, venueCode);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -358,12 +364,12 @@ public class Database {
     public static void writeClub(Club club){
         try {
             connect();
-            System.out.println("Creating statement - Write Club");
+            logger.info("Creating statement - Write Club");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO club VALUES ('" + club.getClubCode() + "', '" + club.getName() + "', '" + club.getVenue() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -372,12 +378,12 @@ public class Database {
     public static void updateClub(Club club){
         try{
             connect();
-            System.out.println("Creating statement - Update Club");
+            logger.info("Creating statement - Update Club");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE club SET clubName='" + club.getName() + "', venue='" + club.getVenue() + "' WHERE clubCode='" + club.getClubCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -390,7 +396,7 @@ public class Database {
         Match match = new Match();
         try {
             connect();
-            System.out.println("Creating Statement - Read Match");
+            logger.info("Creating Statement - Read Match");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM matches WHERE matchCode='" + matchCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -404,7 +410,7 @@ public class Database {
                 match = new Match(matchCode, homeTeamCode, awayTeamCode, homeTacticCode, awayTacticCode, score, date);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -414,12 +420,12 @@ public class Database {
     public static void writeMatch(Match match){
         try {
             connect();
-            System.out.println("Creating statement - Write Match");
+            logger.info("Creating statement - Write Match");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO matches VALUES ('" + match.getMatchCode() + "', '" + match.getHomeTeamCode() + "', '" + match.getAwayTeamCode() + "', '" + match.getHomeTacticCode() + "', '" + match.getAwayTacticCode() + "', '" + match.getScore() + "', '" + match.getDate() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -428,12 +434,12 @@ public class Database {
     public static void updateMatch(Match match){
         try{
             connect();
-            System.out.println("Creating statement - Update Match");
+            logger.info("Creating statement - Update Match");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE matches SET homeTeamCode='" + match.getHomeTeamCode() + "', awayTeamCode='" + match.getAwayTeamCode() + "', homeTacticCode='" + match.getHomeTacticCode() + "', awayTacticCode='" + match.getAwayTacticCode() + "', score='" + match.getScore() + "', date='" + match.getDate() + "' WHERE matchCode='" + match.getMatchCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -520,7 +526,7 @@ public class Database {
         LeaguePosition leaguePosition = new LeaguePosition();
         try {
             connect();
-            System.out.println("Creating Statement - Read LeaguePosition");
+            logger.info("Creating Statement - Read LeaguePosition");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM leaguePosition WHERE leaguePositionCode='" + leaguePositionCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -540,7 +546,7 @@ public class Database {
                 leaguePosition = new LeaguePosition(leaguePositionCode,league,position,teamCode,teamName,played,won,drawn,lost,goalsScored,goalsConceded,goalDifference,points);
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -550,12 +556,12 @@ public class Database {
     public static void writeLeaguePosition(LeaguePosition leaguePosition){
         try {
             connect();
-            System.out.println("Creating statement - Write leaguePosition");
+            logger.info("Creating statement - Write leaguePosition");
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO leaguePosition VALUES ('" + leaguePosition.getLeaguePositionCode() + "', '" + leaguePosition.getLeague() + "', '" + leaguePosition.getPosition() + "', '" + leaguePosition.getTeamCode() + "', '" + leaguePosition.getTeamName() + "', '" + leaguePosition.getPlayed() + "', '" + leaguePosition.getWon() +  "', '" + leaguePosition.getDrawn() + "', '" + leaguePosition.getLost() + "', '" + leaguePosition.getGoalsScored() + "', '" + leaguePosition.getGoalsConceded() + "', '" + leaguePosition.getGoalDifference() + "', '" + leaguePosition.getPoints() + "');";
             stmt.executeUpdate(sql);
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -564,12 +570,12 @@ public class Database {
     public static void updateleaguePosition(LeaguePosition leaguePosition){
         try{
             connect();
-            System.out.println("Creating statement - Update leaguePosition");
+            logger.info("Creating statement - Update leaguePosition");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE leaguePosition SET leaguePositionCode='" + leaguePosition.getLeaguePositionCode() + "', league='" + leaguePosition.getLeague() + "', position='" + leaguePosition.getPosition() + "', teamCode='" + leaguePosition.getTeamCode() + "', teamName='" + leaguePosition.getTeamName() + "', played='" + leaguePosition.getPlayed() + "', won='" + leaguePosition.getWon() + "', drawn='" + leaguePosition.getDrawn() + "', lost='" + leaguePosition.getLost() + "', goalsScored='" + leaguePosition.getGoalsScored() + "', goalsConceded='" + leaguePosition.getGoalsConceded() + "', goalDifference='" + leaguePosition.getGoalDifference() + "', points='" + leaguePosition.getPoints() + "' WHERE leaguePositionCode='" + leaguePosition.getLeaguePositionCode() + "';";
             stmt.executeUpdate(sql);
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -579,7 +585,7 @@ public class Database {
         ArrayList<LeaguePosition> positionsArray = new ArrayList<>();
         try {
             connect();
-            System.out.println("Creating Statement - Read LeaguePosition");
+            logger.info("Creating Statement - Read LeaguePosition");
             Statement stmt = conn.createStatement();
             String sql = " SELECT * FROM leaguePosition WHERE league='" + league + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -599,7 +605,7 @@ public class Database {
                 positionsArray.add(new LeaguePosition(leaguePositionCode,league,position,teamCode,teamName,played,won,drawn,lost,goalsScored,goalsConceded,goalDifference,points));
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -621,7 +627,7 @@ public class Database {
         int awayGoals = Integer.parseInt(scoreLine[1]);
         try{
             connect();
-            System.out.println("Creating statement - Update League Table Home");
+            logger.info("Creating statement - Update League Table Home");
             Statement stmt = conn.createStatement();
             //First we need to read the values from the database before updating them
             String sql = "SELECT * FROM " + homeTeam.getLeague() + " WHERE teamCode = '" + match.getHomeTeamCode() + "';";
@@ -660,7 +666,7 @@ public class Database {
             }
 
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -675,7 +681,7 @@ public class Database {
         int awayGoals = Integer.parseInt(scoreLine[1]);
         try{
             connect();
-            System.out.println("Creating statement - Update League Table");
+            logger.info("Creating statement - Update League Table");
             Statement stmt = conn.createStatement();
             //First we need to read the values from the database before updating them
             String sql = "SELECT * FROM " + awayTeam.getLeague() + " WHERE teamCode = '" + match.getAwayTeamCode() + "';";
@@ -714,7 +720,7 @@ public class Database {
             }
 
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -732,14 +738,14 @@ public class Database {
             connect();
             int numberOfMatches = matches.size();
             for (int matchNumber=0; matchNumber<numberOfMatches; matchNumber++){
-                System.out.println("Creating statement - Write Match");
+                logger.info("Creating statement - Write Match");
                 Statement stmt = conn.createStatement();
                 Match match = matches.get(matchNumber);
                 String sql = "INSERT INTO matches VALUES ('" + match.getMatchCode() + "' , '" + match.getHomeTeamCode() + "' , '" + match.getAwayTeamCode() + "' , '" + "homeTacticCode" + "' , '" + "awayTacticCode" + "' , '" + "score" + "' , '" + match.getDate() + "');";
                 stmt.executeUpdate(sql);
             }    
             } catch (SQLException ex) {
-                System.out.println(ex);
+                logger.error(ex);
             } finally {
                 close();
             }
@@ -753,7 +759,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating Statement - Count Players");
+            logger.info("Creating Statement - Count Players");
             Statement stmt = conn.createStatement();
             String sql = "SELECT playerCode FROM player;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -761,7 +767,7 @@ public class Database {
                 count++;
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -772,7 +778,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating Statement - Count Team");
+            logger.info("Creating Statement - Count Team");
             Statement stmt = conn.createStatement();
             String sql = "SELECT teamCode FROM team;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -780,7 +786,7 @@ public class Database {
                 count++;
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }
@@ -791,7 +797,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating statement - Count Tactics");
+            logger.info("Creating statement - Count Tactics");
             Statement stmt = conn.createStatement();
             String sql = "SELECT tacticCode FROM tactic;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -799,7 +805,7 @@ public class Database {
                 count++;
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -810,7 +816,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating statement - Count Venues");
+            logger.info("Creating statement - Count Venues");
             Statement stmt = conn.createStatement();
             String sql = "SELECT venueCode FROM venue;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -818,7 +824,7 @@ public class Database {
                 count++;
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -829,7 +835,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating statement - Count Clubs");
+            logger.info("Creating statement - Count Clubs");
             Statement stmt = conn.createStatement();
             String sql = "SELECT clubCode FROM club;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -837,7 +843,7 @@ public class Database {
                 count++;
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally{
             close();
         }
@@ -848,7 +854,7 @@ public class Database {
         int count =0;
         try {
             connect();
-            System.out.println("Creating statement - Count StartingXI");
+            logger.info("Creating statement - Count StartingXI");
             Statement stmt = conn.createStatement();
             String sql = "SELECT startingXICode FROM startingXI";
             ResultSet rs = stmt.executeQuery(sql);
@@ -856,7 +862,7 @@ public class Database {
                 count++;
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally {
             close();
         }
@@ -867,7 +873,7 @@ public class Database {
         int count =0;
         try {
             connect();
-            System.out.println("Creating statement - Count Matches");
+            logger.info("Creating statement - Count Matches");
             Statement stmt = conn.createStatement();
                     String sql = "SELECT matchCode FROM matches";
             ResultSet rs = stmt.executeQuery(sql);
@@ -875,7 +881,7 @@ public class Database {
                 count++;
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         }finally {
             close();
         }
@@ -886,7 +892,7 @@ public class Database {
         int count = 0;
         try {
             connect();
-            System.out.println("Creating Statement - Count Players");
+            logger.info("Creating Statement - Count Players");
             Statement stmt = conn.createStatement();
             String sql = "SELECT playerCode FROM player WHERE playerCode='" + playerCode + "';";
             ResultSet rs = stmt.executeQuery(sql);
@@ -894,7 +900,7 @@ public class Database {
                 count++;
             }
         } catch(SQLException ex){
-            System.out.println(ex);
+            logger.error(ex);
         } finally {
             close();
         }

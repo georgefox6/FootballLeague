@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.lang.Math;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.*;
 
 public class Match {
+
+    public static Logger logger = LogManager.getLogger("com.josh");
+
     //Match variables
     String matchCode;
     String homeTeamCode;
@@ -233,7 +239,7 @@ public class Match {
             while(rs.next()){
                 matches.add(new Match(rs.getString("matchCode"), rs.getString("homeTeamCode"), rs.getString("awayTeamCode"), rs.getString("homeTacticCode"), rs.getString("awayTacticCode"), rs.getString("score"), rs.getInt("date")));
             }
-            System.out.println("Player Size : " + matches.size());
+            logger.info("Player Size : " + matches.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

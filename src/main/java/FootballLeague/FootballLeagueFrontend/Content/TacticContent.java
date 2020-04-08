@@ -10,11 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import org.json.simple.parser.ParseException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class TacticContent extends GridPane {
+    
     //Formation selector
     public ComboBox<String> formation;
     public Label formationLabel;

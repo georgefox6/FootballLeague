@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 @Deprecated
 public class Gui{
+    
     public static void createFrame(JPanel panel){
         JFrame frame = new JFrame("Football League Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
