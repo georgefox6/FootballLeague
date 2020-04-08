@@ -9,3 +9,6 @@ src/main/resources/SaveGames
 
 # Ignore all save game files and data
 src/main/resources/SaveGames/*
+
+# Ignore log files
+logs

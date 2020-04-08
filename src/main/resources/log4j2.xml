@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="DEBUG">
     <Appenders>
-        <File name="LogToFile" fileName="logs/app.log">
+        <RandomAccessFile name="MasterLogToFile" fileName="logs/master.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
-        </File>
+        </RandomAccessFile>
+        <RandomAccessFile name="DatabaseExceptionLogToFile" filename="logs/databaseExceptions.log"> 
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </RandomAccessFile>
+        <Routing name="RoutingAppender">
+            <Routes>
+                <pattern>$${marker:}</pattern>
+                <Route key="EXCEPTION" ref="DatabaseExceptionLogToFile"/>
+                <Route key="DEFAULT" ref="MasterLogToFile"/>
+            </Routes>
+        </Routing>
     </Appenders>
     <Loggers>      
         <Logger name="com.josh" level="debug" additivity="false">
-            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="RoutingAppender"/>
         </Logger>
         <Root level="error">
-            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="MasterLogToFile"/>
         </Root>
     </Loggers>
+    <!-- <Properties>
+        <Property name="contextPath">DEFAULT</Property>
+    </Properties> -->
 </Configuration>
