@@ -1,6 +1,5 @@
 package FootballLeague.FootballLeagueFrontend.Content;
 
-import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Match;
 import FootballLeague.FootballLeagueBackend.Team;
 import javafx.geometry.Insets;
@@ -8,59 +7,49 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import static FootballLeague.FootballLeagueBackend.GameState.*;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
-import static FootballLeague.FootballLeagueBackend.GameState.readSaveName;
-import static FootballLeague.FootballLeagueBackend.GameState.readGameWeek;
+import static FootballLeague.FootballLeagueBackend.GameState.*;
+import static FootballLeague.FootballLeagueBackend.Match.getNumWeeks;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
-public class LeagueResultsContent extends VBox {
-
-    public static Logger logger = LogManager.getLogger("com.josh");
-
+public class LeagueFixturesContent extends VBox {
     ComboBox<Integer> gameWeek;
     ComboBox<Team> team;
-    VBox results;
+    VBox fixtures;
 
-    public LeagueResultsContent(){
+    public LeagueFixturesContent(){
         //Sets some spacing to make the screen look better
         setPadding(new Insets(0, 10, 0, 10));
 
         gameWeek = new ComboBox<>();
         team = new ComboBox<>();
-        results = new VBox();
+        fixtures = new VBox();
         updateContent();
 
-        //This is the action listener for the combo box, so when a game week is selected then it will display the corresponding results on the screen
+        //This is the action listener for the combo box, so when a game week is selected then it will display the corresponding fixtures on the screen
         gameWeek.setOnAction(e -> {
             if(gameWeek.getValue() != null){
-                results.getChildren().clear();
+                fixtures.getChildren().clear();
                 for(Match result : readAllMatches("WHERE date='" + gameWeek.getValue() + "';")){
-                    String labelContents = padRight(result.getHomeTeamName(), 20) + result.getScore() +  " " + padRight(result.getAwayTeamName(), 20);
-                    logger.info(labelContents);
+                    String labelContents = padRight(result.getHomeTeamName(), 20) + " VS " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
-                    if(Team.readTeam(result.getHomeTeamCode()).getLeague().equals(readTeamLeague())){
-                        results.getChildren().add(label);
-                    }
+                    fixtures.getChildren().add(label);
                 }
                 team.setValue(null);
             }
 
         });
 
-        //This is the action listener for the combo box, so when a team is selected it will display the corresponding results on the screen
+        //This is the action listener for the combo box, so when a team is selected it will display the corresponding fixtures on the screen
         team.setOnAction(e -> {
             if(team.getValue() != null){
-                results.getChildren().clear();
-                System.out.println("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' ORDER BY date ASC;");
-                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score <> 'null' ORDER BY date ASC;")){
-                    String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + result.getScore() + " " + padRight(result.getAwayTeamName(), 20);
+                fixtures.getChildren().clear();
+                for(Match result : readAllMatches("WHERE homeTeamCode='" + team.getValue().getTeamCode() + "' AND score == 'null'  OR awayTeamCode='" + team.getValue().getTeamCode() + "' AND score == 'null' ORDER BY date ASC;")){
+                    String labelContents = result.getDate() + " : " + padRight(result.getHomeTeamName(), 20) + " VS " + padRight(result.getAwayTeamName(), 20);
                     Label label = new Label(labelContents);
                     if(team.getValue().getLeague().equals(readTeamLeague())){
-                        results.getChildren().add(label);
+                        fixtures.getChildren().add(label);
                     }
                 }
                 gameWeek.setValue(null);
@@ -78,7 +67,7 @@ public class LeagueResultsContent extends VBox {
         resultSelector.getChildren().addAll(gameWeekLabel, gameWeek, teamLabel, team);
 
         this.getChildren().add(resultSelector);
-        this.getChildren().add(results);
+        this.getChildren().add(fixtures);
     }
 
     //this function updates the variables in the combo boxes and clears the screen
@@ -88,14 +77,14 @@ public class LeagueResultsContent extends VBox {
         //Remove the existing teams from the combo box
         team.getItems().clear();
         //Remove the existing results from the screen
-        results.getChildren().clear();
+        fixtures.getChildren().clear();
         //Fill the combo box with all of the game weeks containing results
-        for(int i = 1; i < Integer.parseInt(readGameWeek(readSaveName())); i++){
+        for(int i = Integer.parseInt(readGameWeek(readSaveName())); i < getNumWeeks(); i++){
             gameWeek.getItems().add(i);
         }
         gameWeek.getItems().add(null);
         //Fill the team combo box with all of the teams
-        for(Team t : readAllTeams("WHERE league='" + GameState.readTeamLeague() + "';")){
+        for(Team t : readAllTeams("WHERE league='" + readTeamLeague() + "';")){
             team.getItems().add(t);
         }
         team.getItems().add(null);

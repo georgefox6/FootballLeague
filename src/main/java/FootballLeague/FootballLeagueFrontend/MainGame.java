@@ -41,6 +41,7 @@ public class MainGame extends Stage {
     AdvanceFixturesContent advanceFixturesContent;
     AdvanceResultsContent advanceResultsContent;
     LeagueResultsContent leagueResultsContent;
+    LeagueFixturesContent leagueFixturesContent;
 
     //Constructor for the main game stage
     public MainGame(){
@@ -112,6 +113,8 @@ public class MainGame extends Stage {
 
         leagueResultsContent= new LeagueResultsContent();
 
+        leagueFixturesContent = new LeagueFixturesContent();
+
         //TODO load tactic button... pop out? then fill all of the data
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
@@ -134,9 +137,12 @@ public class MainGame extends Stage {
             borderPane.setCenter(leagueTableContent);
         });
         leagueMenu.resultsButton.setOnAction(e -> {
-            System.out.println("Displaying the results");
             leagueResultsContent.updateContent();
             borderPane.setCenter(leagueResultsContent);
+        });
+        leagueMenu.fixturesButton.setOnAction(e -> {
+            leagueFixturesContent.updateContent();
+            borderPane.setCenter(leagueFixturesContent);
         });
         topMenu.tacticButton.setOnAction(e -> {
             borderPane.setLeft(tacticMenu);

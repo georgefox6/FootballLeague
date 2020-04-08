@@ -406,7 +406,7 @@ public class Database {
                 String homeTacticCode = rs.getString("homeTacticCode");
                 String awayTacticCode = rs.getString("awayTacticCode");
                 String score = rs.getString("score");
-                String date = rs.getString("date");
+                int date = rs.getInt("date");
                 match = new Match(matchCode, homeTeamCode, awayTeamCode, homeTacticCode, awayTacticCode, score, date);
             }
         } catch(SQLException ex){
