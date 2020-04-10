@@ -9,17 +9,17 @@ public class LeagueMenu extends VBox {
     Button leagueTableButton;
     Button topScorersButton;
     public Button resultsButton;
-    Button fixturesButton;
+    public Button fixturesButton;
 
     //Constructor
     public LeagueMenu(){
         leagueTableButton = new Button("League Table");
         topScorersButton = new Button("Top Scorers");
-        resultsButton = new Button("Results");
         fixturesButton = new Button("Fixtures");
+        resultsButton = new Button("Results");
 
         //Adds the content to the left menu League
-        this.getChildren().addAll(leagueTableButton, topScorersButton, resultsButton, fixturesButton);
+        this.getChildren().addAll(leagueTableButton, topScorersButton, fixturesButton, resultsButton);
         this.setSpacing(10);
         this.setPadding(new Insets(15, 12, 15, 12));
     }

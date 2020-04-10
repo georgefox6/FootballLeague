@@ -38,7 +38,7 @@ public class Schedule {
 		this.numberOfTeams = teamCodes.size();
 		// Each team needs to play every other team, twice
 		this.gameWeeks = numberOfTeams - 1;
-		this.matches = new ArrayList<Match>();
+		this.matches = new ArrayList<>();
 	}
 
 	public void createSchedule() {
@@ -49,12 +49,13 @@ public class Schedule {
 
 		for (int gameWeek=1; gameWeek<gameWeeks+1; gameWeek++) {
 
-			ArrayList<String> subTeamCodesC = new ArrayList<String>();
-			ArrayList<String> subTeamCodesD = new ArrayList<String>();
+			ArrayList<String> subTeamCodesC = new ArrayList<>(subTeamCodesA);
+			ArrayList<String> subTeamCodesD = new ArrayList<>(subTeamCodesB);
 
-			subTeamCodesC.addAll(subTeamCodesA);
-			subTeamCodesD.addAll(subTeamCodesB);
-			
+			System.out.println("subTeamCodesB Length : " + subTeamCodesB.size());
+			System.out.println("subTeamCodesB 0 : " + subTeamCodesB.get(0));
+
+
 			subTeamCodesC.set(1, subTeamCodesB.get(0));
 
 			for (int i=2; i<subTeamsLength; i++) {
@@ -71,10 +72,9 @@ public class Schedule {
 			subTeamCodesB = subTeamCodesD;
 
 			for (int m=0; m<subTeamsLength; m++) {
-				String gameWeekString = Integer.toString(gameWeek);
-				String gameWeekStringReverse = Integer.toString(gameWeeks+gameWeek);
-				Match match = new Match(subTeamCodesA.get(m), subTeamCodesB.get(m), gameWeekString);
-				Match matchReverse = new Match(subTeamCodesB.get(m), subTeamCodesA.get(m), gameWeekStringReverse);
+				int gameWeekReverse = gameWeeks+gameWeek;
+				Match match = new Match(subTeamCodesA.get(m), subTeamCodesB.get(m), gameWeek);
+				Match matchReverse = new Match(subTeamCodesB.get(m), subTeamCodesA.get(m), gameWeekReverse);
 
 				matches.add(match);
 				matches.add(matchReverse);
