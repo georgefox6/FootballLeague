@@ -23,7 +23,7 @@ public class FileHandler {
 	}
 
 	public void copyBaseSaveGame(String sourceTitle, String destinationTitle, Boolean overwrite) throws IOException {
-		String sourcePath = "src/main/resources/SaveGames/" + sourceTitle + ".db";
+		String sourcePath = "src/main/resources/BaseGames/" + sourceTitle + ".db";
 		String destinationPath = "src/main/resources/SaveGames/" + destinationTitle + ".db";
 		if (overwrite) {
 			File f = new File(destinationPath);
@@ -47,6 +47,20 @@ public class FileHandler {
 	public ArrayList<String> getSaveGameNamesDB() {
 		String saveGamesDirectoryPath = "src/main/resources/SaveGames/";
 		ArrayList<String> saveGameTitles = new ArrayList<String>();
+		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
+		for (File file : saveGamesTitlesRaw) {
+			if (file.isFile()) {
+				if(file.getName().contains(".db") && !file.getName().contains("mainGame.db")){
+					saveGameTitles.add(file.getName().split("\\.")[0]);
+				}
+			}
+		}
+		return saveGameTitles;
+	}
+
+	public ArrayList<String> getBaseGames() {
+		String saveGamesDirectoryPath = "src/main/resources/BaseGames/";
+		ArrayList<String> saveGameTitles = new ArrayList<>();
 		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
 		for (File file : saveGamesTitlesRaw) {
 			if (file.isFile()) {
