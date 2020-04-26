@@ -16,7 +16,7 @@ We will now detail how to implement common use cases for LogHandler.
 
 ### How to set up LogHandler
 
-Given a class `Package.SubPackage.Class` include Log Handler as below
+Given a class `Package.SubPackage.Class` include Log Handler like so
 
 ```java
 import FootballLeague.FootballLeagueBackend.LogHandler;
