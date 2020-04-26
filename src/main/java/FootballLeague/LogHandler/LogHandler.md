@@ -39,12 +39,16 @@ log.log("message.");
 ```
  which will log to both `logs/master.log` and to `logs/Package/SubPackage/Class.log`.
  
- To create a special log we ensure the special flag is the first argument in `log.log()` and the second is `"message"`. For example
+ To create a special log we ensure the special flag is the first argument in `log.log()` and the second is `"message"`. For example,
  
  ```java
  log.log("EXCEPTION", "message");
  ```
- will log to all of `logs/master.log`, `logs/Package/SubPackage/Class.log` and `logs/exception.log`.
+ will log to all of `logs/master.log`, `logs/Package/SubPackage/Class.log` and `logs/exceptions.log`.
+ 
+ ### Limitations of special logs
+ 
+ In order to log to a special log the special log must be explicitly created in `log4j2.xml`. At time of writing the only special log case is `"EXCEPTION"`, to create another type of special log relevant files will need to be modified; until instructions on how to do so are included here please contact [Josh Gillott](https://github.com/lolamathematician).
  
  
  
