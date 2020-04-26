@@ -6,8 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import FootballLeague.LogHandler.LogHandler;
 
 import static FootballLeague.FootballLeagueBackend.GameState.readSaveName;
 import static FootballLeague.FootballLeagueBackend.GameState.readGameWeek;
@@ -15,7 +14,7 @@ import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 
 public class LeagueResultsContent extends VBox {
 
-    public static Logger logger = LogManager.getLogger("com.josh");
+    public static LogHandler log = new LogHandler("FootballLeague.FootballLeagueFrontend.Content.LeagueResultsContent");
 
     ComboBox<Integer> gameWeek;
     VBox results;
@@ -33,7 +32,7 @@ public class LeagueResultsContent extends VBox {
             results.getChildren().clear();
             for(Match result : readAllMatches("WHERE date='" + gameWeek.getValue() + "';")){
                 String labelContents = padRight(result.getHomeTeamName(), 20) + result.getScore() +  " " + padRight(result.getAwayTeamName(), 20);
-                logger.info(labelContents);
+                log.log(labelContents);
                 Label label = new Label(labelContents);
                 results.getChildren().add(label);
             }

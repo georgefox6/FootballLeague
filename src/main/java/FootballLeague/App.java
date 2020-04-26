@@ -7,20 +7,31 @@ import FootballLeague.FootballLeagueFrontend.MainMenu;
 import javafx.application.Application;
 
 import FootballLeague.LogHandler.LogHandler;
+import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class App {
+
+    private static final boolean RESET_NOT_APPEND_LOGS = true;
+
+    public static LogHandler log = new LogHandler("FootballLeague.App");
+    public static FileHandler f = new FileHandler();
+
+    public static void resetOrAppendLogs(boolean resetOrAppendLogsFlag) {
+        if (resetOrAppendLogsFlag) {
+            f.deleteDirectoryFromString("logs");
+        }
+    }
+
     public String getGreeting() {
         return "Hello world.";
     }
-
-    public static LogHandler log = new LogHandler("FootballLeague.App");
 
     public static void main(String[] args) {
 
         System.out.println(new App().getGreeting());
 
-        log.log("This is a log");
-        log.log("EXCEPTION", "There was an Exception");
+        resetOrAppendLogs(RESET_NOT_APPEND_LOGS);
+        log.log("App launched.");
 
         Application.launch(GameMenu.class, null);
     }

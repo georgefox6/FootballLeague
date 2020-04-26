@@ -4,8 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import FootballLeague.LogHandler.LogHandler;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 import static FootballLeague.FootballLeagueBackend.Player.readPlayer;
@@ -13,7 +12,7 @@ import static FootballLeague.FootballLeagueBackend.Player.updatePlayer;
 
 public class Team {
 
-    public static Logger logger = LogManager.getLogger("com.josh");
+    public static LogHandler log = new LogHandler("FootballLeague.FootballLeagueBackend.Team");
 
     //The Team class fields
     String teamCode;
@@ -123,7 +122,7 @@ public class Team {
             while(rs.next()){
                 teams.add(new Team(rs.getString("teamCode"), rs.getString("teamName"), rs.getString("league"), rs.getString("club")));
             }
-            logger.info("Player Size : " + teams.size());
+            log.log("Player Size : " + teams.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -157,7 +156,7 @@ public class Team {
             while(rs.next()){
                 teams.add(new Team(rs.getString("teamCode"), rs.getString("teamName"), rs.getString("league"), rs.getString("club")));
             }
-            logger.info("Player Size : " + teams.size());
+            log.log("Player Size : " + teams.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

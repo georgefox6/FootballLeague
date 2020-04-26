@@ -8,45 +8,31 @@ import org.apache.logging.log4j.MarkerManager;
 
 import org.apache.logging.log4j.core.LoggerContext;
 
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
+
+import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class LogHandler {
 
 	String classPath;
 
 	// Constructor
+	// TODO: See if there is someway of finding creating class automatically so 
+	// one does not have to type in the classpath when creating new instance
 	public LogHandler(String creatingClass) {
-		System.out.println("HERE 1: " + creatingClass);
 		this.classPath = creatingClass.replace('.', '/');
-		System.out.println("HERE 2: " + this.classPath);
-		System.out.println("HERE 3: " + classPath);
-    	System.setProperty("classLog", this.classPath);
-    	reconfigure();
-	}
-
-	// Deletes all existing log files - logs will be unrecoverable
-	private void reset() {
-
-	}
-
-	// Appends this session to existing log files
-	private void append() {
-
-	}
-
-	// Method to be used in other classes to access either reset or append methods
-	public void initializeSession(boolean resetLogs) {
-		if (resetLogs) {
-			System.out.println("");
-		} else {
-			System.out.println("");
-		}
 	}
 
 	private void reconfigure() {
+    	System.setProperty("classLog", this.classPath);
 		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		File file = new File("src/main/resources/log4j2.xml");
 		context.setConfigLocation(file.toURI());
+		System.out.println("HERE: " + classPath);
 	}
 
 	public void logToMasterLog(String message) {
@@ -65,20 +51,24 @@ public class LogHandler {
 		specialLog.info(MARKER, message);		
 	}
 
-	// Only passing one String argument into log assumes it is a normal log with no marker
+	// Only passing one object argument into log assumes it is a normal log with no marker
 	// Logs to masterLog and classLog only
-	public void log(String message) {
-		logToMasterLog(message);
-		logToClassLog(message);
+	public void log(Object message) {
+		reconfigure();
+		String messageString = message.toString();
+		logToMasterLog(messageString);
+		logToClassLog(messageString);
 	}
 
 	// Logs to all of masterLog, classLog and specialLog
-	public void log(String marker, String message) {
-		logToMasterLog(message);
-		logToClassLog(message);
-		logToSpecialLog(message, marker);
+	public void log(String marker, Object message) {
+		reconfigure();
+		String messageString = message.toString();
+		logToMasterLog(messageString);
+		logToClassLog(messageString);
+		logToSpecialLog(messageString, marker);
 	}
 
 
-	public static void main(String[] args){}
+	// public static void main(String[] args){}
 }

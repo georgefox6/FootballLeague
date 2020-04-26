@@ -58,6 +58,29 @@ public class FileHandler {
 		return saveGameTitles;
 	}
 
+	public static boolean deleteDirectoryFromString(String fileString) {
+		File f = new File(fileString);
+		boolean deleteDirectoryOutcome = deleteDirectory(f);
+		return deleteDirectoryOutcome;
+	}
+
+	public static boolean deleteDirectory(File directory) {
+    if(directory.exists()){
+        File[] files = directory.listFiles();
+        if(null!=files){
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+        }
+    }
+    return(directory.delete());
+}
+
 	public static void main(String[] args) {
 	}
 }

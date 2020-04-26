@@ -4,14 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import FootballLeague.LogHandler.LogHandler;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Player {
 
-    public static Logger logger = LogManager.getLogger("com.josh");
+    public static LogHandler log = new LogHandler("FootballLeague.FootballLeagueBackend.Player");
 
     //The player class fields
     String playerCode;
@@ -131,7 +130,7 @@ public class Player {
             while(rs.next()){
                 players.add(new Player(rs.getString("playerCode"), rs.getString("forename"), rs.getString("surname"), rs.getString("injuryStatus").equals("true"), rs.getString("teamCode")));
             }
-            logger.info("Player Size : " + players.size());
+            log.log("Player Size : " + players.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

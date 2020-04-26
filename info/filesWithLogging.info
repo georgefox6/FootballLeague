@@ -1,6 +1,6 @@
 FootballLeague.App.java
 FootballLeague.FootballLeagueBackend.Club.java
-FootballLeague.FootballLeagueBackend.DatabaseConnection.java
+FootballLeague.FootballLeagueBackend.Database.java
 FootballLeague.FootballLeagueBackend.Match.java
 FootballLeague.FootballLeagueBackend.Player.java
 FootballLeague.FootballLeagueBackend.Schedule.java
