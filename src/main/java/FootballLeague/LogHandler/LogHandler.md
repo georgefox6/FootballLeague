@@ -16,19 +16,19 @@ We will now detail how to set up and implement common use cases of LogHandler.
 
 ### How to set up LogHandler
 
-Given a class `Package.SubPackage.Class` include Log Handler like so
+LogHandler is imported like so
 
 ```java
 import FootballLeague.FootballLeagueBackend.LogHandler;
 ```
 
-To initialize a LogHandler instance we use the following
+Given a class `Package.SubPackage.Class` LogHandler is initialized using
 
 ```java
 public static LogHandler log = new LogHandler("Package.SubPackage.Class");
 ```
 
-including the full class name (`Package.SubPackage.Class`) ensures the class' unique log is located at `logs/Package/SubPackage/Class.log`.
+where including the full class name (`Package.SubPackage.Class`) ensures the class' unique log is located at `logs/Package/SubPackage/Class.log`.
 
 ### How to log an event with LogHandler
 
