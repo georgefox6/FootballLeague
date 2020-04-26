@@ -12,7 +12,7 @@ LogHandler creates logs for events. When implemented as instructed in this guide
 
 ## How to use LogHandler
 
-We will now detail how to implement common use cases for LogHandler.
+We will now detail how to set up and implement common use cases of LogHandler.
 
 ### How to set up LogHandler
 
