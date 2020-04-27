@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration status="WARN">
 	<Appenders>
 		<RandomAccessFile name="MasterLog" fileName="logs/master.log">
             <PatternLayout>
@@ -33,52 +33,8 @@
 		<Logger name="specialLog" level="debug" additivity="false">
 			<AppenderRef ref="SpecialLog"/>
 		</Logger>
-		<!--
-		<Logger name="FootballLeague.App" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Club" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.DatabaseConnection" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Match" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Player" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Schedule" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.StartingXI" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Tactic" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Team" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueBackend.Venue" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueFrontend.GameMenu" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueFrontend.Content.LeagueResultsContent" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.FootballLeagueFrontend.Content.ScoutingContent" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		<Logger name="FootballLeague.LogHandler.LogHandler" level="debug" additivity="false">
-			<AppenderRef ref=""/>
-		</Logger>
-		-->
 		<Root level="error">
-			<AppenderRef ref="Master"/>
+			<AppenderRef ref="MasterLog"/>
 		</Root>
 	</Loggers>
 </Configuration>

@@ -32,7 +32,6 @@ public class LogHandler {
 		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		File file = new File("src/main/resources/log4j2.xml");
 		context.setConfigLocation(file.toURI());
-		System.out.println("HERE: " + classPath);
 	}
 
 	public void logToMasterLog(String message) {
