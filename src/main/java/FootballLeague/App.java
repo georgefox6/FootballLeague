@@ -11,6 +11,8 @@ import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class App {
 
+    // set to true if you want to delete logs at the beginning of each session
+    // WARNING: setting true means all previous logs in the logs directory will be unrecoverable
     private static final boolean RESET_NOT_APPEND_LOGS = true;
 
     public static LogHandler log = new LogHandler("FootballLeague.App");
