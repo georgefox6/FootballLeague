@@ -15,14 +15,7 @@ public class App {
     // WARNING: setting true means all previous logs in the logs directory will be unrecoverable
     private static final boolean RESET_NOT_APPEND_LOGS = true;
 
-    public static LogHandler log = new LogHandler("FootballLeague.App");
-    public static FileHandler f = new FileHandler();
-
-    public static void resetOrAppendLogs(boolean resetOrAppendLogsFlag) {
-        if (resetOrAppendLogsFlag) {
-            f.deleteDirectoryFromString("logs");
-        }
-    }
+    private static LogHandler log = new LogHandler("FootballLeague.App");
 
     public String getGreeting() {
         return "Hello world.";
@@ -32,7 +25,7 @@ public class App {
 
         System.out.println(new App().getGreeting());
 
-        resetOrAppendLogs(RESET_NOT_APPEND_LOGS);
+        log.initialize(RESET_NOT_APPEND_LOGS);
         log.log("App launched.");
 
         Application.launch(GameMenu.class, null);

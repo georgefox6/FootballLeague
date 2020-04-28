@@ -20,12 +20,23 @@ public class LogHandler {
 
 	String classPath;
 
+	static FileHandler f = new FileHandler();
+
+	// Unique log entry code the same for every log entry to match up log entries in different log files
+	static int logNumber;
+
 	// Constructor
 	// TODO: See if there is someway of finding creating class automatically so 
 	// one does not have to type in the classpath when creating new instance
 	public LogHandler(String creatingClass) {
 		this.classPath = creatingClass.replace('.', '/');
 	}
+
+	public static void initialize(boolean resetOrAppendLogsFlag) {
+        if (resetOrAppendLogsFlag) {
+            f.deleteDirectoryFromString("logs");
+        }
+    }
 
 	private void reconfigure() {
     	System.setProperty("classLog", this.classPath);
