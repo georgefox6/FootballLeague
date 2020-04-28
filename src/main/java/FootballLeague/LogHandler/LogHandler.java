@@ -36,6 +36,7 @@ public class LogHandler {
         if (resetOrAppendLogsFlag) {
             f.deleteDirectoryFromString("logs");
         }
+        logNumber = 0;
     }
 
 	private void reconfigure() {
@@ -68,6 +69,7 @@ public class LogHandler {
 		String messageString = message.toString();
 		logToMasterLog(messageString);
 		logToClassLog(messageString);
+		logNumber = logNumber + 1;
 	}
 
 	// Logs to all of masterLog, classLog and specialLog
@@ -77,6 +79,7 @@ public class LogHandler {
 		logToMasterLog(messageString);
 		logToClassLog(messageString);
 		logToSpecialLog(messageString, marker);
+		logNumber = logNumber + 1;
 	}
 
 
