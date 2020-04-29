@@ -281,10 +281,6 @@ public class GameMenu extends Application {
                     progressBox.close();
                 });
 
-//                LocalDateTime myDateObj = LocalDateTime.now();
-//                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//                String formattedDate = myDateObj.format(myFormatObj);
-
                 String baseGameName = dbSize.trim() + "-" + formattedDate;
 
                 try {
