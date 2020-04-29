@@ -1,24 +1,24 @@
 package FootballLeague.FootballLeagueBackend.WebScraper;
 
-import FootballLeague.FootballLeagueBackend.Tactic;
-import FootballLeague.FootballLeagueBackend.Team;
+import FootballLeague.FootballLeagueBackend.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.crypto.spec.PSource;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import FootballLeague.FootballLeagueBackend.GameState;
-import FootballLeague.FootballLeagueBackend.Player;
+import static FootballLeague.FootballLeagueBackend.Club.writeClub;
 import static FootballLeague.FootballLeagueBackend.Player.writePlayer;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 import static FootballLeague.FootballLeagueBackend.Team.writeTeam;
+import static FootballLeague.FootballLeagueBackend.Venue.writeVenue;
 
 public class DatabasePopulator {
 
@@ -50,6 +50,7 @@ public class DatabasePopulator {
     }
 
     public static void jsonToDB(String jsonName, String dbName){
+        System.out.println("JSON NAME : " + jsonName);
 
         //Set current save to the db name provided as a parameter
         try {
@@ -58,7 +59,13 @@ public class DatabasePopulator {
             e.printStackTrace();
         }
 
-        insertTeams();
+//        insertTeams();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
@@ -71,36 +78,67 @@ public class DatabasePopulator {
 
             JSONArray playerList = (JSONArray) obj;
 
-            //Iterate over player list
-            playerList.forEach( emp -> parsePlayerObject( (JSONObject) emp ) );
+            for(Object o : playerList){
+                JSONObject jsonObject = (JSONObject) o;
+                //if it is a team object then call parse team method
+                if(jsonObject.get("team") != null ) {
+                    parseTeamObject(jsonObject);
+                }
+                //if it is a player object then call parse player method
+                else if(jsonObject.get("player") != null ){
+                    parsePlayerObject(jsonObject);
+                }
+            }
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
+    public static void parseTeamObject(JSONObject team){
+        JSONObject teamObject = (JSONObject) team.get("team");
+
+        String venueName = sanitiseData((String) teamObject.get("venueName"));
+        int capacity = Integer.parseInt((String)teamObject.get("venueCapacity"));
+
+        Venue venue = new Venue(venueName, capacity, 20);
+        System.out.println("Venue code: " + venue.getVenueCode());
+
+        String clubName = (String) teamObject.get("name");
+
+        Club club = new Club(clubName, venue.getVenueCode());
+
+        String league = (String) teamObject.get("league");
+
+        Team team1 = new Team(clubName, league, club.getClubCode());
+
+        writeVenue(venue);
+
+        writeClub(club);
+
+        writeTeam(team1);
+
+        System.out.println("team written: " + clubName);
+
+    }
+
     private static void parsePlayerObject(JSONObject player){
-        //Get employee object within list
+        //Get player object within list
         JSONObject playerObject = (JSONObject) player.get("player");
 
-        //Get employee first name
-        String name = (String) playerObject.get("name");
+        //Get player first name
+        String name = sanitiseData((String) playerObject.get("name"));
         System.out.println(name);
 
+        //If there was an error when reading the players name then don't add that player to the database
         if(name == null){
-            System.out.println("Null");
             return;
         }
 
-        if(name.equals("")){
-            System.out.println("Blank");
-            return;
-        }
-
-        //Get employees first name
+        //Get players first name
         String forename = name.split(" ")[0];
 
-        //Get employees surname
+        //Get employees surname - conditionals used to allow double barrelled names
         String surname = null;
         if(name.split(" ").length < 2){
             surname = name.split(" ")[0];
@@ -113,18 +151,40 @@ public class DatabasePopulator {
         //Get team
         String team = (String) playerObject.get("team");
 
+        //Remove "U23" from the team name
         if(team.contains("U23")){
             team = team.substring(0, team.length() - 4);
         }
 
-        //Get teamCode
-        String teamCode = readAllTeams("WHERE teamName='" + team + "'").get(0).getTeamCode();
 
-        Player player1 = new Player(forename, surname, true, teamCode);
 
-        System.out.println("Forename: " + player1.getForename());
-        System.out.println("Surname: " + player1.getSurname());
-        System.out.println("Team Code: " + player1.getTeamCode());
-        writePlayer(player1);
+
+        System.out.println("Team needed: " + team);
+
+        if(team.equals("Al-Waab")){
+            team = "Tottenham Hotspur";
+        }
+        if(team.equals("Happy Birthday")){
+            team = "AFC Bournemouth";
+        }
+
+        String teamCode = "";
+
+        if(readAllTeams("WHERE teamName='" + team + "'") == null){
+            teamCode = "BROKEN - " + team;
+        } else {
+            //Get teamCode
+            teamCode = readAllTeams("WHERE teamName='" + team + "'").get(0).getTeamCode();
+        }
+
+
+        //Write the created player to the database
+        writePlayer(new Player(forename, surname, true, teamCode));
+
+
+    }
+
+    public static String sanitiseData(String str){
+        return str.replace("'","");
     }
 }

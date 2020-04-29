@@ -259,7 +259,13 @@ public class GameMenu extends Application {
             String dbSize = ((RadioButton)createDbVbox.group.getSelectedToggle()).getText().split("-")[0];
             progressBox = new ProgressBox("Generating New " + dbSize + "Database");
 
-            Task task = returnTaskJsonCreation(dbSize);
+            //Used to add the date time to the file name to make them unique
+            LocalDateTime myDateObj = LocalDateTime.now();
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("ddMMyyyyHHmm");
+            String formattedDate = myDateObj.format(myFormatObj);
+            String jsonFileName = dbSize.trim() + formattedDate;
+
+            Task task = returnTaskJsonCreation(dbSize, jsonFileName);
 
             progressBox.progressBar.progressProperty().bind(task.progressProperty());
 
@@ -275,9 +281,9 @@ public class GameMenu extends Application {
                     progressBox.close();
                 });
 
-                LocalDateTime myDateObj = LocalDateTime.now();
-                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                String formattedDate = myDateObj.format(myFormatObj);
+//                LocalDateTime myDateObj = LocalDateTime.now();
+//                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//                String formattedDate = myDateObj.format(myFormatObj);
 
                 String baseGameName = dbSize.trim() + "-" + formattedDate;
 
@@ -289,7 +295,9 @@ public class GameMenu extends Application {
                     ioException.printStackTrace();
                 }
 
-                DatabasePopulator.jsonToDB("playerJsonSmall230420202026.json", baseGameName);
+
+
+                DatabasePopulator.jsonToDB(jsonFileName + ".json", baseGameName);
 
             });
 
@@ -433,7 +441,6 @@ public class GameMenu extends Application {
             System.out.println("No Results");
         } else {
             for(HtmlElement row : playerRows){
-                String name = ((HtmlElement)row.getFirstByXPath("./td/table/tbody/tr/td/div/span/a")).asText();
                 String profileHtml = ((HtmlAnchor)row.getFirstByXPath("./td/table/tbody/tr/td/div/span/a")).getHrefAttribute();
                 playerLinks.add(profileHtml);
             }
@@ -464,6 +471,28 @@ public class GameMenu extends Application {
         }
         System.out.println("Finished getting the team links");
         return teamLinks;
+    }
+
+    public static TeamJsonScraper getTeam(String teamUrl){
+
+        try{
+            WebClient client = new WebClient();
+            client.getOptions().setCssEnabled(false);
+            client.getOptions().setJavaScriptEnabled(false);
+            HtmlPage page = client.getPage(teamUrl);
+
+            String name = ((HtmlElement) page.getFirstByXPath("//*[@id=\"verein_head\"]/div/div[1]/div[1]/div/div[1]/h1/span")).asText();
+            String stadiumName = ((HtmlElement) page.getFirstByXPath("//*[@id=\"verein_head\"]/div/div[1]/div[2]/div/div[2]/p[2]/span[2]/a")).asText();
+            String stadiumCapacityString = ((HtmlElement) page.getFirstByXPath("//*[@id=\"verein_head\"]/div/div[1]/div[2]/div/div[2]/p[2]/span[2]/span")).asText().replace(".", "");
+            String league = ((HtmlImage) page.getFirstByXPath("//*[@id=\"verein_head\"]/div/div[1]/div[4]/div[1]/a/img")).getAltAttribute();
+
+            int stadiumCapacity = Integer.parseInt(stadiumCapacityString.split(" ")[0]);
+
+            return new TeamJsonScraper(name, stadiumName, stadiumCapacity, league);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new TeamJsonScraper();
     }
 
 
@@ -577,12 +606,13 @@ public class GameMenu extends Application {
         return Long.parseLong(str);
     }
 
-    public Task returnTaskJsonCreation(String dbSize){
+    public Task returnTaskJsonCreation(String dbSize, String jsonFileName){
         return new Task() {
             @Override
             protected Object call() throws Exception {
                 ArrayList<String> teamLinks = new ArrayList<>();
                 ArrayList<PlayerJsonScraper> playerList = new ArrayList<>();
+                ArrayList<TeamJsonScraper> teamList = new ArrayList<>();
                 System.out.println("Start Json Creation");
                 String baseUrl = "https://www.transfermarkt.co.uk";
                 String premierLeagueUrl = "https://www.transfermarkt.co.uk/premier-league/startseite/wettbewerb/GB1";
@@ -614,8 +644,9 @@ public class GameMenu extends Application {
                         System.out.println("Is cancelled");
                         break;
                     }
+                    teamList.add(getTeam(baseUrl + teamLink));
                     for (String playerLink : getPlayerLinks(baseUrl + teamLink)) {
-                        //These players have insufficient data to use to will be skipped
+                        //These players have insufficient data to use so will be skipped
                         if( playerLink.equals("/ahmadou-dia/profil/spieler/611673") ||
                                 playerLink.equals("/callum-pearson/profil/spieler/547036") ||
                                 playerLink.equals("/eiji-kawashima/profil/spieler/77383")  ||
@@ -636,7 +667,7 @@ public class GameMenu extends Application {
                 }
                 try {
                     //Writes the players to the json file
-                    JsonScraperOperations.writePlayer(playerList, dbSize);
+                    JsonScraperOperations.writePlayer(teamList, playerList, jsonFileName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -644,5 +675,4 @@ public class GameMenu extends Application {
             }
         };
     }
-
 }

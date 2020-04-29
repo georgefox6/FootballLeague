@@ -7,17 +7,33 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class JsonScraperOperations {
 
     //This method is only used to write the json to store the current save name
-    public static void writePlayer(ArrayList<PlayerJsonScraper> players, String dbSize) throws IOException {
+    public static void writePlayer(ArrayList<TeamJsonScraper> teams, ArrayList<PlayerJsonScraper> players, String jsonFileName) throws IOException {
 
-        //Add employees to list
+        //Add players to list
         JSONArray playerList = new JSONArray();
+
+        for(TeamJsonScraper team : teams){
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("Writing team to JSON");
+            System.out.println(team.teamName);
+            System.out.println(team.venueName);
+            System.out.println(team.venueCapacity);
+            JSONObject teamDetails = new JSONObject();
+            teamDetails.put("name", team.teamName);
+            teamDetails.put("venueName", team.venueName);
+            teamDetails.put("venueCapacity", String.valueOf(team.venueCapacity));
+            teamDetails.put("league", team.league);
+
+            JSONObject teamObject = new JSONObject();
+            teamObject.put("team", teamDetails);
+
+            playerList.add(teamObject);
+        }
 
         for(PlayerJsonScraper player : players){
             JSONObject playerDetails = new JSONObject();
@@ -40,12 +56,9 @@ public class JsonScraperOperations {
             playerList.add(playerObject);
         }
 
-        //Used to add the date time to the file name to make them unique
-        LocalDateTime myDateObj = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("ddMMyyyyHHmm");
-        String formattedDate = myDateObj.format(myFormatObj);
 
-        Path filePath = Paths.get("src/main/resources/BaseGames/playerJson" + dbSize.trim() + formattedDate + ".json");
+
+        Path filePath = Paths.get("src/main/resources/BaseGames/" + jsonFileName + ".json");
 
         //Check if the file exists
         if(!Files.exists(filePath)) {
