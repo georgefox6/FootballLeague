@@ -6,12 +6,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.crypto.spec.PSource;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static FootballLeague.FootballLeagueBackend.Club.writeClub;
 import static FootballLeague.FootballLeagueBackend.Player.writePlayer;
