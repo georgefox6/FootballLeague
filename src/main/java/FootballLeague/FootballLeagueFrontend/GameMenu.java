@@ -1,16 +1,12 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import java.io.File.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Team;
@@ -26,12 +22,6 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -39,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
-import javafx.util.Callback;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
