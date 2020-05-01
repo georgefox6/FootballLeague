@@ -46,6 +46,9 @@ dependencies {
 
     compile files('libs/json-simple-1.1.1.jar')
 
+    //HTML UNIT dependency
+    implementation 'net.sourceforge.htmlunit:htmlunit:2.39.0'
+
     // Enable logging in the application
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.6.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.6.1'

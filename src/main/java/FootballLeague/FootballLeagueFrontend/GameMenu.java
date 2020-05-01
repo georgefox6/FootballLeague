@@ -1,37 +1,49 @@
 package FootballLeague.FootballLeagueFrontend;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import FootballLeague.FootballLeagueBackend.GameState;
 import FootballLeague.FootballLeagueBackend.Team;
+import FootballLeague.FootballLeagueBackend.WebScraper.*;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
+import javafx.concurrent.Task;
+
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
+
 import FootballLeague.FootballLeagueBackend.FileHandler;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import static FootballLeague.FootballLeagueFrontend.MainGame.initNewGame;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class GameMenu extends Application {
 
     public static Logger logger = LogManager.getLogger("com.josh");
 
     ComboBox<Team> teamSelector;
+    ComboBox<String> baseGameSelector;
+    ProgressBox progressBox;
+    CreateDbVbox createDbVbox;
+    Button createGameButton;
     Stage stage;
 
     @Override
@@ -71,11 +83,19 @@ public class GameMenu extends Application {
         //     NewGame Screen      //
         /////////////////////////////
 
+        baseGameSelector = new ComboBox<>();
+
         TextField newGameName = new TextField();
+        newGameName.setDisable(true);
+
         Button backButton = new Button();
-        Button createGameButton = new Button();
-        ObservableList<Team> teamList = getAllTeams();
-        teamSelector = new ComboBox<>(teamList);
+
+        createGameButton = new Button();
+        createGameButton.setDisable(true);
+
+        teamSelector = new ComboBox<>();
+        teamSelector.setDisable(true);
+
 
         backButton.setText("Back");
         createGameButton.setText("Create game");
@@ -85,7 +105,7 @@ public class GameMenu extends Application {
         newGameMenuButtons.setSpacing(10);
 
         VBox newGameMenu = new VBox();
-        newGameMenu.getChildren().addAll(newGameName, teamSelector, newGameMenuButtons);
+        newGameMenu.getChildren().addAll(baseGameSelector, newGameName, teamSelector, newGameMenuButtons);
         newGameMenu.setSpacing(10);
         newGameMenu.setPadding(new Insets(25));
 
@@ -124,18 +144,40 @@ public class GameMenu extends Application {
         loadGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
 
 
+        ////////////////////////////
+        //    Settings Screen     //
+        ////////////////////////////
+
+        Button settingsCreateNewDBButton = new Button();
+        settingsCreateNewDBButton.setText("Create DB");
+
+        Button settingsBackButton = new Button();
+        settingsBackButton.setText("Back");
+
+        VBox settingsMenu = new VBox();
+        settingsMenu.getChildren().addAll(settingsCreateNewDBButton, settingsBackButton);
+        settingsMenu.setSpacing(10);
+        settingsMenu.setPadding(new Insets(25));
+
+        BorderPane borderPaneSettingsScreen = new BorderPane();
+        borderPaneSettingsScreen.setCenter(settingsMenu);
+
+        Scene settingsScene = new Scene(borderPaneSettingsScreen, 280, 200);
+
         /////////////////////////////
         //   Home Screen Actions   //
         /////////////////////////////
 
         newGameButton.setOnAction((ActionEvent event) -> {
+            ObservableList<String> baseGameList = getAllBaseGames();
+            baseGameSelector.setItems(baseGameList);
             pressedNewGameButton(stage, newGameScreenScene);
         });
         loadGameButton.setOnAction((ActionEvent event) -> {
             pressedLoadGameButton(stage, loadGameScreenScene);
         });
         settingsButton.setOnAction((ActionEvent event) -> {
-            pressedSettingsButton();
+            pressedSettingsButton(stage, settingsScene);
         });
         quitButton.setOnAction((ActionEvent event) -> {
             pressedQuitButton();
@@ -149,7 +191,22 @@ public class GameMenu extends Application {
             pressedBackButton(stage, mainMenuScene);
         });
         createGameButton.setOnAction((ActionEvent event) -> {
-            pressedCreateGameButton(newGameName.getText());
+            pressedCreateGameButton(baseGameSelector.getValue(), newGameName.getText());
+        });
+
+        baseGameSelector.setOnAction(e -> {
+            newGameName.setDisable(false);
+            createGameButton.setDisable(false);
+            teamSelector.setDisable(false);
+
+            try {
+                GameState.writeSaveName("../BaseGames/" + baseGameSelector.getValue());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            ObservableList<Team> teamList = getAllTeams();
+            teamSelector.setItems(teamList);
         });
 
         //////////////////////////////
@@ -165,6 +222,80 @@ public class GameMenu extends Application {
             loadGame(saveName);
         });
 
+        ///////////////////////////////
+        //  Settings Screen Actions  //
+        ///////////////////////////////
+
+        settingsBackButton.setOnAction(e -> {
+            pressedBackButton(stage, mainMenuScene);
+        });
+
+        createDbVbox = new CreateDbVbox();
+        settingsCreateNewDBButton.setOnAction(e -> {
+            BorderPane borderPaneNewDB = new BorderPane();
+            borderPaneNewDB.setCenter(createDbVbox);
+            Scene scene = new Scene(borderPaneNewDB, 280, 200);
+            stage.setScene(scene);
+        });
+
+
+        ///////////////////////////////
+        //   Create new DB Actions   //
+        ///////////////////////////////
+
+        createDbVbox.generateButton.setOnAction(e -> {
+            System.out.println(((RadioButton)createDbVbox.group.getSelectedToggle()).getText());
+            String dbSize = ((RadioButton)createDbVbox.group.getSelectedToggle()).getText().split("-")[0];
+            progressBox = new ProgressBox("Generating New " + dbSize + "Database");
+
+            //Used to add the date time to the file name to make them unique
+            LocalDateTime myDateObj = LocalDateTime.now();
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("ddMMyyyyHHmm");
+            String formattedDate = myDateObj.format(myFormatObj);
+            String jsonFileName = dbSize.trim() + formattedDate;
+
+            Task task = WebToJson.returnTaskJsonCreation(dbSize, jsonFileName);
+
+            //Used to bind the progress bar to the progress of the task
+            progressBox.progressBar.progressProperty().bind(task.progressProperty());
+
+            //Code to be run once the task has been completed successfully
+            task.setOnSucceeded(f -> {
+                progressBox.vbox.getChildren().add(new Label("Database Complete!"));
+
+                Button okButton = new Button("Ok");
+                progressBox.vbox.getChildren().add(okButton);
+
+                okButton.setOnAction(g -> {
+                    System.out.println("close");
+                    progressBox.close();
+                });
+
+                String baseGameName = dbSize.trim() + "-" + formattedDate;
+
+                try {
+                    Path source = Paths.get("src/main/resources/blank.db");
+                    Path target = Paths.get("src/main/resources/BaseGames/" + baseGameName + ".db");
+                    Files.copy(source, target, REPLACE_EXISTING);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+
+
+                DatabasePopulator.jsonToDB(jsonFileName + ".json", baseGameName);
+
+            });
+
+            Thread thread = new Thread(task);
+            thread.start();
+
+
+        });
+
+        createDbVbox.backButton.setOnAction(e -> {
+            pressedBackButton(stage, settingsScene);
+        });
 
 
         /////////////////////////////
@@ -188,28 +319,29 @@ public class GameMenu extends Application {
         stage.setScene(loadGameScreenScene);
     }
 
-    private void pressedSettingsButton() {
-
+    private void pressedSettingsButton(Stage stage, Scene scene) {
+        stage.setTitle("Settings");
+        stage.setScene(scene);
     }
 
     private void pressedQuitButton() {
         // stage.close();
     }
 
-    private void pressedCreateGameButton(String saveGameName) {
+    private void pressedCreateGameButton(String baseGame, String saveGameName) {
         logger.info("Create game");
         if (checkGameExists(saveGameName)) {
             Boolean answer = ConfirmBox.display("Game already exists:", "Are you sure you want to overwrite this game?");
             if (answer) {
                 try {
-                    createNewGame(saveGameName, true);
+                    createNewGame(baseGame, saveGameName, true);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         } else {
             try {
-                createNewGame(saveGameName, false);
+                createNewGame(baseGame, saveGameName, false);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -229,11 +361,10 @@ public class GameMenu extends Application {
         return gameExists;
     }
 
-    private void createNewGame(String saveGameName, Boolean overwrite) throws IOException, InterruptedException {
+    private void createNewGame(String baseGame, String saveGameName, Boolean overwrite) throws IOException, InterruptedException {
         FileHandler f = new FileHandler();
-        String mainGameName = "mainGame";
         try {
-            f.copyBaseSaveGame(mainGameName, saveGameName, overwrite);
+            f.copyBaseSaveGame(baseGame, saveGameName, overwrite);
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -251,14 +382,18 @@ public class GameMenu extends Application {
     }
 
     public ObservableList<Team> getAllTeams(){
-        ArrayList<Team> teams = Team.readAllTeamsMain("");
+        ArrayList<Team> teams = Team.readAllTeams("");
         return FXCollections.observableArrayList(teams);
     }
 
     public ObservableList<String> getAllSaves(){
         FileHandler f = new FileHandler();
         return FXCollections.observableArrayList(f.getSaveGameNamesDB());
+    }
 
+    public ObservableList<String> getAllBaseGames(){
+        FileHandler handler = new FileHandler();
+        return FXCollections.observableArrayList(handler.getBaseGames());
     }
 
     private void loadGame(String saveGameName){

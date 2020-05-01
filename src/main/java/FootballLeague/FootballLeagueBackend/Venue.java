@@ -59,8 +59,7 @@ public class Venue {
     public Venue(){}
 
     public Venue(String name, int capacity, int ticketPrice){
-        //TODO this database call needs removing
-        codeIteration = Database.countVenues();
+        codeIteration = countVenue();
         this.venueCode = (String.format("%03d", codeIteration) + name.charAt(0) + name.charAt(1) + name.charAt(2)).toUpperCase();
         this.name = name;
         this.capacity = capacity;
