@@ -1,6 +1,6 @@
 # Football League
-Football League is a java based football management game. It gives you the ability to pick a team to manage, choose your
- tactics, sign your favourite players and simulate games.
+Football League is a java based football management game. It gives you the ability to pick one of over 120 teams to to manage, choose your
+ tactics, sign your favourite players and simulate games. The game contains over 3000 real players from all of the major leagues and uses real data to make the game more fun and realistic.
 
 
 ## Installation Instructions
