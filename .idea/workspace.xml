@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FootballLeague.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/JavaFX11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/LeaguePosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/LeaguePosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
