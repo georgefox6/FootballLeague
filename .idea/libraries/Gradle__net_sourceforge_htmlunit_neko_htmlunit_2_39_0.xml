@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sourceforge.htmlunit:neko-htmlunit:2.39.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/caches/modules-2/files-2.1/net.sourceforge.htmlunit/neko-htmlunit/2.39.0/3df559dd3e34978cc17598d8df03d47ae77b1dff/neko-htmlunit-2.39.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlunit/neko-htmlunit/2.39.0/3df559dd3e34978cc17598d8df03d47ae77b1dff/neko-htmlunit-2.39.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/caches/modules-2/files-2.1/net.sourceforge.htmlunit/neko-htmlunit/2.39.0/ede5be5795d29a025f48f6e9f9329b85bf1a46d8/neko-htmlunit-2.39.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlunit/neko-htmlunit/2.39.0/ede5be5795d29a025f48f6e9f9329b85bf1a46d8/neko-htmlunit-2.39.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

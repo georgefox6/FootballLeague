@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openjfx:javafx-controls:win:12">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/caches/modules-2/files-2.1/org.openjfx/javafx-controls/12/45d9af154b384e2eb9d787f5d8621b4f54df0d28/javafx-controls-12-win.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/12/45d9af154b384e2eb9d787f5d8621b4f54df0d28/javafx-controls-12-win.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/caches/modules-2/files-2.1/org.openjfx/javafx-controls/12/b94e4ee04a2ef5ae1bf30ce4514fc4f773b3af57/javafx-controls-12-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/12/b94e4ee04a2ef5ae1bf30ce4514fc4f773b3af57/javafx-controls-12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
