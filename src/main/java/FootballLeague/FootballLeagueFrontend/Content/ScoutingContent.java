@@ -21,28 +21,36 @@ public class ScoutingContent extends TableView {
     
     TableColumn<Player, String> forenameColumn;
     TableColumn<Player, String> surnameColumn;
-    TableColumn<Player, Boolean> injuryColumn;
+    TableColumn<Player, Double> attackingStatColumn;
+    TableColumn<Player, Double> creativityStatColumn;
+    TableColumn<Player, Double> defensiveStatColumn;
     TableColumn<Player, String> teamName;
 
     public ScoutingContent() {
         forenameColumn = new TableColumn<>("Forename");
         surnameColumn = new TableColumn<>("Surname");
-        injuryColumn = new TableColumn<>("Injury Status");
+        attackingStatColumn = new TableColumn<>("Attacking Stat");
+        creativityStatColumn = new TableColumn<>("Creativity Stat");
+        defensiveStatColumn = new TableColumn<>("Defensive Stat");
         teamName = new TableColumn<>("Team Name");
 
         //Set the size of each column
-        forenameColumn.setMinWidth(180);
-        surnameColumn.setMinWidth(180);
-        injuryColumn.setMinWidth(180);
-        teamName.setMinWidth(180);
+        forenameColumn.setMinWidth(130);
+        surnameColumn.setMinWidth(130);
+        attackingStatColumn.setMinWidth(130);
+        creativityStatColumn.setMinWidth(130);
+        defensiveStatColumn.setMinWidth(130);
+        teamName.setMinWidth(130);
 
         forenameColumn.setCellValueFactory(new PropertyValueFactory<>("forename"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        injuryColumn.setCellValueFactory(new PropertyValueFactory<>("injuryStatus"));
+        attackingStatColumn.setCellValueFactory(new PropertyValueFactory<>("attackingStat"));
+        creativityStatColumn.setCellValueFactory(new PropertyValueFactory<>("creativityStat"));
+        defensiveStatColumn.setCellValueFactory(new PropertyValueFactory<>("defensiveStat"));
         teamName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
 
         setItems(getAllPlayers());
-        getColumns().addAll(forenameColumn, surnameColumn, injuryColumn, teamName);
+        getColumns().addAll(forenameColumn, surnameColumn, attackingStatColumn, creativityStatColumn, defensiveStatColumn, teamName);
         addShortlistButton();
 
 

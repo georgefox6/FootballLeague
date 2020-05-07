@@ -17,36 +17,6 @@ public class PlayerJsonScraper {
 
     public PlayerJsonScraper(){}
 
-    //Used for outfield players
-    public PlayerJsonScraper(String blank, String name, String dateOfBirth, int age, String position, String nationality, String team, int gamesPlayed, int goalsScored, int assists, long value, String playerUrl) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.age = age;
-        this.position = position;
-        this.nationality = nationality;
-        this.team = team;
-        this.gamesPlayed = gamesPlayed;
-        this.goalsScored = goalsScored;
-        this.assists = assists;
-        this.value = value;
-        this.playerUrl = playerUrl;
-    }
-
-    //Used for goalkeepers
-    public PlayerJsonScraper(String name, String dateOfBirth, int age, String position, String nationality, String team, int gamesPlayed, int cleanSheets, int goalsConceded, long value, String playerUrl) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.age = age;
-        this.position = position;
-        this.nationality = nationality;
-        this.team = team;
-        this.gamesPlayed = gamesPlayed;
-        this.cleanSheets = cleanSheets;
-        this.goalsConceded = goalsConceded;
-        this.value = value;
-        this.playerUrl = playerUrl;
-    }
-
     //Used for all players
     public PlayerJsonScraper(String name, String dateOfBirth, int age, String position, String nationality, String team, int gamesPlayed, int cleanSheets, int goalsConceded, int goalsScored, int assists, long value, String playerUrl) {
         this.name = name;

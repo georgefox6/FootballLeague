@@ -17,8 +17,10 @@ public class Player {
     String playerCode;
     String forename;
     String surname;
-    Boolean injuryStatus;
     String teamCode;
+    double attackingStat;
+    double creativityStat;
+    double defensiveStat;
     static int codeIteration;
 
     //This is used to auto increment the player code so that they are all unique
@@ -30,30 +32,36 @@ public class Player {
     public Player(){}
 
     //Constructor without team teamCode and generated player code
-    public Player(String forename, String surname, Boolean injuryStatus){
+    public Player(String forename, String surname, Boolean injuryStatus, double attackingStat, double creativityStat, double defensiveStat){
         this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;
-        this.injuryStatus = injuryStatus;
+        this.attackingStat = attackingStat;
+        this.creativityStat = creativityStat;
+        this.defensiveStat = defensiveStat;
         this.teamCode = null;
     }
 
     //Constructor with teamCode and generated player code
-    public Player(String forename, String surname, Boolean injuryStatus, String teamCode){
+    public Player(String forename, String surname, double attackingStat, double creativityStat, double defensiveStat, String teamCode){
         this.playerCode = (String.format("%03d", codeIteration) + forename.charAt(0) + surname.charAt(0) + surname.charAt(1)).toUpperCase();
         this.forename = forename;
         this.surname = surname;
-        this.injuryStatus = injuryStatus;
+        this.attackingStat = attackingStat;
+        this.creativityStat = creativityStat;
+        this.defensiveStat = defensiveStat;
         this.teamCode = teamCode;
         codeIteration++;
     }
 
     //Constructor with playerCode for creation of player object from DB so player code remains consistent
-    public Player(String playerCode, String forename, String surname, Boolean injuryStatus, String teamCode){
+    public Player(String playerCode, String forename, String surname, double attackingStat, double creativityStat, double defensiveStat, String teamCode){
         this.playerCode = playerCode.toUpperCase();
         this.forename = forename;
         this.surname = surname;
-        this.injuryStatus = injuryStatus;
+        this.attackingStat = attackingStat;
+        this.creativityStat = creativityStat;
+        this.defensiveStat = defensiveStat;
         this.teamCode = teamCode;
     }
 
@@ -69,9 +77,19 @@ public class Player {
     public void setSurname(String surname){
         this.surname = surname;
     }
-    public void setInjuryStatus(Boolean injuryStatus){
-        this.injuryStatus = injuryStatus;
+
+    public void setAttackingStat(double attackingStat) {
+        this.attackingStat = attackingStat;
     }
+
+    public void setCreativityStat(double creativityStat) {
+        this.creativityStat = creativityStat;
+    }
+
+    public void setDefensiveStat(double defensiveStat) {
+        this.defensiveStat = defensiveStat;
+    }
+
     public void setTeamCode(String teamCode){
         this.teamCode = teamCode;
     }
@@ -86,8 +104,17 @@ public class Player {
     public String getSurname() {
         return surname;
     }
-    public Boolean getInjuryStatus() {
-        return injuryStatus;
+
+    public double getAttackingStat() {
+        return attackingStat;
+    }
+
+    public double getCreativityStat() {
+        return creativityStat;
+    }
+
+    public double getDefensiveStat() {
+        return defensiveStat;
     }
 
     public String getTeamCode() {
@@ -112,7 +139,7 @@ public class Player {
             try {
                 assert result != null;
                 if(result.next()){
-                    return new Player(playerCode, result.getString("forename"), result.getString("surname"), result.getString("injuryStatus").equals("true"), result.getString("teamCode"));
+                    return new Player(playerCode, result.getString("forename"), result.getString("surname"), result.getDouble("attackingStat"), result.getDouble("creativityStat"), result.getDouble("defensiveStat"), result.getString("teamCode"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -129,7 +156,7 @@ public class Player {
             ResultSet rs = readAllQuery("player", clause);
             assert rs != null;
             while(rs.next()){
-                players.add(new Player(rs.getString("playerCode"), rs.getString("forename"), rs.getString("surname"), rs.getString("injuryStatus").equals("true"), rs.getString("teamCode")));
+                players.add(new Player(rs.getString("playerCode"), rs.getString("forename"), rs.getString("surname"), rs.getDouble("attackingStat"), rs.getDouble("creativityStat"), rs.getDouble("defensiveStat"), rs.getString("teamCode")));
             }
             logger.info("Player Size : " + players.size());
         } catch (SQLException e) {
@@ -141,12 +168,12 @@ public class Player {
     }
 
     public static boolean writePlayer(Player player){
-        String values = String.format("'%s', '%s', '%s', '%s', '%s'", player.getPlayerCode(), player.getForename(), player.getSurname(), player.getInjuryStatus(), player.getTeamCode());
+        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s'", player.getPlayerCode(), player.getForename(), player.getSurname(), player.getAttackingStat(), player.getCreativityStat(), player.getDefensiveStat(), player.getTeamCode());
         return DatabaseConnection.writeQuery("player", values);
     }
 
     public static void updatePlayer(Player player){
-        String values = String.format("forename='%s', surname='%s', injuryStatus='%s', teamCode='%s' WHERE playerCode='%s'", player.getForename(), player.getSurname(), player.getInjuryStatus(), player.getTeamCode(), player.getPlayerCode());
+        String values = String.format("forename='%s', surname='%s', attackingStat='%s', creativityStat='%s', defensiveStat='%s',  teamCode='%s' WHERE playerCode='%s'", player.getForename(), player.getSurname(), player.getAttackingStat(), player.getCreativityStat(), player.getDefensiveStat(), player.getTeamCode(), player.getPlayerCode());
         updateQuery("player", values);
     }
 

@@ -8,6 +8,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static FootballLeague.FootballLeagueBackend.Club.writeClub;
 import static FootballLeague.FootballLeagueBackend.Player.writePlayer;
@@ -119,6 +121,27 @@ public class DatabasePopulator {
         //Get team
         String team = (String) playerObject.get("team");
 
+        //Games played
+        int gamesPlayed = Integer.parseInt((String) playerObject.get("gamesPlayed"));
+
+        //Get the attacking stat
+        double attackingStat = 0.0;
+        if(gamesPlayed != 0){
+            attackingStat = Double.parseDouble((String) playerObject.get("goalsScored"))/ gamesPlayed;
+        }
+
+        //Get the creativity stat
+        double creativityStat = 0.0;
+        if(gamesPlayed != 0){
+            creativityStat = Double.parseDouble((String) playerObject.get("assists"))/ gamesPlayed;
+        }
+
+        //Used to reduce the stats for players who have played less than 5 games to reduce outliers
+        if(gamesPlayed < 5){
+            attackingStat = attackingStat/5;
+            creativityStat = creativityStat/5;
+        }
+
         //Remove "U23" from the team name
         if(team.contains("U23")){
             team = team.substring(0, team.length() - 4);
@@ -133,12 +156,25 @@ public class DatabasePopulator {
             e.printStackTrace();
         }
 
+        //TODO generate the defensive stat
         //Write the created player to the database
-        writePlayer(new Player(forename, surname, true, teamCode));
+        writePlayer(new Player(forename, surname, round(attackingStat, 2), round(creativityStat, 2), round(0, 2), teamCode));
     }
 
     //This method is used to remove ' from the data as it was causing errors with the SQL
     public static String sanitiseData(String str){
+        if(str.length() < 1){
+            return str;
+        }
         return str.replace("'","");
+    }
+
+    //This method is used round the doubles to a specified number of decimal places
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

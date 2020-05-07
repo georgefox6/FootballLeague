@@ -16,24 +16,32 @@ public class FirstTeamContent extends TableView {
     
     TableColumn<Player, String> forenameColumn;
     TableColumn<Player, String> surnameColumn;
-    TableColumn<Player, Boolean> injuryColumn;
+    TableColumn<Player, Double> attackingStatColumn;
+    TableColumn<Player, Double> creativityStatColumn;
+    TableColumn<Player, Double> defensiveStatColumn;
 
     public FirstTeamContent() {
         forenameColumn = new TableColumn<>("Forename");
         surnameColumn = new TableColumn<>("Surname");
-        injuryColumn = new TableColumn<>("Injury Status");
+        attackingStatColumn = new TableColumn<>("Attacking Stat");
+        creativityStatColumn = new TableColumn<>("Creativity Stat");
+        defensiveStatColumn = new TableColumn<>("Defensive Stat");
 
         //Set the size of each column
-        forenameColumn.setMinWidth(200);
-        surnameColumn.setMinWidth(200);
-        injuryColumn.setMinWidth(200);
+        forenameColumn.setMinWidth(150);
+        surnameColumn.setMinWidth(150);
+        attackingStatColumn.setMinWidth(150);
+        creativityStatColumn.setMinWidth(150);
+        defensiveStatColumn.setMinWidth(150);
 
         forenameColumn.setCellValueFactory(new PropertyValueFactory<>("forename"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        injuryColumn.setCellValueFactory(new PropertyValueFactory<>("injuryStatus"));
+        attackingStatColumn.setCellValueFactory(new PropertyValueFactory<>("attackingStat"));
+        creativityStatColumn.setCellValueFactory(new PropertyValueFactory<>("creativityStat"));
+        defensiveStatColumn.setCellValueFactory(new PropertyValueFactory<>("defensiveStat"));
 
         setItems(getPlayersFromTeam());
-        getColumns().addAll(forenameColumn, surnameColumn, injuryColumn);
+        getColumns().addAll(forenameColumn, surnameColumn, attackingStatColumn, creativityStatColumn, defensiveStatColumn);
     }
 
     public ObservableList<Player> getPlayersFromTeam() {
