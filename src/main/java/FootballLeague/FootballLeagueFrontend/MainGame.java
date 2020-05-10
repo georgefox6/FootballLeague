@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 
 import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readUniqueLeagues;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
+import static FootballLeague.FootballLeagueBackend.StartingXI.readStartingXI;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 
@@ -108,6 +109,7 @@ public class MainGame extends Stage {
         tacticContent = new TacticContent();
         saveTacticButtonListener();
         resetTacticButtonListener();
+        loadTacticButtonListener();
 
         scoutingContent = new ScoutingContent();
 
@@ -272,6 +274,10 @@ public class MainGame extends Stage {
 
     //Add the action listeners for the reset tactic button
     public void resetTacticButtonListener(){
+        clearTactic();
+    }
+
+    public void clearTactic(){
         //Action listener for the reset tactic button
         tacticMenu.newTacticButton.setOnAction(e -> {
 
@@ -351,6 +357,9 @@ public class MainGame extends Stage {
                 //Team not filled out
                 AlertBox.display("Incomplete Team", "You must add players to each position before saving");
             } else {
+
+                String saveName = SaveBox.display("Save Tactic", "Enter the tactic name");
+
                 //Write the tactic to the database
                 System.out.println(tacticContent.positionTwoCB.getValue().getPlayerCode());
                 StartingXI startingXI = new StartingXI(tacticContent.positionOneCB.getValue().getPlayerCode(), tacticContent.positionTwoCB.getValue().getPlayerCode(), tacticContent.positionThreeCB.getValue().getPlayerCode(), tacticContent.positionFourCB.getValue().getPlayerCode(), tacticContent.positionFiveCB.getValue().getPlayerCode(), tacticContent.positionSixCB.getValue().getPlayerCode(), tacticContent.positionSevenCB.getValue().getPlayerCode(), tacticContent.positionEightCB.getValue().getPlayerCode(), tacticContent.positionNineCB.getValue().getPlayerCode(), tacticContent.positionTenCB.getValue().getPlayerCode(), tacticContent.positionElevenCB.getValue().getPlayerCode());
@@ -359,13 +368,35 @@ public class MainGame extends Stage {
 
                 //Reads what formation has been selected
                 String selectedFormation = tacticContent.formation.getValue();
-                //TODO just filled with dummy variables for now
-                Tactic tactic = new Tactic(startingXI.getStartingXICode(),0.5,0.6,selectedFormation,tacticContent.playStyle.getValue());
+                Tactic tactic = new Tactic(startingXI.getStartingXICode(),tacticContent.attackingScore, tacticContent.creativeScore, tacticContent.defensiveScore,selectedFormation,tacticContent.playStyle.getValue(), saveName);
                 //Write the tactic to the database
                 writeTactic(tactic);
                 //Pop out to say tactic saved
-                AlertBox.display("Tactic Saved", "Your tactic " + tactic.getTacticCode() + " has been saved!");
+                AlertBox.display("Tactic Saved", "Your tactic " + tactic.getName() + " has been saved!");
             }
         });
     }
-}
+
+    //Adds the action listener for the load tactic button
+    public void loadTacticButtonListener(){
+        tacticMenu.loadTacticButton.setOnAction(e -> {
+            clearTactic();
+            Tactic loadedTactic = LoadBox.display("Load Tactic", "Choose a tactic to load");
+            tacticContent.formation.setValue(loadedTactic.getFormation());
+
+            tacticContent.playStyle.setValue(loadedTactic.getPlayStyle());
+            StartingXI startingXI = readStartingXI(loadedTactic.getStartingXICode());
+            tacticContent.positionOneCB.setValue(Player.readPlayer(startingXI.getPlayer1()));
+            tacticContent.positionTwoCB.setValue(Player.readPlayer(startingXI.getPlayer2()));
+            tacticContent.positionThreeCB.setValue(Player.readPlayer(startingXI.getPlayer3()));
+            tacticContent.positionFourCB.setValue(Player.readPlayer(startingXI.getPlayer4()));
+            tacticContent.positionFiveCB.setValue(Player.readPlayer(startingXI.getPlayer5()));
+            tacticContent.positionSixCB.setValue(Player.readPlayer(startingXI.getPlayer6()));
+            tacticContent.positionSevenCB.setValue(Player.readPlayer(startingXI.getPlayer7()));
+            tacticContent.positionEightCB.setValue(Player.readPlayer(startingXI.getPlayer8()));
+            tacticContent.positionNineCB.setValue(Player.readPlayer(startingXI.getPlayer9()));
+            tacticContent.positionTenCB.setValue(Player.readPlayer(startingXI.getPlayer10()));
+            tacticContent.positionElevenCB.setValue(Player.readPlayer(startingXI.getPlayer11()));
+        });
+
+    }}

@@ -6,7 +6,7 @@ import javafx.scene.layout.VBox;
 
 public class TacticMenu extends VBox {
     public Button newTacticButton;
-    Button loadTacticButton;
+    public Button loadTacticButton;
     public Button saveTacticButton;
 
     public TacticMenu(){

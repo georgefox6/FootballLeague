@@ -21,9 +21,9 @@ import static FootballLeague.FootballLeagueBackend.Venue.writeVenue;
 public class DatabasePopulator {
 
     public static void addDefaultTactics(){
-        writeTactic(new Tactic("01", "00", 0.8, 0.4, "442", "Attacking"));
-        writeTactic(new Tactic("02", "00", 0.6, 0.5, "433", "Park the bus"));
-        writeTactic(new Tactic("03", "00", 0.1, 0.1, "532", "Gengenpress"));
+        writeTactic(new Tactic("01", "00", 0.8, 0.4, 0.4, "442", "Attacking", ""));
+        writeTactic(new Tactic("02", "00", 0.6, 0.4,  0.5, "433", "Park the bus", ""));
+        writeTactic(new Tactic("03", "00", 0.1, 0.4,  0.1, "532", "Gengenpress", ""));
     }
 
     public static void jsonToDB(String jsonName, String dbName){

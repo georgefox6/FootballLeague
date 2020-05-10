@@ -27,6 +27,10 @@ public class TacticContent extends GridPane {
     Label creativeScoreLabel;
     Label defensiveScoreLabel;
 
+    public double attackingScore;
+    public double creativeScore;
+    public double defensiveScore;
+
     //Formation selector
     public ComboBox<String> formation;
     public Label formationLabel;
@@ -711,9 +715,9 @@ public class TacticContent extends GridPane {
 
     public void updateStatLabels(){
         ArrayList<ComboBox> cbs = new ArrayList<>(List.of(positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB));
-        double attackingScore = 0.0;
-        double creativeScore = 0.0;
-        double defensiveScore = 0.0;
+        attackingScore = 0.0;
+        creativeScore = 0.0;
+        defensiveScore = 0.0;
         for(ComboBox cb : cbs){
             if(cb.getValue() != null){
                 Player player = (Player) cb.getValue();

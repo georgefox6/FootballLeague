@@ -19,10 +19,12 @@ public class Tactic {
     String startingXICode;
     //Scale from 0 to 1 of how good the team is at scoring goals
     double attackScore;
+    double creativeScore;
     //Scale from 0 to 1 of how good the team is at defending
     double defenceScore;
     String formation;
     String playStyle;
+    String name;
 
     static int codeIteration;
 
@@ -40,6 +42,7 @@ public class Tactic {
     public double getAttackScore() {
         return attackScore;
     }
+    public double getCreativeScore(){ return creativeScore;}
     public double getDefenceScore() {
         return defenceScore;
     }
@@ -49,11 +52,10 @@ public class Tactic {
     public String getPlayStyle() {
         return playStyle;
     }
+    public String getName(){return name;}
 
 
     //Setters
-
-
     public void setTacticCode(String tacticCode) {
         this.tacticCode = tacticCode;
     }
@@ -65,6 +67,8 @@ public class Tactic {
     public void setAttackScore(double attackScore) {
         this.attackScore = attackScore;
     }
+
+    public void setCreativeScore(double creativeScore) { this.creativeScore = creativeScore;}
 
     public void setDefenceScore(double defenceScore) {
         this.defenceScore = defenceScore;
@@ -82,26 +86,36 @@ public class Tactic {
         Tactic.codeIteration = codeIteration;
     }
 
+    public void setName(String name){this.name = name;}
+
     //Constructors
     Tactic(){}
 
-    public Tactic(String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String startingXICode, double attackScore, double creativeScore, double defenceScore, String formation, String playStyle, String name){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
+        this.creativeScore = creativeScore;
         this.defenceScore = defenceScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        this.name = name;
         codeIteration++;
     }
 
-    public Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String tacticCode, String startingXICode, double attackScore, double creativeScore, double defenceScore, String formation, String playStyle, String name){
         this.tacticCode = tacticCode.toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
+        this.creativeScore = creativeScore;
         this.defenceScore = defenceScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        this.name = name;
+    }
+
+    public String toString(){
+        return this.name;
     }
 
     //This method is used to create a string of the player codes of the startingXI delimited by commas
@@ -130,7 +144,7 @@ public class Tactic {
         try {
             assert result != null;
             if(result.next()){
-                return new Tactic(tacticCode, result.getString("startingXICode"), result.getDouble("attackScore"), result.getDouble("defenceScore"), result.getString("formation"), result.getString("playStyle"));
+                return new Tactic(tacticCode, result.getString("startingXICode"), result.getDouble("attackScore"), result.getDouble("creativeScore"), result.getDouble("defenceScore"), result.getString("formation"), result.getString("playStyle"), result.getString("name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,7 +161,7 @@ public class Tactic {
             ResultSet rs = readAllQuery("tactic", clause);
             assert rs != null;
             while(rs.next()){
-                tactics.add(new Tactic(rs.getString("tacticCode"), rs.getString("startingXICode"), rs.getDouble("attackScore"), rs.getDouble("defenceScore"), rs.getString("formation"), rs.getString("playStyle")));
+                tactics.add(new Tactic(rs.getString("tacticCode"), rs.getString("startingXICode"), rs.getDouble("attackScore"), rs.getDouble("creativeScore"), rs.getDouble("defenceScore"), rs.getString("formation"), rs.getString("playStyle"), rs.getString("name")));
             }
             logger.info("Tactic Size : " + tactics.size());
         } catch (SQLException e) {
@@ -159,12 +173,12 @@ public class Tactic {
     }
 
     public static boolean writeTactic(Tactic tactic){
-        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s'", tactic.getTacticCode(), tactic.getStartingXICode(), tactic.getAttackScore(), tactic.getDefenceScore(), tactic.getFormation(), tactic.getPlayStyle());
+        String values = String.format("'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s'", tactic.getTacticCode(), tactic.getStartingXICode(), tactic.getAttackScore(), tactic.getCreativeScore(), tactic.getDefenceScore(), tactic.getFormation(), tactic.getPlayStyle(), tactic.getName());
         return DatabaseConnection.writeQuery("tactic", values);
     }
 
     public static void updateTactic(Tactic tactic){
-        String values = String.format("startingXICode='%s', attackScore='%s', defenceScore='%s', formation='%s', playStyle='%s' WHERE tacticCode='%s'", tactic.getStartingXICode(), tactic.getAttackScore(), tactic.getDefenceScore(), tactic.getFormation(), tactic.getPlayStyle(), tactic.getTacticCode());
+        String values = String.format("startingXICode='%s', attackScore='%s', creativeScore='%s', defenceScore='%s', formation='%s', playStyle='%s', name='%s' WHERE tacticCode='%s'", tactic.getStartingXICode(), tactic.getAttackScore(), tactic.getCreativeScore(), tactic.getDefenceScore(), tactic.getFormation(), tactic.getPlayStyle(), tactic.getName(), tactic.getTacticCode());
         updateQuery("tactic", values);
     }
 
