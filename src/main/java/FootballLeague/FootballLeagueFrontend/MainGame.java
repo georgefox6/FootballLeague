@@ -264,7 +264,7 @@ public class MainGame extends Stage {
                 break;
             case "Very Colourful":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("FootballLeague/src/main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/VeryColourful.css");
+                scene.getStylesheets().add("/src/main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/VeryColourful.css");
                 break;
         }
         System.out.println("Changed the theme to " + selectedTheme);
@@ -275,35 +275,50 @@ public class MainGame extends Stage {
         //Action listener for the reset tactic button
         tacticMenu.newTacticButton.setOnAction(e -> {
 
-            //Resets the text of all of the labels on the right hand side of the screen to *
-            if(tacticContent.getChildren().contains(tacticContent.p1)){
-                tacticContent.p1.setText("*");
-                tacticContent.p2.setText("*");
-                tacticContent.p3.setText("*");
-                tacticContent.p4.setText("*");
-                tacticContent.p5.setText("*");
-                tacticContent.p6.setText("*");
-                tacticContent.p7.setText("*");
-                tacticContent.p8.setText("*");
-                tacticContent.p9.setText("*");
-                tacticContent.p10.setText("*");
-                tacticContent.p11.setText("*");
+//            tacticContent.formation.setValue(null);
+
+            if(tacticContent.positionOneCB.getValue() != null){
+                tacticContent.clear1();
             }
 
-            //Resets the value of the combo boxes to null
-            if(tacticContent.getChildren().contains(tacticContent.positionOneCB)){
-                //Resets the values of all of the combo boxes to null
-                tacticContent.positionOneCB.setValue(null);
-                tacticContent.positionTwoCB.setValue(null);
-                tacticContent.positionThreeCB.setValue(null);
-                tacticContent.positionFourCB.setValue(null);
-                tacticContent.positionFiveCB.setValue(null);
-                tacticContent.positionSixCB.setValue(null);
-                tacticContent.positionSevenCB.setValue(null);
-                tacticContent.positionEightCB.setValue(null);
-                tacticContent.positionNineCB.setValue(null);
-                tacticContent.positionTenCB.setValue(null);
-                tacticContent.positionElevenCB.setValue(null);
+            if(tacticContent.positionTwoCB.getValue() != null){
+                tacticContent.clear2();
+            }
+
+            if(tacticContent.positionThreeCB.getValue() != null){
+                tacticContent.clear3();
+            }
+
+            if(tacticContent.positionFourCB.getValue() != null){
+                tacticContent.clear4();
+            }
+
+            if(tacticContent.positionFiveCB.getValue() != null){
+                tacticContent.clear5();
+            }
+
+            if(tacticContent.positionSixCB.getValue() != null){
+                tacticContent.clear6();
+            }
+
+            if(tacticContent.positionSevenCB.getValue() != null){
+                tacticContent.clear7();
+            }
+
+            if(tacticContent.positionEightCB.getValue() != null){
+                tacticContent.clear8();
+            }
+
+            if(tacticContent.positionNineCB.getValue() != null){
+                tacticContent.clear9();
+            }
+
+            if(tacticContent.positionTenCB.getValue() != null){
+                tacticContent.clear10();
+            }
+
+            if(tacticContent.positionElevenCB.getValue() != null){
+                tacticContent.clear11();
             }
 
             //Removes everything from the screen

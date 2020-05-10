@@ -14,14 +14,19 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import org.json.simple.parser.ParseException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TacticContent extends GridPane {
 
+    //TODO use the formation and play style as a modifier for the attacking and creative score
+
     Label attackingScoreLabel;
     Label creativeScoreLabel;
-    
+    Label defensiveScoreLabel;
+
     //Formation selector
     public ComboBox<String> formation;
     public Label formationLabel;
@@ -105,6 +110,7 @@ public class TacticContent extends GridPane {
 
         attackingScoreLabel = new Label("Attacking Score: ");
         creativeScoreLabel = new Label("Creative Score: ");
+        defensiveScoreLabel = new Label("Defensive Score: ");
 
         clearButton1 = new Button("Clear");
         clearButton2 = new Button("Clear");
@@ -197,6 +203,7 @@ public class TacticContent extends GridPane {
         //Checks that the value of the combo box is not null as this will cause an error
         positionOneCB.setOnAction(e -> {
             if(positionOneCB.getValue() != null){
+                System.out.println("Position one action listener just got triggered");
                 p1.setText(positionOneCB.getValue().toString());
                 updateCBOne();
                 previousPlayer1 = positionOneCB.getValue();
@@ -286,192 +293,258 @@ public class TacticContent extends GridPane {
 
         //Action listeners for the clear buttons
         clearButton1.setOnAction(e -> {
-            Player player = positionOneCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionOneCB.setValue(null);
-            p1.setText("*");
-            updateStatLabels();
+            if(positionOneCB.getValue() != null){
+                clear1();
+            }
         });
 
         clearButton2.setOnAction(e -> {
-            Player player = positionTwoCB.getValue();
-            positionOneCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionTwoCB.setValue(null);
-            p2.setText("*");
-            updateStatLabels();
+            if(positionTwoCB.getValue() != null){
+                clear2();
+            }
         });
 
         clearButton3.setOnAction(e -> {
-            Player player = positionThreeCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionThreeCB.setValue(null);
-            p3.setText("*");
-            updateStatLabels();
+            if(positionThreeCB.getValue() != null){
+                clear3();
+            }
         });
 
+
         clearButton4.setOnAction(e -> {
-            Player player = positionFourCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionFourCB.setValue(null);
-            p4.setText("*");
-            updateStatLabels();
+            if(positionFourCB.getValue() != null){
+                clear4();
+            }
         });
 
         clearButton5.setOnAction(e -> {
-            Player player = positionFiveCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionFiveCB.setValue(null);
-            p5.setText("*");
-            updateStatLabels();
+            if(positionFiveCB.getValue() != null){
+                clear5();
+            }
         });
 
         clearButton6.setOnAction(e -> {
-            Player player = positionSixCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionSixCB.setValue(null);
-            p6.setText("*");
-            updateStatLabels();
+            if(positionSixCB.getValue() != null){
+                clear6();
+            }
         });
 
         clearButton7.setOnAction(e -> {
-            Player player = positionSevenCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionSevenCB.setValue(null);
-            p7.setText("*");
-            updateStatLabels();
+            if(positionSevenCB.getValue() != null){
+                clear7();
+            }
         });
 
         clearButton8.setOnAction(e -> {
-            Player player = positionEightCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionEightCB.setValue(null);
-            p8.setText("*");
-            updateStatLabels();
+            if(positionEightCB.getValue() != null){
+                clear8();
+            }
         });
 
         clearButton9.setOnAction(e -> {
-            Player player = positionNineCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionNineCB.setValue(null);
-            p9.setText("*");
-            updateStatLabels();
+            if(positionNineCB.getValue() != null){
+                clear9();
+            }
         });
 
         clearButton10.setOnAction(e -> {
-            Player player = positionTenCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionElevenCB.getItems().add(player);
-            positionTenCB.setValue(null);
-            p10.setText("*");
-            updateStatLabels();
+            if(positionTenCB.getValue() != null){
+                clear10();
+            }
         });
 
         clearButton11.setOnAction(e -> {
-            Player player = positionElevenCB.getValue();
-            positionTwoCB.getItems().add(player);
-            positionThreeCB.getItems().add(player);
-            positionFourCB.getItems().add(player);
-            positionFiveCB.getItems().add(player);
-            positionSixCB.getItems().add(player);
-            positionSevenCB.getItems().add(player);
-            positionEightCB.getItems().add(player);
-            positionNineCB.getItems().add(player);
-            positionTenCB.getItems().add(player);
-            positionOneCB.getItems().add(player);
-            positionElevenCB.setValue(null);
-            p11.setText("*");
-            updateStatLabels();
+            if(positionElevenCB.getValue() != null){
+                clear11();
+            }
         });
+    }
 
+    public void clear1(){
+        Player player = positionOneCB.getValue();
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionOneCB.setValue(null);
+        p1.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear2(){
+        Player player = positionTwoCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionTwoCB.setValue(null);
+        p2.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear3(){
+        Player player = positionThreeCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionThreeCB.setValue(null);
+        p3.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear4(){
+        Player player = positionFourCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionFourCB.setValue(null);
+        p4.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear5(){
+        Player player = positionFiveCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionFiveCB.setValue(null);
+        p5.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear6(){
+        Player player = positionSixCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionSixCB.setValue(null);
+        p6.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear7(){
+        Player player = positionSevenCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionSevenCB.setValue(null);
+        p7.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear8(){
+        Player player = positionEightCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionEightCB.setValue(null);
+        p8.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear9(){
+        Player player = positionNineCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionNineCB.setValue(null);
+        p9.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear10(){
+        Player player = positionTenCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionElevenCB.getItems().add(player);
+        positionTenCB.setValue(null);
+        p10.setText("*");
+        updateStatLabels();
+    }
+
+    public void clear11(){
+        Player player = positionElevenCB.getValue();
+        positionOneCB.getItems().add(player);
+        positionTwoCB.getItems().add(player);
+        positionThreeCB.getItems().add(player);
+        positionFourCB.getItems().add(player);
+        positionFiveCB.getItems().add(player);
+        positionSixCB.getItems().add(player);
+        positionSevenCB.getItems().add(player);
+        positionEightCB.getItems().add(player);
+        positionNineCB.getItems().add(player);
+        positionTenCB.getItems().add(player);
+        positionElevenCB.setValue(null);
+        p11.setText("*");
+        updateStatLabels();
     }
 
     //Clear the screen of everything
@@ -509,6 +582,7 @@ public class TacticContent extends GridPane {
 
         add(attackingScoreLabel, 10, 1);
         add(creativeScoreLabel, 10, 2);
+        add(defensiveScoreLabel, 10, 3);
     }
 
     public void setFormation433(){
@@ -541,6 +615,7 @@ public class TacticContent extends GridPane {
 
         add(attackingScoreLabel, 10, 1);
         add(creativeScoreLabel, 10, 2);
+        add(defensiveScoreLabel, 10, 3);
     }
 
     public void setFormation532(){
@@ -573,6 +648,7 @@ public class TacticContent extends GridPane {
 
         add(attackingScoreLabel, 10, 1);
         add(creativeScoreLabel, 10, 2);
+        add(defensiveScoreLabel, 10, 3);
     }
 
     public void setFormation343(){
@@ -605,6 +681,7 @@ public class TacticContent extends GridPane {
 
         add(attackingScoreLabel, 10, 1);
         add(creativeScoreLabel, 10, 2);
+        add(defensiveScoreLabel, 10, 3);
     }
 
     public void addRemoveButtons(){
@@ -636,15 +713,27 @@ public class TacticContent extends GridPane {
         ArrayList<ComboBox> cbs = new ArrayList<>(List.of(positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB));
         double attackingScore = 0.0;
         double creativeScore = 0.0;
+        double defensiveScore = 0.0;
         for(ComboBox cb : cbs){
             if(cb.getValue() != null){
                 Player player = (Player) cb.getValue();
                 attackingScore += player.getAttackingStat();
                 creativeScore += player.getCreativityStat();
+                defensiveScore += player.getDefensiveStat();
             }
         }
-        attackingScoreLabel.setText("Attacking Score: " + attackingScore);
-        creativeScoreLabel.setText("Creative Score: " + creativeScore);
+        attackingScoreLabel.setText("Attacking Score: " + round(attackingScore, 2));
+        creativeScoreLabel.setText("Creative Score: " + round(creativeScore, 2));
+        defensiveScoreLabel.setText("Defensive Score: " + round(defensiveScore, 2));
+    }
+
+    //This method is used round the doubles to a specified number of decimal places
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     //This method is used to update options in the combo box
@@ -664,7 +753,6 @@ public class TacticContent extends GridPane {
         positionElevenCB.getItems().removeIf( d -> (d.getSurname().equals(player.getSurname())));
 
         if(previousPlayer1 != null) {
-            positionOneCB.getItems().add(previousPlayer1);
             positionTwoCB.getItems().add(previousPlayer1);
             positionThreeCB.getItems().add(previousPlayer1);
             positionFourCB.getItems().add(previousPlayer1);
@@ -696,7 +784,6 @@ public class TacticContent extends GridPane {
 
         if(previousPlayer2 != null) {
             positionOneCB.getItems().add(previousPlayer2);
-            positionTwoCB.getItems().add(previousPlayer2);
             positionThreeCB.getItems().add(previousPlayer2);
             positionFourCB.getItems().add(previousPlayer2);
             positionFiveCB.getItems().add(previousPlayer2);
@@ -728,7 +815,6 @@ public class TacticContent extends GridPane {
         if(previousPlayer3 != null) {
             positionOneCB.getItems().add(previousPlayer3);
             positionTwoCB.getItems().add(previousPlayer3);
-            positionThreeCB.getItems().add(previousPlayer3);
             positionFourCB.getItems().add(previousPlayer3);
             positionFiveCB.getItems().add(previousPlayer3);
             positionSixCB.getItems().add(previousPlayer3);
@@ -760,7 +846,6 @@ public class TacticContent extends GridPane {
             positionOneCB.getItems().add(previousPlayer4);
             positionTwoCB.getItems().add(previousPlayer4);
             positionThreeCB.getItems().add(previousPlayer4);
-            positionFourCB.getItems().add(previousPlayer4);
             positionFiveCB.getItems().add(previousPlayer4);
             positionSixCB.getItems().add(previousPlayer4);
             positionSevenCB.getItems().add(previousPlayer4);
@@ -792,7 +877,6 @@ public class TacticContent extends GridPane {
             positionTwoCB.getItems().add(previousPlayer5);
             positionThreeCB.getItems().add(previousPlayer5);
             positionFourCB.getItems().add(previousPlayer5);
-            positionFiveCB.getItems().add(previousPlayer5);
             positionSixCB.getItems().add(previousPlayer5);
             positionSevenCB.getItems().add(previousPlayer5);
             positionEightCB.getItems().add(previousPlayer5);
@@ -824,7 +908,6 @@ public class TacticContent extends GridPane {
             positionThreeCB.getItems().add(previousPlayer6);
             positionFourCB.getItems().add(previousPlayer6);
             positionFiveCB.getItems().add(previousPlayer6);
-            positionSixCB.getItems().add(previousPlayer6);
             positionSevenCB.getItems().add(previousPlayer6);
             positionEightCB.getItems().add(previousPlayer6);
             positionNineCB.getItems().add(previousPlayer6);
@@ -856,7 +939,6 @@ public class TacticContent extends GridPane {
             positionFourCB.getItems().add(previousPlayer7);
             positionFiveCB.getItems().add(previousPlayer7);
             positionSixCB.getItems().add(previousPlayer7);
-            positionSevenCB.getItems().add(previousPlayer7);
             positionEightCB.getItems().add(previousPlayer7);
             positionNineCB.getItems().add(previousPlayer7);
             positionTenCB.getItems().add(previousPlayer7);
@@ -888,7 +970,6 @@ public class TacticContent extends GridPane {
             positionFiveCB.getItems().add(previousPlayer8);
             positionSixCB.getItems().add(previousPlayer8);
             positionSevenCB.getItems().add(previousPlayer8);
-            positionEightCB.getItems().add(previousPlayer8);
             positionNineCB.getItems().add(previousPlayer8);
             positionTenCB.getItems().add(previousPlayer8);
             positionElevenCB.getItems().add(previousPlayer8);
@@ -920,7 +1001,6 @@ public class TacticContent extends GridPane {
             positionSixCB.getItems().add(previousPlayer9);
             positionSevenCB.getItems().add(previousPlayer9);
             positionEightCB.getItems().add(previousPlayer9);
-            positionNineCB.getItems().add(previousPlayer9);
             positionTenCB.getItems().add(previousPlayer9);
             positionElevenCB.getItems().add(previousPlayer9);
         }
@@ -952,7 +1032,6 @@ public class TacticContent extends GridPane {
             positionSevenCB.getItems().add(previousPlayer10);
             positionEightCB.getItems().add(previousPlayer10);
             positionNineCB.getItems().add(previousPlayer10);
-            positionTenCB.getItems().add(previousPlayer10);
             positionElevenCB.getItems().add(previousPlayer10);
         }
     }
@@ -984,7 +1063,6 @@ public class TacticContent extends GridPane {
             positionEightCB.getItems().add(previousPlayer11);
             positionNineCB.getItems().add(previousPlayer11);
             positionTenCB.getItems().add(previousPlayer11);
-            positionElevenCB.getItems().add(previousPlayer11);
         }
     }
 }

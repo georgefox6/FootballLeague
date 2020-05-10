@@ -4,6 +4,7 @@
     <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
