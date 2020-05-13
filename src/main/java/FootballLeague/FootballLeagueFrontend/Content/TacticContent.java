@@ -129,8 +129,8 @@ public class TacticContent extends GridPane {
         clearButton11 = new Button("Clear");
 
 //        Image deleteIcon = new Image(getClass().getResourceAsStream("/src/main/resources/images/delete-icon.png"));
-//        Image deleteIcon = new Image(getClass().getResourceAsStream("/../../resources/images/delete-icon.png"));
-//        Image deleteIcon = new Image(getClass().getResourceAsStream("C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\resources\\images\\delete-icon.png"));
+////        Image deleteIcon = new Image(getClass().getResourceAsStream("/../../resources/images/delete-icon.png"));
+////        Image deleteIcon = new Image(getClass().getResourceAsStream("C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\resources\\images\\delete-icon.png"));
 //        ImageView deleteIconView = new ImageView(deleteIcon);
 //        Button btn = new Button("delete");
 //        btn.setGraphic(deleteIconView);
@@ -361,6 +361,10 @@ public class TacticContent extends GridPane {
             if(positionElevenCB.getValue() != null){
                 clear11();
             }
+        });
+
+        playStyle.setOnAction(e -> {
+            updateStatLabels();
         });
     }
 
@@ -713,6 +717,20 @@ public class TacticContent extends GridPane {
         return playerList;
     }
 
+    public void updatePlayerLabels(){
+        p1.setText(positionOneCB.getValue().toString());
+        p2.setText(positionTwoCB.getValue().toString());
+        p3.setText(positionThreeCB.getValue().toString());
+        p4.setText(positionFourCB.getValue().toString());
+        p5.setText(positionFiveCB.getValue().toString());
+        p6.setText(positionSixCB.getValue().toString());
+        p7.setText(positionSevenCB.getValue().toString());
+        p8.setText(positionEightCB.getValue().toString());
+        p9.setText(positionNineCB.getValue().toString());
+        p10.setText(positionTenCB.getValue().toString());
+        p11.setText(positionElevenCB.getValue().toString());
+    }
+
     public void updateStatLabels(){
         ArrayList<ComboBox> cbs = new ArrayList<>(List.of(positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB));
         attackingScore = 0.0;
@@ -726,6 +744,30 @@ public class TacticContent extends GridPane {
                 defensiveScore += player.getDefensiveStat();
             }
         }
+
+        switch(playStyle.getValue()){
+            case "Tiki Taka":
+                attackingScore = attackingScore * 0.7;
+                creativeScore = creativeScore * 1.5;
+                defensiveScore = defensiveScore * 1.2;
+                break;
+            case "Gegenpress":
+                attackingScore = attackingScore * 1.2;
+                creativeScore = creativeScore * 1.1;
+                defensiveScore = defensiveScore * 0.8;
+                break;
+            case "Counter Attack":
+                attackingScore = attackingScore * 0.9;
+                creativeScore = creativeScore * 0.6;
+                defensiveScore = defensiveScore * 1.8;
+                break;
+            case "Park the bus":
+                attackingScore = attackingScore * 0.4;
+                creativeScore = creativeScore * 0.4;
+                defensiveScore = defensiveScore * 3.0;
+                break;
+        }
+
         attackingScoreLabel.setText("Attacking Score: " + round(attackingScore, 2));
         creativeScoreLabel.setText("Creative Score: " + round(creativeScore, 2));
         defensiveScoreLabel.setText("Defensive Score: " + round(defensiveScore, 2));

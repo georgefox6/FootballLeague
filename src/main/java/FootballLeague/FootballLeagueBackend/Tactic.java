@@ -13,8 +13,7 @@ import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 public class Tactic {
 
     public static Logger logger = LogManager.getLogger("com.josh");
-    
-    //TODO tactic should probably have a name variable to users can name the tactics they create
+
     String tacticCode;
     String startingXICode;
     //Scale from 0 to 1 of how good the team is at scoring goals

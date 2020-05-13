@@ -2,13 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_base_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_base_win_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_controls_win_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_graphics_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_graphics_win_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_media_win_14.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_base_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_base_win_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_controls_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_controls_win_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_fxml_win_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_graphics_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjfx_javafx_graphics_win_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/FootballLeague.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/FootballLeague.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/FootballLeague.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/FootballLeague.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Tactic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Tactic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/DatabasePopulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/DatabasePopulator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/blank.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/blank.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,10 +66,41 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\resources" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\out\production\FootballLeague\FootballLeague\FootballLeagueFrontend" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague\FootballLeagueFrontend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="FootballLeague.App" />
+      <module name="FootballLeague.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FootballLeague.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -74,10 +120,26 @@
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
     <state x="806" y="348" key="#com.intellij.ide.util.MemberChooser/0.0.2000.1293@0.0.2000.1293" timestamp="1588979753052" />
-    <state x="481" y="222" key="SettingsEditor" timestamp="1588799058980">
+    <state width="1957" height="366" key="GridCell.Tab.0.bottom" timestamp="1589390608690">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1588799058980" />
+    <state width="1957" height="366" key="GridCell.Tab.0.bottom/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
+    <state width="1957" height="366" key="GridCell.Tab.0.center" timestamp="1589390608690">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="366" key="GridCell.Tab.0.center/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
+    <state width="1957" height="366" key="GridCell.Tab.0.left" timestamp="1589390608690">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="366" key="GridCell.Tab.0.left/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
+    <state width="1957" height="366" key="GridCell.Tab.0.right" timestamp="1589390608690">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="366" key="GridCell.Tab.0.right/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
+    <state x="481" y="222" key="SettingsEditor" timestamp="1589390970770">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1589390970770" />
     <state x="657" y="304" key="run.anything.popup" timestamp="1589026579101">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>

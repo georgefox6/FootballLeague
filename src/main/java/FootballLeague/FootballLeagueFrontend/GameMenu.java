@@ -77,7 +77,21 @@ public class GameMenu extends Application {
         borderPaneMainMenu.setCenter(mainMenu);
 
         Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
-        mainMenuScene.getStylesheets().add("FootballLeague/src/main/Stylesheets/NotTwitter.css");
+        mainMenuScene.getStylesheets().clear();
+//        mainMenuScene.getStylesheets().add("FootballLeague/src/main/Stylesheets/NotTwitter.css");
+//        mainMenuScene.getStylesheets().add(getClass().getResource("Stylesheets\\DarkTheme.css"));
+//        mainMenuScene.getStylesheets().add("\\FootballLeague\\DarkTheme.css");
+//        mainMenuScene.getStylesheets().add("Stylesheets\\DarkTheme.css");
+//        mainMenuScene.getStylesheets().add("file:///C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\Stylesheets\\DarkTheme.css");
+//        mainMenuScene.getStylesheets().add("FootballLeague\\FootballLeagueFrontend\\NotTwitter.css");
+//        mainMenuScene.getStylesheets().add("Stylesheets\\NotTwitter.css");
+//        mainMenuScene.getStylesheets().add("\\..\\..\\Stylesheets\\NotTwitter.css");
+//        mainMenuScene.getStylesheets().add("jetbrains://idea/navigate/reference?project=FootballLeague&fqn1=FootballLeague.FootballLeagueFrontend.GameMenu&path2=resources%2FStylesheets%2FNotTwitter.css");
+        mainMenuScene.getStylesheets().add("../../../resources/Stylesheets");
+
+//        C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague\FootballLeagueFrontend\GameMenu.java
+//                ../../../resources/Stylesheets
+//        C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\resources\Stylesheets\NotTwitter.css
 
         /////////////////////////////
         //     NewGame Screen      //

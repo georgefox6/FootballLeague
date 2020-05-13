@@ -13,8 +13,10 @@ import org.json.simple.parser.ParseException;
 
 import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readUniqueLeagues;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
+import static FootballLeague.FootballLeagueBackend.Match.updateMatch;
 import static FootballLeague.FootballLeagueBackend.StartingXI.readStartingXI;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
+import static FootballLeague.FootballLeagueBackend.Tactic.updateTactic;
 import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
@@ -117,8 +119,6 @@ public class MainGame extends Stage {
 
         leagueFixturesContent = new LeagueFixturesContent();
 
-        //TODO load tactic button... pop out? then fill all of the data
-
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topMenu);
@@ -203,7 +203,50 @@ public class MainGame extends Stage {
             this.close();
     }
 
+    public Tactic getCurrentTactic(){
+        StartingXI startingXI = new StartingXI(tacticContent.positionOneCB.getValue().getPlayerCode(),
+                tacticContent.positionTwoCB.getValue().getPlayerCode(),
+                tacticContent.positionThreeCB.getValue().getPlayerCode(),
+                tacticContent.positionFourCB.getValue().getPlayerCode(),
+                tacticContent.positionFiveCB.getValue().getPlayerCode(),
+                tacticContent.positionSixCB.getValue().getPlayerCode(),
+                tacticContent.positionSevenCB.getValue().getPlayerCode(),
+                tacticContent.positionEightCB.getValue().getPlayerCode(),
+                tacticContent.positionNineCB.getValue().getPlayerCode(),
+                tacticContent.positionTenCB.getValue().getPlayerCode(),
+                tacticContent.positionElevenCB.getValue().getPlayerCode()
+        );
+        writeStartingXI(startingXI);
+        Tactic tactic = new Tactic(startingXI.getStartingXICode(), tacticContent.attackingScore, tacticContent.creativeScore, tacticContent.defensiveScore, tacticContent.formation.getValue(), tacticContent.playStyle.getValue(), "");
+        writeTactic(tactic);
+        return tactic;
+    }
+
     public void advanceGame(){
+        //This is used to set the tactic of the players team for the next match
+        Tactic tactic = getCurrentTactic();
+
+        try {
+            ArrayList<Match> homeMatches = readAllMatches("WHERE homeTeamCode='" + GameState.readTeam(GameState.readSaveName()) +
+                    "' and date='" + GameState.readGameWeek(GameState.readSaveName()) + "'");
+
+            ArrayList<Match> awayMatches = readAllMatches("WHERE awayTeamCode='" + GameState.readTeam(GameState.readSaveName()) +
+                    "' and date='" + GameState.readGameWeek(GameState.readSaveName()) + "'");
+
+            if(homeMatches.size() != 0){
+                Match hm = homeMatches.get(0);
+                hm.setHomeTacticCode(tactic.getTacticCode());
+                updateMatch(hm);
+            } else if(awayMatches.size() != 0) {
+                Match am = awayMatches.get(0);
+                am.setAwayTacticCode(tactic.getTacticCode());
+                updateMatch(am);
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
         //Creates the clause to search for matches
         String clause = "";
         clause = "WHERE date='" + GameState.readGameWeek(GameState.readSaveName()) + "'";
@@ -397,6 +440,9 @@ public class MainGame extends Stage {
             tacticContent.positionNineCB.setValue(Player.readPlayer(startingXI.getPlayer9()));
             tacticContent.positionTenCB.setValue(Player.readPlayer(startingXI.getPlayer10()));
             tacticContent.positionElevenCB.setValue(Player.readPlayer(startingXI.getPlayer11()));
+
+            tacticContent.updateStatLabels();
+            tacticContent.updatePlayerLabels();
         });
 
     }}
