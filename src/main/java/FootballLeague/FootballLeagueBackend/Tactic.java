@@ -4,11 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
+import static FootballLeague.FootballLeagueBackend.Player.readAllPlayers;
+import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 
 public class Tactic {
 
@@ -88,7 +91,7 @@ public class Tactic {
     public void setName(String name){this.name = name;}
 
     //Constructors
-    Tactic(){}
+    public Tactic(){}
 
     public Tactic(String startingXICode, double attackScore, double creativeScore, double defenceScore, String formation, String playStyle, String name){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
@@ -117,26 +120,79 @@ public class Tactic {
         return this.name;
     }
 
-    //This method is used to create a string of the player codes of the startingXI delimited by commas
-    //This is how the startingXI will be stored in the DB e.g 002GFO,007ERO,032WRO
-    public static String startingXIToCode(ArrayList<Player> startingXI){
-        String startingXICode = startingXI.get(0).getPlayerCode();
-        for (int i = 1; i < startingXI.size(); i++){
-            startingXICode = startingXICode + "," + startingXI.get(i).getPlayerCode();
+    public static Tactic generateBestTactic(String teamCode){
+        ArrayList<Player> teamPlayers = readAllPlayers("WHERE teamCode='" + teamCode + "'");
+        Collections.sort(teamPlayers);
+        ArrayList<Player> goalkeeper = new ArrayList<>();
+        ArrayList<Player> defenders = new ArrayList<>();
+        ArrayList<Player> midfielders = new ArrayList<>();
+        ArrayList<Player> forwards = new ArrayList<>();
+        double defensiveScore = 0.0;
+        double creativeScore = 0.0;
+        double attackingScore = 0.0;
+        for(Player player : teamPlayers){
+            switch(player.getPosition()){
+                case"Goalkeeper":
+                    if(goalkeeper.size() == 0){
+                        goalkeeper.add(player);
+                    }
+                    defensiveScore += player.getDefensiveStat();
+                    creativeScore += player.getCreativityStat();
+                    attackingScore += player.getAttackingStat();
+                    break;
+                case"Defender":
+                    if(defenders.size() + midfielders.size() + forwards.size() >= 10){
+                        break;
+                    }
+                    if(defenders.size() < 3){
+                        defenders.add(player);
+                    } else if(defenders.size() + midfielders.size() + forwards.size() < 10 && defenders.size() < 4){
+                        defenders.add(player);
+                    } else if(defenders.size() + midfielders.size() + forwards.size() < 10 && defenders.size() < 5 && forwards.size() < 3 && defenders.size() + midfielders.size() < 8){
+                        defenders.add(player);
+                    }
+                    defensiveScore += player.getDefensiveStat();
+                    creativeScore += player.getCreativityStat();
+                    attackingScore += player.getAttackingStat();
+                    break;
+                case"Midfielder":
+                    if(defenders.size() + midfielders.size() + forwards.size() >= 10){
+                        break;
+                    }
+                    if(midfielders.size() < 3){
+                        midfielders.add(player);
+                    } else if(defenders.size() + midfielders.size() + forwards.size() < 10 && defenders.size() <= 4 && midfielders.size() < 4) {
+                        midfielders.add(player);
+                    }
+                    defensiveScore += player.getDefensiveStat();
+                    creativeScore += player.getCreativityStat();
+                    attackingScore += player.getAttackingStat();
+                    break;
+                case"Forward":
+                    if(defenders.size() + midfielders.size() + forwards.size() >= 10){
+                        break;
+                    }
+                    if(forwards.size() < 2){
+                        forwards.add(player);
+                    } else if(defenders.size() + midfielders.size() + forwards.size() < 10 && forwards.size() < 3 && defenders.size() < 5){
+                        forwards.add(player);
+                    }
+                    defensiveScore += player.getDefensiveStat();
+                    creativeScore += player.getCreativityStat();
+                    attackingScore += player.getAttackingStat();
+                    break;
+            }
         }
-        return startingXICode;
+        String formation = defenders.size() + "-" + midfielders.size() + "-" + forwards.size();
+        ArrayList<Player> startingPlayers = new ArrayList<>();
+        startingPlayers.addAll(goalkeeper);
+        startingPlayers.addAll(defenders);
+        startingPlayers.addAll(midfielders);
+        startingPlayers.addAll(forwards);
+        StartingXI startingXI = new StartingXI(startingPlayers.get(0),startingPlayers.get(1),startingPlayers.get(2),startingPlayers.get(3),startingPlayers.get(4),startingPlayers.get(5),startingPlayers.get(6),startingPlayers.get(7),startingPlayers.get(8),startingPlayers.get(9),startingPlayers.get(10));
+        writeStartingXI(startingXI);
+        return new Tactic(startingXI.getStartingXICode(), attackingScore, creativeScore, defensiveScore, formation, "Tiki Taka", "");
     }
-
-    //This method is used to return an array list of players when a string of player codes as it will be stored in the DB in this form
-    public static ArrayList<Player> codeToStartingXI(String playerCodes){
-        ArrayList<Player> StartingXI = new ArrayList<>();
-        ArrayList<String> playerCodesList = (ArrayList<String>) Arrays.asList(playerCodes.split(","));
-        for(int i = 0; i < playerCodesList.size(); i++){
-            StartingXI.add(Player.readPlayer(playerCodesList.get(i)));
-        }
-        return StartingXI;
-    }
-    //TODO add function to calculate attack/defence scores based on the other inputs (players, formation and playstyle)
 
     public static Tactic readTactic(String tacticCode){
         ResultSet result = DatabaseConnection.readQuery("tactic", "tacticCode='" + tacticCode);

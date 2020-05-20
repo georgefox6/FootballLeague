@@ -12,13 +12,13 @@ public class PlayerJsonScraper {
     public int assists;
     public int cleanSheets;
     public int goalsConceded;
-    public long value;
+    public int value;
     public String playerUrl;
 
     public PlayerJsonScraper(){}
 
     //Used for all players
-    public PlayerJsonScraper(String name, String dateOfBirth, int age, String position, String nationality, String team, int gamesPlayed, int cleanSheets, int goalsConceded, int goalsScored, int assists, long value, String playerUrl) {
+    public PlayerJsonScraper(String name, String dateOfBirth, int age, String position, String nationality, String team, int gamesPlayed, int cleanSheets, int goalsConceded, int goalsScored, int assists, int value, String playerUrl) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.age = age;

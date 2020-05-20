@@ -121,6 +121,20 @@ public class DatabasePopulator {
         //Get team
         String team = (String) playerObject.get("team");
 
+
+        String position = ((String) playerObject.get("position"));
+        String role = position;
+
+        if(position.contains("-")){
+            position = ((String) playerObject.get("position")).split("-", 2)[0].trim();
+            role = ((String) playerObject.get("position")).split("-", 2)[1].trim();
+
+        }
+
+
+
+        int value = Integer.parseInt((String) playerObject.get("value"));
+
         //Games played
         int gamesPlayed = Integer.parseInt((String) playerObject.get("gamesPlayed"));
 
@@ -134,6 +148,49 @@ public class DatabasePopulator {
         double creativityStat = 0.0;
         if(gamesPlayed != 0){
             creativityStat = Double.parseDouble((String) playerObject.get("assists"))/ gamesPlayed;
+        }
+
+        double defensiveStat = 0.0;
+        switch(role){
+            case"Centre-Forward":
+                defensiveStat = 0.02;
+                break;
+            case"Second Striker":
+                defensiveStat = 0.02;
+                break;
+            case"Left Winger":
+                defensiveStat = 0.05;
+                break;
+            case"Right Winger":
+                defensiveStat = 0.05;
+                break;
+            case"Attacking Midfield":
+                defensiveStat = 0.07;
+                break;
+            case"Central Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Right Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Left Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Defensive Midfield":
+                defensiveStat = 0.2;
+                break;
+            case"Right-Back":
+                defensiveStat = 0.25;
+                break;
+            case"Left-Back":
+                defensiveStat = 0.25;
+                break;
+            case"Centre-Back":
+                defensiveStat = 0.3;
+                break;
+            case"Goalkeeper":
+                defensiveStat = 0.4;
+                break;
         }
 
         //Used to reduce the stats for players who have played less than 5 games to reduce outliers
@@ -153,12 +210,12 @@ public class DatabasePopulator {
         try{
             teamCode = readAllTeams("WHERE teamName='" + team + "'").get(0).getTeamCode();
         } catch (Exception e){
+            System.out.println("+++++++++++++++++++++++: " + team);
             e.printStackTrace();
         }
 
-        //TODO generate the defensive stat
         //Write the created player to the database
-        writePlayer(new Player(forename, surname, round(attackingStat, 2), round(creativityStat, 2), round(0, 2), teamCode));
+        writePlayer(new Player(forename, surname, round(attackingStat, 2), round(creativityStat, 2), round(defensiveStat, 2), teamCode, position, role, value));
     }
 
     //This method is used to remove ' from the data as it was causing errors with the SQL

@@ -66,6 +66,22 @@ public class StartingXI {
         codeIteration++;
     }
 
+    public StartingXI(Player player1, Player player2, Player player3, Player player4, Player player5, Player player6, Player player7, Player player8, Player player9, Player player10, Player player11){
+        this.player1 = player1.getPlayerCode();
+        this.player2 = player2.getPlayerCode();
+        this.player3 = player3.getPlayerCode();
+        this.player4 = player4.getPlayerCode();
+        this.player5 = player5.getPlayerCode();
+        this.player6 = player6.getPlayerCode();
+        this.player7 = player7.getPlayerCode();
+        this.player8 = player8.getPlayerCode();
+        this.player9 = player9.getPlayerCode();
+        this.player10 = player10.getPlayerCode();
+        this.player11 = player11.getPlayerCode();
+        this.startingXICode = (String.format("%03d", codeIteration) + this.player1.charAt(3) + this.player2.charAt(4) + this.player3.charAt(5)).toUpperCase();
+        codeIteration++;
+    }
+
     //Getters and setters
     public String getStartingXICode() {
         return startingXICode;
@@ -208,10 +224,5 @@ public class StartingXI {
 
     public static int countStartingXI(){
         return countQuery("startingXI", "startingXICode");
-    }
-
-    public static void main(String[] args) {
-
-        logger.info(countStartingXI());
     }
 }

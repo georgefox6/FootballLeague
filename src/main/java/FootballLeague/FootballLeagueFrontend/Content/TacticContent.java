@@ -128,14 +128,6 @@ public class TacticContent extends GridPane {
         clearButton10 = new Button("Clear");
         clearButton11 = new Button("Clear");
 
-//        Image deleteIcon = new Image(getClass().getResourceAsStream("/src/main/resources/images/delete-icon.png"));
-////        Image deleteIcon = new Image(getClass().getResourceAsStream("/../../resources/images/delete-icon.png"));
-////        Image deleteIcon = new Image(getClass().getResourceAsStream("C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\resources\\images\\delete-icon.png"));
-//        ImageView deleteIconView = new ImageView(deleteIcon);
-//        Button btn = new Button("delete");
-//        btn.setGraphic(deleteIconView);
-//        add(btn, 5, 5);
-
         //Set min column width
          for (int i = 0; i < 10; i++) {
             ColumnConstraints column = new ColumnConstraints();
@@ -207,7 +199,6 @@ public class TacticContent extends GridPane {
         //Checks that the value of the combo box is not null as this will cause an error
         positionOneCB.setOnAction(e -> {
             if(positionOneCB.getValue() != null){
-                System.out.println("Position one action listener just got triggered");
                 p1.setText(positionOneCB.getValue().toString());
                 updateCBOne();
                 previousPlayer1 = positionOneCB.getValue();
@@ -759,12 +750,14 @@ public class TacticContent extends GridPane {
             case "Counter Attack":
                 attackingScore = attackingScore * 0.9;
                 creativeScore = creativeScore * 0.6;
-                defensiveScore = defensiveScore * 1.8;
+                defensiveScore = defensiveScore * 1.6;
                 break;
             case "Park the bus":
                 attackingScore = attackingScore * 0.4;
                 creativeScore = creativeScore * 0.4;
-                defensiveScore = defensiveScore * 3.0;
+                defensiveScore = defensiveScore * 2.0;
+                break;
+            default:
                 break;
         }
 

@@ -216,11 +216,10 @@ public class WebToJson {
                 name = ((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[8]/div/div/div[1]/div/div/h1")).asText();
             }
 
-            long value = 0L;
+            int value = 0;
             if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[2]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
                 value = formatValue(((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[2]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]")).asText().replace(".", ""));
-            }
-            if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
+            } else if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
                 value = formatValue(((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]")).asText().replace(".", ""));
             }
 
@@ -265,17 +264,23 @@ public class WebToJson {
     }
 
     //Formats the value variable to turn it into a long
-    public static long formatValue(String str){
+    public static int formatValue(String str){
+        System.out.println("str: " + str);
         str = str.substring(1);
         if(str.contains("m")){
             str = str.replace("m","");
-            return Long.parseLong(str) * 1000000 / 100;
+            return Integer.parseInt(str) * 10000;
         }
         if(str.contains("k")){
             str = str.replace("k","");
-            return Long.parseLong(str) * 1000;
+            return Integer.parseInt(str) * 1000;
         }
-        return Long.parseLong(str);
+        if(str.contains("Th")){
+            System.out.println("is th");
+            str = str.replace("Th","");
+            return Integer.parseInt(str) * 1000;
+        }
+        return Integer.parseInt(str);
     }
 
     //This method returns a task object which will write files to the JSON depending on the dbsize selected by the user

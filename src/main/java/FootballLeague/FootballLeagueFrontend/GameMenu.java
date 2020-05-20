@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import FootballLeague.FootballLeagueBackend.GameState;
-import FootballLeague.FootballLeagueBackend.Team;
+import FootballLeague.FootballLeagueBackend.*;
 import FootballLeague.FootballLeagueBackend.WebScraper.*;
 
 import javafx.application.Application;
@@ -26,8 +25,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-
-import FootballLeague.FootballLeagueBackend.FileHandler;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;

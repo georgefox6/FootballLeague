@@ -6,7 +6,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import static FootballLeague.FootballLeagueBackend.Match.writeMatch;
+import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
+import static FootballLeague.FootballLeagueBackend.Team.writeTeam;
 
 public class Schedule {
 
@@ -89,6 +91,12 @@ public class Schedule {
 
 	public void writeMatches(){
 		for(Match match : matches){
+			Tactic homeTactic = Tactic.generateBestTactic(match.getHomeTeamCode());
+			Tactic awayTactic = Tactic.generateBestTactic(match.getAwayTeamCode());
+			writeTactic(homeTactic);
+			writeTactic(awayTactic);
+			match.setHomeTacticCode(homeTactic.getTacticCode());
+			match.setAwayTacticCode(awayTactic.getTacticCode());
 			writeMatch(match);
 		}
 	}

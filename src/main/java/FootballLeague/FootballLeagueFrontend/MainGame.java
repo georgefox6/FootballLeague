@@ -2,6 +2,8 @@ package FootballLeague.FootballLeagueFrontend;
 
 import FootballLeague.FootballLeagueBackend.*;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 public class MainGame extends Stage {
 
     Scene scene;
+    BorderPane borderPane;
     TopMenu topMenu;
     //LeftMenus
     TeamMenu teamMenu;
@@ -120,7 +123,7 @@ public class MainGame extends Stage {
         leagueFixturesContent = new LeagueFixturesContent();
 
         //creates the main layout and adds the topMenu main layout and the leftMenuHome as default
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setTop(topMenu);
         borderPane.setLeft(clubMenu);
 
@@ -152,8 +155,10 @@ public class MainGame extends Stage {
         });
         topMenu.advanceButton.setOnAction(e -> {
             borderPane.setCenter(advanceFixturesContent);
-            this.advanceFixturesContent.update();
-            //TODO the left pane needs clearing
+            advanceFixturesContent.update();
+            HBox hBox = new HBox();
+            hBox.setMinWidth(100);
+            borderPane.setLeft(hBox);
         });
         topMenu.scoutingButton.setOnAction(e -> {
             borderPane.setLeft(scoutingMenu);
@@ -176,9 +181,6 @@ public class MainGame extends Stage {
 
         advanceFixturesContent.nextButton.setOnAction(e -> {
             advanceGame();
-            borderPane.setCenter(advanceResultsContent);
-            advanceResultsContent.update();
-            advanceGameWeek();
         });
 
         advanceResultsContent.doneButton.setOnAction(e -> {
@@ -224,7 +226,16 @@ public class MainGame extends Stage {
 
     public void advanceGame(){
         //This is used to set the tactic of the players team for the next match
-        Tactic tactic = getCurrentTactic();
+        Tactic currentTactic = new Tactic();
+        try {
+            currentTactic = getCurrentTactic();
+        } catch(Exception e){
+            AlertBox.display("Incomplete Team", "You must have a complete team before advancing");
+            borderPane.setCenter(tacticContent);
+            borderPane.setLeft(tacticMenu);
+            return;
+        }
+
 
         try {
             ArrayList<Match> homeMatches = readAllMatches("WHERE homeTeamCode='" + GameState.readTeam(GameState.readSaveName()) +
@@ -235,11 +246,11 @@ public class MainGame extends Stage {
 
             if(homeMatches.size() != 0){
                 Match hm = homeMatches.get(0);
-                hm.setHomeTacticCode(tactic.getTacticCode());
+                hm.setHomeTacticCode(currentTactic.getTacticCode());
                 updateMatch(hm);
             } else if(awayMatches.size() != 0) {
                 Match am = awayMatches.get(0);
-                am.setAwayTacticCode(tactic.getTacticCode());
+                am.setAwayTacticCode(currentTactic.getTacticCode());
                 updateMatch(am);
             }
 
@@ -257,6 +268,9 @@ public class MainGame extends Stage {
         for(Match match : matchesThisWeek){
             match.playMatch();
         }
+        advanceGameWeek();
+        borderPane.setCenter(advanceResultsContent);
+        advanceResultsContent.update();
     }
 
     public void advanceGameWeek(){
