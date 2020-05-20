@@ -21,8 +21,6 @@ import java.util.List;
 
 public class TacticContent extends GridPane {
 
-    //TODO use the formation and play style as a modifier for the attacking and creative score
-
     Label attackingScoreLabel;
     Label creativeScoreLabel;
     Label defensiveScoreLabel;
@@ -736,30 +734,33 @@ public class TacticContent extends GridPane {
             }
         }
 
-        switch(playStyle.getValue()){
-            case "Tiki Taka":
-                attackingScore = attackingScore * 0.7;
-                creativeScore = creativeScore * 1.5;
-                defensiveScore = defensiveScore * 1.2;
-                break;
-            case "Gegenpress":
-                attackingScore = attackingScore * 1.2;
-                creativeScore = creativeScore * 1.1;
-                defensiveScore = defensiveScore * 0.8;
-                break;
-            case "Counter Attack":
-                attackingScore = attackingScore * 0.9;
-                creativeScore = creativeScore * 0.6;
-                defensiveScore = defensiveScore * 1.6;
-                break;
-            case "Park the bus":
-                attackingScore = attackingScore * 0.4;
-                creativeScore = creativeScore * 0.4;
-                defensiveScore = defensiveScore * 2.0;
-                break;
-            default:
-                break;
+        if(playStyle.getValue() != null){
+            switch(playStyle.getValue()){
+                case "Tiki Taka":
+                    attackingScore = attackingScore * 0.7;
+                    creativeScore = creativeScore * 1.5;
+                    defensiveScore = defensiveScore * 1.2;
+                    break;
+                case "Gegenpress":
+                    attackingScore = attackingScore * 1.2;
+                    creativeScore = creativeScore * 1.1;
+                    defensiveScore = defensiveScore * 0.8;
+                    break;
+                case "Counter Attack":
+                    attackingScore = attackingScore * 0.9;
+                    creativeScore = creativeScore * 0.6;
+                    defensiveScore = defensiveScore * 1.6;
+                    break;
+                case "Park the bus":
+                    attackingScore = attackingScore * 0.4;
+                    creativeScore = creativeScore * 0.4;
+                    defensiveScore = defensiveScore * 2.0;
+                    break;
+                default:
+                    break;
+            }
         }
+
 
         attackingScoreLabel.setText("Attacking Score: " + round(attackingScore, 2));
         creativeScoreLabel.setText("Creative Score: " + round(creativeScore, 2));

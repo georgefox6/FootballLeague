@@ -173,6 +173,17 @@ public class GameState {
         return object.get("team").toString();
     }
 
+    public static String readCurrentTeam(){
+        String saveName = readSaveName();
+        String team = null;
+        try{
+            team = readTeam(saveName);
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+        return team;
+    }
+
     public static String readTeamName() throws IOException, ParseException {
         String filename = readSaveName();
         JSONObject object = (JSONObject) readJson(filename);

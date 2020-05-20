@@ -13,13 +13,13 @@ import FootballLeague.FootballLeagueFrontend.Content.*;
 import FootballLeague.FootballLeagueFrontend.InnerMenu.*;
 import org.json.simple.parser.ParseException;
 
+import static FootballLeague.FootballLeagueBackend.GameState.readCurrentTeam;
 import static FootballLeague.FootballLeagueBackend.LeagueTableEntry.readUniqueLeagues;
 import static FootballLeague.FootballLeagueBackend.Match.readAllMatches;
 import static FootballLeague.FootballLeagueBackend.Match.updateMatch;
 import static FootballLeague.FootballLeagueBackend.StartingXI.readStartingXI;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
-import static FootballLeague.FootballLeagueBackend.Tactic.updateTactic;
-import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
+import static FootballLeague.FootballLeagueBackend.Tactic.*;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
@@ -115,6 +115,7 @@ public class MainGame extends Stage {
         saveTacticButtonListener();
         resetTacticButtonListener();
         loadTacticButtonListener();
+        autoPickButtonListener();
 
         scoutingContent = new ScoutingContent();
 
@@ -268,9 +269,9 @@ public class MainGame extends Stage {
         for(Match match : matchesThisWeek){
             match.playMatch();
         }
-        advanceGameWeek();
         borderPane.setCenter(advanceResultsContent);
         advanceResultsContent.update();
+        advanceGameWeek();
     }
 
     public void advanceGameWeek(){
@@ -337,9 +338,6 @@ public class MainGame extends Stage {
     public void clearTactic(){
         //Action listener for the reset tactic button
         tacticMenu.newTacticButton.setOnAction(e -> {
-
-//            tacticContent.formation.setValue(null);
-
             if(tacticContent.positionOneCB.getValue() != null){
                 tacticContent.clear1();
             }
@@ -458,5 +456,34 @@ public class MainGame extends Stage {
             tacticContent.updateStatLabels();
             tacticContent.updatePlayerLabels();
         });
+    }
 
-    }}
+
+    public void autoPickButtonListener(){
+        tacticMenu.autoPickButton.setOnAction(e -> {
+            clearTactic();
+            String teamCode = readCurrentTeam();
+            System.out.println("Team Code: " + teamCode);
+            Tactic tactic = generateBestTactic(teamCode);
+
+            tacticContent.playStyle.setValue(tactic.getPlayStyle());
+            tacticContent.formation.setValue(tactic.getFormation());
+
+            StartingXI startingXI = readStartingXI(tactic.getStartingXICode());
+            tacticContent.positionOneCB.setValue(Player.readPlayer(startingXI.getPlayer1()));
+            tacticContent.positionTwoCB.setValue(Player.readPlayer(startingXI.getPlayer2()));
+            tacticContent.positionThreeCB.setValue(Player.readPlayer(startingXI.getPlayer3()));
+            tacticContent.positionFourCB.setValue(Player.readPlayer(startingXI.getPlayer4()));
+            tacticContent.positionFiveCB.setValue(Player.readPlayer(startingXI.getPlayer5()));
+            tacticContent.positionSixCB.setValue(Player.readPlayer(startingXI.getPlayer6()));
+            tacticContent.positionSevenCB.setValue(Player.readPlayer(startingXI.getPlayer7()));
+            tacticContent.positionEightCB.setValue(Player.readPlayer(startingXI.getPlayer8()));
+            tacticContent.positionNineCB.setValue(Player.readPlayer(startingXI.getPlayer9()));
+            tacticContent.positionTenCB.setValue(Player.readPlayer(startingXI.getPlayer10()));
+            tacticContent.positionElevenCB.setValue(Player.readPlayer(startingXI.getPlayer11()));
+
+            tacticContent.updateStatLabels();
+            tacticContent.updatePlayerLabels();
+        });
+    }
+}

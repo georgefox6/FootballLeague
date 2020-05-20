@@ -3,29 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Match.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/StartingXI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/StartingXI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Tactic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/Tactic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/DatabasePopulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/DatabasePopulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/PlayerJsonScraper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/PlayerJsonScraper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/WebToJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/WebScraper/WebToJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Large-070520202144.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Large070520202144.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Medium-290420201838.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Medium290420201838.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Small-290420201929.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BaseGames/Small290420201929.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SaveGames/Brighton.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SaveGames/Brighton.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/SaveGames/currentSave.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/SaveGames/currentSave.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SaveGames/mainGame.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/blank.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/blank.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/leagueTable.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
