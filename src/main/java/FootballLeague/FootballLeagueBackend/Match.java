@@ -47,9 +47,6 @@ public class Match {
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
-        //TODO this is just used to set a default value to the tactic codes
-//        this.homeTacticCode = "01";
-//        this.awayTacticCode = "02";
         this.date = date;
     }
 
