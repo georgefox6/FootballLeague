@@ -116,7 +116,7 @@ public class GameMenu extends Application {
         borderPaneNewGameScreen.setCenter(newGameMenu);
 
         Scene newGameScreenScene = new Scene(borderPaneNewGameScreen, 280, 200);
-        newGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
+        newGameScreenScene.getStylesheets().add("stylesheets/DarkTheme.css");
 
         /////////////////////////////
         //    LoadGame Screen      //

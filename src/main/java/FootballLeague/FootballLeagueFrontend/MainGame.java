@@ -20,6 +20,7 @@ import static FootballLeague.FootballLeagueBackend.Match.updateMatch;
 import static FootballLeague.FootballLeagueBackend.StartingXI.readStartingXI;
 import static FootballLeague.FootballLeagueBackend.StartingXI.writeStartingXI;
 import static FootballLeague.FootballLeagueBackend.Tactic.*;
+import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
 
 //The main idea for this layout is that a border pane is used to allow us to add separate layouts to each section.
 //The top section will be where the main navigation is displayed, the left panel for the secondary menu and the
@@ -187,6 +188,7 @@ public class MainGame extends Stage {
         advanceResultsContent.doneButton.setOnAction(e -> {
             leagueTableContent.updateLeagueTable();
             borderPane.setCenter(leagueTableContent);
+            borderPane.setLeft(leagueMenu);
         });
 
         //Adds action listener for the resolution combo box
@@ -402,6 +404,19 @@ public class MainGame extends Stage {
             schedule.createSchedule();
             schedule.writeMatches();
         }
+        for(Team team : readAllTeams("")){
+            Tactic tactic = generateBestTactic(team.getTeamCode());
+            writeTactic(tactic);
+            for(Match match : readAllMatches("WHERE homeTeamCode = '" + team.getTeamCode() + "'")){
+                match.setHomeTacticCode(tactic.getTacticCode());
+                updateMatch(match);
+            }
+            for(Match match : readAllMatches("WHERE awayTeamCode = '" + team.getTeamCode() + "'")){
+                match.setAwayTacticCode(tactic.getTacticCode());
+                updateMatch(match);
+            }
+        }
+
     }
 
     //Adds the action listeners for the save tactic button

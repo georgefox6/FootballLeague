@@ -91,12 +91,12 @@ public class Schedule {
 
 	public void writeMatches(){
 		for(Match match : matches){
-			Tactic homeTactic = Tactic.generateBestTactic(match.getHomeTeamCode());
-			Tactic awayTactic = Tactic.generateBestTactic(match.getAwayTeamCode());
-			writeTactic(homeTactic);
-			writeTactic(awayTactic);
-			match.setHomeTacticCode(homeTactic.getTacticCode());
-			match.setAwayTacticCode(awayTactic.getTacticCode());
+//			Tactic homeTactic = Tactic.generateBestTactic(match.getHomeTeamCode());
+//			Tactic awayTactic = Tactic.generateBestTactic(match.getAwayTeamCode());
+//			writeTactic(homeTactic);
+//			writeTactic(awayTactic);
+//			match.setHomeTacticCode(homeTactic.getTacticCode());
+//			match.setAwayTacticCode(awayTactic.getTacticCode());
 			writeMatch(match);
 		}
 	}
