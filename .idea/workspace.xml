@@ -2,12 +2,83 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/FootballLeague.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FootballLeague.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/FootballLeague.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/FootballLeague.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/FootballLeague.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/FootballLeague.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueBackend/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Club.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Database.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/DatabaseConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/FileHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/GameState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Gui.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/LeaguePosition.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/LeagueTableEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Match.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Schedule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/StartingXI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Tactic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Team.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueBackend/Venue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/AlertBox.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/ConfirmBox.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/AdvanceFixturesContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/AdvanceResultsContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/FirstTeamContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/LeagueTableContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/OptionsPreferencesContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/ScoutingContent$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/ScoutingContent$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/ScoutingContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/Content/TacticContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/GameMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/ClubMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/LeagueMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/OptionsMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/ScoutingMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/TeamMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/TopMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/InnerMenu/TrainingMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/MainGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/FootballLeague/FootballLeagueFrontend/MainMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/META-INF/FootballLeague.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/Util.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootballLeague/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Stylesheets/DarkTheme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Stylesheets/NotTwitter.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Stylesheets/VeryColourful.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/Content/TacticContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/InnerMenu/TacticMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/GameMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SaveGames/currentSave.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/SaveGames/currentSave.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FootballLeague/FootballLeagueFrontend/NotTwitter.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Stylesheets/DarkTheme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Stylesheets/DarkTheme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Stylesheets/NotTwitter.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Stylesheets/NotTwitter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Stylesheets/VeryColourful.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Stylesheets/VeryColourful.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,9 +93,34 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -67,7 +163,7 @@
       <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague\FootballLeagueFrontend" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.FootballLeague [run]">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="FootballLeague.App" />
       <module name="FootballLeague.main" />
@@ -81,8 +177,88 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FootballLeague [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.FootballLeague [run]" />
+        <item itemvalue="Gradle.FootballLeague [jar]" />
+        <item itemvalue="Gradle.FootballLeague [build]" />
+        <item itemvalue="Gradle.FootballLeague [clean]" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -113,29 +289,41 @@
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
     <state x="681" y="383" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.2000.1293@0.0.2000.1293" timestamp="1589906287658" />
-    <state width="1957" height="366" key="GridCell.Tab.0.bottom" timestamp="1589390608690">
+    <state x="781" y="389" key="FileChooserDialogImpl" timestamp="1590179712649">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state width="1957" height="366" key="GridCell.Tab.0.bottom/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
-    <state width="1957" height="366" key="GridCell.Tab.0.center" timestamp="1589390608690">
+    <state x="781" y="389" key="FileChooserDialogImpl/0.0.2000.1293@0.0.2000.1293" timestamp="1590179712649" />
+    <state width="1957" height="260" key="GridCell.Tab.0.bottom" timestamp="1590249544252">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state width="1957" height="366" key="GridCell.Tab.0.center/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
-    <state width="1957" height="366" key="GridCell.Tab.0.left" timestamp="1589390608690">
+    <state width="1957" height="260" key="GridCell.Tab.0.bottom/0.0.2000.1293@0.0.2000.1293" timestamp="1590249544252" />
+    <state width="1957" height="260" key="GridCell.Tab.0.center" timestamp="1590249544252">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state width="1957" height="366" key="GridCell.Tab.0.left/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
-    <state width="1957" height="366" key="GridCell.Tab.0.right" timestamp="1589390608690">
+    <state width="1957" height="260" key="GridCell.Tab.0.center/0.0.2000.1293@0.0.2000.1293" timestamp="1590249544252" />
+    <state width="1957" height="260" key="GridCell.Tab.0.left" timestamp="1590249544252">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state width="1957" height="366" key="GridCell.Tab.0.right/0.0.2000.1293@0.0.2000.1293" timestamp="1589390608690" />
-    <state x="481" y="222" key="SettingsEditor" timestamp="1589390970770">
+    <state width="1957" height="260" key="GridCell.Tab.0.left/0.0.2000.1293@0.0.2000.1293" timestamp="1590249544252" />
+    <state width="1957" height="260" key="GridCell.Tab.0.right" timestamp="1590249544252">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1589390970770" />
+    <state width="1957" height="260" key="GridCell.Tab.0.right/0.0.2000.1293@0.0.2000.1293" timestamp="1590249544252" />
+    <state x="631" y="500" key="Performance.Activity.Monitor" timestamp="1590179014455">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="631" y="500" key="Performance.Activity.Monitor/0.0.2000.1293@0.0.2000.1293" timestamp="1590179014455" />
+    <state x="481" y="222" key="SettingsEditor" timestamp="1590179832008">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1590179832008" />
     <state x="657" y="304" key="run.anything.popup" timestamp="1589026579101">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
     <state x="657" y="304" key="run.anything.popup/0.0.2000.1293@0.0.2000.1293" timestamp="1589026579101" />
+    <state x="663" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1590179044568">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="663" y="289" width="672" height="678" key="search.everywhere.popup/0.0.2000.1293@0.0.2000.1293" timestamp="1590179044568" />
   </component>
 </project>

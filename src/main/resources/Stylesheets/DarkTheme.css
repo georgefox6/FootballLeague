@@ -4,7 +4,7 @@
 
 .label{
     -fx-text-fill: #55ACEE;
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
 }
 
 .button{
@@ -16,4 +16,8 @@
 .button:hover{
     -fx-background-color: white;
     -fx-text-fill: #000000;
+}
+
+.delete-button {
+    -fx-pref-width: 30px;
 }

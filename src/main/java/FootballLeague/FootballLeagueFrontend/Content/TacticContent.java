@@ -107,24 +107,39 @@ public class TacticContent extends GridPane {
     Button clearButton10;
     Button clearButton11;
 
+
     //Constructor for the tactic content
     public TacticContent(){
+
+
 
         attackingScoreLabel = new Label("Attacking Score: ");
         creativeScoreLabel = new Label("Creative Score: ");
         defensiveScoreLabel = new Label("Defensive Score: ");
 
-        clearButton1 = new Button("Clear");
-        clearButton2 = new Button("Clear");
-        clearButton3 = new Button("Clear");
-        clearButton4 = new Button("Clear");
-        clearButton5 = new Button("Clear");
-        clearButton6 = new Button("Clear");
-        clearButton7 = new Button("Clear");
-        clearButton8 = new Button("Clear");
-        clearButton9 = new Button("Clear");
-        clearButton10 = new Button("Clear");
-        clearButton11 = new Button("Clear");
+        clearButton1 = new Button();
+        clearButton2 = new Button();
+        clearButton3 = new Button();
+        clearButton4 = new Button();
+        clearButton5 = new Button();
+        clearButton6 = new Button();
+        clearButton7 = new Button();
+        clearButton8 = new Button();
+        clearButton9 = new Button();
+        clearButton10 = new Button();
+        clearButton11 = new Button();
+
+        clearButton1 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton2 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton3 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton4 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton5 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton6 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton7 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton8 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton9 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton10 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
+        clearButton11 = createIconButton("images/delete-icon.png", 18, 18, "delete-button");
 
         //Set min column width
          for (int i = 0; i < 10; i++) {
@@ -158,9 +173,9 @@ public class TacticContent extends GridPane {
 
         //PlayStyle selector
         playStyle = new ComboBox<>(FXCollections.observableArrayList("Tiki Taka", "Gegenpress", "Counter Attack", "Park the bus"));
-        add(playStyle, 3, 1);
+        add(playStyle, 1, 2);
         playStyleLabel = new Label("Play style:");
-        add(playStyleLabel, 2, 1);
+        add(playStyleLabel, 0, 2);
 
         positionOneCB = new ComboBox<>(getPlayersFromTeam());
         positionTwoCB = new ComboBox<>(getPlayersFromTeam());
@@ -176,20 +191,22 @@ public class TacticContent extends GridPane {
 
         //Action listener for the formation combo box which will set the correct labels
         formation.setOnAction(e -> {
-            clearScreen();
-            switch(formation.getValue()){
-                case "4-4-2":
-                    setFormation442();
-                    break;
-                case "4-3-3":
-                    setFormation433();
-                    break;
-                case "5-3-2":
-                    setFormation532();
-                    break;
-                case "3-4-3":
-                    setFormation343();
-                    break;
+            if(formation.getValue() != null){
+                clearScreen();
+                switch(formation.getValue()){
+                    case "4-4-2":
+                        setFormation442();
+                        break;
+                    case "4-3-3":
+                        setFormation433();
+                        break;
+                    case "5-3-2":
+                        setFormation532();
+                        break;
+                    case "3-4-3":
+                        setFormation343();
+                        break;
+                }
             }
         });
 
@@ -357,18 +374,30 @@ public class TacticContent extends GridPane {
         });
     }
 
+    public Button createIconButton(String imageLocation, int height, int width, String styleClass){
+        Image icon = new Image(imageLocation);
+        ImageView iconView = new ImageView(icon);
+        iconView.setFitWidth(width);
+        iconView.setFitHeight(height);
+        Button button = new Button("", iconView);
+        button.getStyleClass().add(styleClass);
+        return button;
+    }
+
     public void clear1(){
         Player player = positionOneCB.getValue();
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionTwoCB.getItems().contains(player)){
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionOneCB.setValue(null);
         p1.setText("*");
         updateStatLabels();
@@ -376,16 +405,18 @@ public class TacticContent extends GridPane {
 
     public void clear2(){
         Player player = positionTwoCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionTwoCB.setValue(null);
         p2.setText("*");
         updateStatLabels();
@@ -393,16 +424,18 @@ public class TacticContent extends GridPane {
 
     public void clear3(){
         Player player = positionThreeCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionThreeCB.setValue(null);
         p3.setText("*");
         updateStatLabels();
@@ -410,16 +443,18 @@ public class TacticContent extends GridPane {
 
     public void clear4(){
         Player player = positionFourCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionFourCB.setValue(null);
         p4.setText("*");
         updateStatLabels();
@@ -427,16 +462,18 @@ public class TacticContent extends GridPane {
 
     public void clear5(){
         Player player = positionFiveCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionFiveCB.setValue(null);
         p5.setText("*");
         updateStatLabels();
@@ -444,16 +481,18 @@ public class TacticContent extends GridPane {
 
     public void clear6(){
         Player player = positionSixCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionSixCB.setValue(null);
         p6.setText("*");
         updateStatLabels();
@@ -461,16 +500,18 @@ public class TacticContent extends GridPane {
 
     public void clear7(){
         Player player = positionSevenCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionSevenCB.setValue(null);
         p7.setText("*");
         updateStatLabels();
@@ -478,16 +519,18 @@ public class TacticContent extends GridPane {
 
     public void clear8(){
         Player player = positionEightCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionEightCB.setValue(null);
         p8.setText("*");
         updateStatLabels();
@@ -495,16 +538,18 @@ public class TacticContent extends GridPane {
 
     public void clear9(){
         Player player = positionNineCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionNineCB.setValue(null);
         p9.setText("*");
         updateStatLabels();
@@ -512,16 +557,18 @@ public class TacticContent extends GridPane {
 
     public void clear10(){
         Player player = positionTenCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionElevenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionElevenCB.getItems().add(player);
+        }
         positionTenCB.setValue(null);
         p10.setText("*");
         updateStatLabels();
@@ -529,16 +576,18 @@ public class TacticContent extends GridPane {
 
     public void clear11(){
         Player player = positionElevenCB.getValue();
-        positionOneCB.getItems().add(player);
-        positionTwoCB.getItems().add(player);
-        positionThreeCB.getItems().add(player);
-        positionFourCB.getItems().add(player);
-        positionFiveCB.getItems().add(player);
-        positionSixCB.getItems().add(player);
-        positionSevenCB.getItems().add(player);
-        positionEightCB.getItems().add(player);
-        positionNineCB.getItems().add(player);
-        positionTenCB.getItems().add(player);
+        if(!positionOneCB.getItems().contains(player)) {
+            positionOneCB.getItems().add(player);
+            positionTwoCB.getItems().add(player);
+            positionThreeCB.getItems().add(player);
+            positionFourCB.getItems().add(player);
+            positionFiveCB.getItems().add(player);
+            positionSixCB.getItems().add(player);
+            positionSevenCB.getItems().add(player);
+            positionEightCB.getItems().add(player);
+            positionNineCB.getItems().add(player);
+            positionTenCB.getItems().add(player);
+        }
         positionElevenCB.setValue(null);
         p11.setText("*");
         updateStatLabels();
@@ -553,8 +602,8 @@ public class TacticContent extends GridPane {
         //Adds the formation and play style selectors
         this.add(formationLabel, 0, 1);
         this.add(formation, 1, 1);
-        this.add(playStyleLabel, 2, 1);
-        this.add(playStyle, 3, 1);
+        this.add(playStyleLabel, 0, 2);
+        this.add(playStyle, 1, 2);
 
         //Add the labels to the screen
         this.addColumn(0, gkLabel, rbLabel, rcbLabel, lcbLabel, lbLabel, rmLabel, rcmLabel, lcmLabel, lmLabel, rstLabel, lstLabel);
@@ -562,32 +611,32 @@ public class TacticContent extends GridPane {
         this.addColumn(1,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
 
         //Add the *'s to the right side of the screen
-        add(p1, 7, 10);
-        add(p2, 9, 8);
-        add(p3, 8, 8);
-        add(p4, 6, 8);
-        add(p5, 5, 8);
-        add(p6, 9, 6);
-        add(p7, 8, 6);
-        add(p8, 6, 6);
-        add(p9, 5, 6);
-        add(p10, 8, 4);
-        add(p11, 6, 4);
+        add(p1, 5, 10);
+        add(p2, 7, 8);
+        add(p3, 6, 8);
+        add(p4, 4, 8);
+        add(p5, 3, 8);
+        add(p6, 7, 6);
+        add(p7, 6, 6);
+        add(p8, 4, 6);
+        add(p9, 3, 6);
+        add(p10, 6, 4);
+        add(p11, 4, 4);
 
         //Adds the remove buttons
         addRemoveButtons();
 
-        add(attackingScoreLabel, 10, 1);
-        add(creativeScoreLabel, 10, 2);
-        add(defensiveScoreLabel, 10, 3);
+        add(attackingScoreLabel, 9, 1);
+        add(creativeScoreLabel, 9, 2);
+        add(defensiveScoreLabel, 9, 3);
     }
 
     public void setFormation433(){
         //Adds the formation and play style selectors
         this.add(formationLabel, 0, 1);
         this.add(formation, 1, 1);
-        this.add(playStyleLabel, 2, 1);
-        this.add(playStyle, 3, 1);
+        this.add(playStyleLabel, 0, 2);
+        this.add(playStyle, 1, 2);
 
         //Add the labels to the screen
         this.addColumn(0, gkLabel, rbLabel, rcbLabel, lcbLabel, lbLabel, rcmLabel, cmLabel, lcmLabel, rwLabel, stLabel, lwLabel);
@@ -595,32 +644,32 @@ public class TacticContent extends GridPane {
         this.addColumn(1,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
 
         //Add the *'s to the right side of the screen
-        add(p1, 7, 10);
-        add(p2, 9, 8);
-        add(p3, 8, 8);
-        add(p4, 6, 8);
-        add(p5, 5, 8);
-        add(p6, 8, 6);
-        add(p7, 7, 6);
-        add(p8, 6, 6);
-        add(p9, 9, 4);
-        add(p10, 7, 4);
-        add(p11, 5, 4);
+        add(p1, 5, 10);
+        add(p2, 7, 8);
+        add(p3, 6, 8);
+        add(p4, 4, 8);
+        add(p5, 3, 8);
+        add(p6, 6, 6);
+        add(p7, 5, 6);
+        add(p8, 4, 6);
+        add(p9, 7, 4);
+        add(p10, 5, 4);
+        add(p11, 3, 4);
 
         //Adds the remove buttons
         addRemoveButtons();
 
-        add(attackingScoreLabel, 10, 1);
-        add(creativeScoreLabel, 10, 2);
-        add(defensiveScoreLabel, 10, 3);
+        add(attackingScoreLabel, 8, 1);
+        add(creativeScoreLabel, 8, 2);
+        add(defensiveScoreLabel, 8, 3);
     }
 
     public void setFormation532(){
         //Adds the formation and play style selectors
         this.add(formationLabel, 0, 1);
         this.add(formation, 1, 1);
-        this.add(playStyleLabel, 2, 1);
-        this.add(playStyle, 3, 1);
+        this.add(playStyleLabel, 0, 2);
+        this.add(playStyle, 1, 2);
 
         //Add the labels to the screen
         this.addColumn(0, gkLabel, rbLabel, rcbLabel, cbLabel, lcbLabel, lbLabel, rcmLabel, cmLabel, lcmLabel, rstLabel, lstLabel);
@@ -628,32 +677,32 @@ public class TacticContent extends GridPane {
         this.addColumn(1,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
 
         //Add the *'s to the right side of the screen
-        add(p1, 7, 10);
-        add(p2, 9, 8);
-        add(p3, 8, 8);
-        add(p4, 7, 8);
-        add(p5, 6, 8);
-        add(p6, 5, 8);
-        add(p7, 8, 6);
-        add(p8, 7, 6);
-        add(p9, 6, 6);
-        add(p10, 8, 4);
-        add(p11, 6, 4);
+        add(p1, 5, 10);
+        add(p2, 7, 8);
+        add(p3, 6, 8);
+        add(p4, 5, 8);
+        add(p5, 4, 8);
+        add(p6, 3, 8);
+        add(p7, 6, 6);
+        add(p8, 5, 6);
+        add(p9, 4, 6);
+        add(p10, 6, 4);
+        add(p11, 4, 4);
 
         //Adds the remove buttons
         addRemoveButtons();
 
-        add(attackingScoreLabel, 10, 1);
-        add(creativeScoreLabel, 10, 2);
-        add(defensiveScoreLabel, 10, 3);
+        add(attackingScoreLabel, 8, 1);
+        add(creativeScoreLabel, 8, 2);
+        add(defensiveScoreLabel, 8, 3);
     }
 
     public void setFormation343(){
         //Adds the formation and play style selectors
         this.add(formationLabel, 0, 1);
         this.add(formation, 1, 1);
-        this.add(playStyleLabel, 2, 1);
-        this.add(playStyle, 3, 1);
+        this.add(playStyleLabel, 0, 2);
+        this.add(playStyle, 1, 2);
 
         //Add the labels to the screen
         this.addColumn(0, gkLabel, rcbLabel, cbLabel, lcbLabel, rmLabel, rcmLabel, lcmLabel, lmLabel, rwLabel, stLabel, lwLabel);
@@ -661,38 +710,38 @@ public class TacticContent extends GridPane {
         this.addColumn(1,positionOneCB, positionTwoCB, positionThreeCB, positionFourCB, positionFiveCB, positionSixCB, positionSevenCB, positionEightCB, positionNineCB, positionTenCB, positionElevenCB);
 
         //Add the *'s to the right side of the screen
-        add(p1, 7, 10);
-        add(p2, 8, 8);
-        add(p3, 7, 8);
-        add(p4, 6, 8);
-        add(p5, 9, 6);
-        add(p6, 8, 6);
-        add(p7, 6, 6);
-        add(p8, 5, 6);
-        add(p9, 9, 4);
-        add(p10, 7, 4);
-        add(p11, 5, 4);
+        add(p1, 5, 10);
+        add(p2, 6, 8);
+        add(p3, 5, 8);
+        add(p4, 4, 8);
+        add(p5, 7, 6);
+        add(p6, 6, 6);
+        add(p7, 4, 6);
+        add(p8, 3, 6);
+        add(p9, 7, 4);
+        add(p10, 5, 4);
+        add(p11, 3, 4);
 
         //Adds the remove buttons
         addRemoveButtons();
 
-        add(attackingScoreLabel, 10, 1);
-        add(creativeScoreLabel, 10, 2);
-        add(defensiveScoreLabel, 10, 3);
+        add(attackingScoreLabel, 8, 1);
+        add(creativeScoreLabel, 8, 2);
+        add(defensiveScoreLabel, 8, 3);
     }
 
     public void addRemoveButtons(){
-        add(clearButton1, 2, 2);
-        add(clearButton2, 2, 3);
-        add(clearButton3, 2, 4);
-        add(clearButton4, 2, 5);
-        add(clearButton5, 2, 6);
-        add(clearButton6, 2, 7);
-        add(clearButton7, 2, 8);
-        add(clearButton8, 2, 9);
-        add(clearButton9, 2, 10);
-        add(clearButton10, 2, 11);
-        add(clearButton11, 2, 12);
+        add(clearButton1, 2, 3);
+        add(clearButton2, 2, 4);
+        add(clearButton3, 2, 5);
+        add(clearButton4, 2, 6);
+        add(clearButton5, 2, 7);
+        add(clearButton6, 2, 8);
+        add(clearButton7, 2, 9);
+        add(clearButton8, 2, 10);
+        add(clearButton9, 2, 11);
+        add(clearButton10, 2, 12);
+        add(clearButton11, 2, 13);
     }
 
     public ObservableList<Player> getPlayersFromTeam(){

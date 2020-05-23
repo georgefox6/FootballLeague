@@ -1,5 +1,7 @@
 package FootballLeague.FootballLeagueFrontend;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +30,8 @@ import javafx.scene.layout.BorderPane;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+
+import javax.imageio.ImageIO;
 
 import static FootballLeague.FootballLeagueFrontend.MainGame.initNewGame;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -75,20 +79,8 @@ public class GameMenu extends Application {
 
         Scene mainMenuScene = new Scene(borderPaneMainMenu, 280, 200);
         mainMenuScene.getStylesheets().clear();
-//        mainMenuScene.getStylesheets().add("FootballLeague/src/main/Stylesheets/NotTwitter.css");
-//        mainMenuScene.getStylesheets().add(getClass().getResource("Stylesheets\\DarkTheme.css"));
-//        mainMenuScene.getStylesheets().add("\\FootballLeague\\DarkTheme.css");
-//        mainMenuScene.getStylesheets().add("Stylesheets\\DarkTheme.css");
-//        mainMenuScene.getStylesheets().add("file:///C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\Stylesheets\\DarkTheme.css");
-//        mainMenuScene.getStylesheets().add("FootballLeague\\FootballLeagueFrontend\\NotTwitter.css");
-//        mainMenuScene.getStylesheets().add("Stylesheets\\NotTwitter.css");
-//        mainMenuScene.getStylesheets().add("\\..\\..\\Stylesheets\\NotTwitter.css");
-//        mainMenuScene.getStylesheets().add("jetbrains://idea/navigate/reference?project=FootballLeague&fqn1=FootballLeague.FootballLeagueFrontend.GameMenu&path2=resources%2FStylesheets%2FNotTwitter.css");
-        mainMenuScene.getStylesheets().add("../../../resources/Stylesheets");
+        mainMenuScene.getStylesheets().add("stylesheets/DarkTheme.css");
 
-//        C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague\FootballLeagueFrontend\GameMenu.java
-//                ../../../resources/Stylesheets
-//        C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\resources\Stylesheets\NotTwitter.css
 
         /////////////////////////////
         //     NewGame Screen      //
@@ -152,7 +144,7 @@ public class GameMenu extends Application {
         borderPaneLoadGameScreen.setCenter(loadGameMenu);
 
         Scene loadGameScreenScene = new Scene(borderPaneLoadGameScreen, 280, 200);
-        loadGameScreenScene.getStylesheets().add("/src/main/Stylesheets/NotTwitter.css");
+        loadGameScreenScene.getStylesheets().add("stylesheets/DarkTheme.css");
 
 
         ////////////////////////////

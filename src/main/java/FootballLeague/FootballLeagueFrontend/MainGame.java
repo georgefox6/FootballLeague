@@ -194,8 +194,8 @@ public class MainGame extends Stage {
         optionsPreferencesContent.themeCB.setOnAction(e -> setTheme(optionsPreferencesContent.themeCB.getValue()));
 
         //Creates the scene with the borderPane layout window size
-        scene = new Scene(borderPane, 1020, 500);
-        scene.getStylesheets().add("java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+        scene = new Scene(borderPane, 1000, 550);
+        scene.getStylesheets().add("stylesheets/DarkTheme.css");
         this.setScene(scene);
         this.show();
     }
@@ -316,15 +316,15 @@ public class MainGame extends Stage {
         switch(selectedTheme){
             case "Not Twitter":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/NotTwitter.css");
+                scene.getStylesheets().add("stylesheets/NotTwitter.css");
                 break;
             case "Dark Theme":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("C:\\Users\\Georg\\Documents\\Java Projects\\FootballLeague\\src\\main\\java\\FootballLeague\\Stylesheets\\DarkTheme.css");
+                scene.getStylesheets().add("stylesheets/DarkTheme.css");
                 break;
             case "Very Colourful":
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add("/src/main/java/FootballLeague/FootballLeagueFrontend/Stylesheets/VeryColourful.css");
+                scene.getStylesheets().add("stylesheets/VeryColourful.css");
                 break;
         }
         System.out.println("Changed the theme to " + selectedTheme);
@@ -332,64 +332,65 @@ public class MainGame extends Stage {
 
     //Add the action listeners for the reset tactic button
     public void resetTacticButtonListener(){
-        clearTactic();
-    }
-
-    public void clearTactic(){
         //Action listener for the reset tactic button
         tacticMenu.newTacticButton.setOnAction(e -> {
-            if(tacticContent.positionOneCB.getValue() != null){
-                tacticContent.clear1();
-            }
-
-            if(tacticContent.positionTwoCB.getValue() != null){
-                tacticContent.clear2();
-            }
-
-            if(tacticContent.positionThreeCB.getValue() != null){
-                tacticContent.clear3();
-            }
-
-            if(tacticContent.positionFourCB.getValue() != null){
-                tacticContent.clear4();
-            }
-
-            if(tacticContent.positionFiveCB.getValue() != null){
-                tacticContent.clear5();
-            }
-
-            if(tacticContent.positionSixCB.getValue() != null){
-                tacticContent.clear6();
-            }
-
-            if(tacticContent.positionSevenCB.getValue() != null){
-                tacticContent.clear7();
-            }
-
-            if(tacticContent.positionEightCB.getValue() != null){
-                tacticContent.clear8();
-            }
-
-            if(tacticContent.positionNineCB.getValue() != null){
-                tacticContent.clear9();
-            }
-
-            if(tacticContent.positionTenCB.getValue() != null){
-                tacticContent.clear10();
-            }
-
-            if(tacticContent.positionElevenCB.getValue() != null){
-                tacticContent.clear11();
-            }
-
+            clearTactic();
+            tacticContent.formation.valueProperty().set(null);
+            tacticContent.playStyle.valueProperty().set(null);
             //Removes everything from the screen
             tacticContent.clearScreen();
             //Adds all of the necessary nodes to the screen
             tacticContent.add(tacticContent.formationLabel, 0, 1);
             tacticContent.add(tacticContent.formation, 1, 1);
-            tacticContent.add(tacticContent.playStyleLabel, 2, 1);
-            tacticContent.add(tacticContent.playStyle, 3, 1);
+            tacticContent.add(tacticContent.playStyleLabel, 0, 2);
+            tacticContent.add(tacticContent.playStyle, 1, 2);
         });
+    }
+
+    public void clearTactic(){
+        if(tacticContent.positionOneCB.getValue() != null){
+            tacticContent.clear1();
+        }
+
+        if(tacticContent.positionTwoCB.getValue() != null){
+            tacticContent.clear2();
+        }
+
+        if(tacticContent.positionThreeCB.getValue() != null){
+            tacticContent.clear3();
+        }
+
+        if(tacticContent.positionFourCB.getValue() != null){
+            tacticContent.clear4();
+        }
+
+        if(tacticContent.positionFiveCB.getValue() != null){
+            tacticContent.clear5();
+        }
+
+        if(tacticContent.positionSixCB.getValue() != null){
+            tacticContent.clear6();
+        }
+
+        if(tacticContent.positionSevenCB.getValue() != null){
+            tacticContent.clear7();
+        }
+
+        if(tacticContent.positionEightCB.getValue() != null){
+            tacticContent.clear8();
+        }
+
+        if(tacticContent.positionNineCB.getValue() != null){
+            tacticContent.clear9();
+        }
+
+        if(tacticContent.positionTenCB.getValue() != null){
+            tacticContent.clear10();
+        }
+
+        if(tacticContent.positionElevenCB.getValue() != null){
+            tacticContent.clear11();
+        }
     }
 
     public static void initNewGame(){
