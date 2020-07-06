@@ -3,17 +3,17 @@
 	<Appenders>
 		<RandomAccessFile name="MasterLog" fileName="logs/master.log">
             <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+                <Pattern>%d %m%n</Pattern>
             </PatternLayout>
         </RandomAccessFile>
         <RandomAccessFile name="ClassLog" fileName="logs/${sys:classLog}.log">
         	<PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+                <Pattern>%d %m%n</Pattern>
             </PatternLayout>
         </RandomAccessFile>
         <RandomAccessFile name="ExceptionLog" fileName="logs/exceptions.log">
         	<PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+                <Pattern>%d %m%n</Pattern>
             </PatternLayout>
         </RandomAccessFile>
         <Routing name="SpecialLog">

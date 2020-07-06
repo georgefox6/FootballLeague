@@ -19,16 +19,18 @@ import FootballLeague.FootballLeagueBackend.FileHandler;
 public class LogHandler {
 
 	String classPath;
+	String fullClass;
 
 	static FileHandler f = new FileHandler();
 
 	// Unique log entry code the same for every log entry to match up log entries in different log files
-	static int logNumber;
+	static Integer logID;
 
 	// Constructor
 	// TODO: See if there is someway of finding creating class automatically so 
-	// one does not have to type in the classpath when creating new instance
+	// one does not have to type in the class path when creating new instance
 	public LogHandler(String creatingClass) {
+		this.fullClass = creatingClass;
 		this.classPath = creatingClass.replace('.', '/');
 	}
 
@@ -36,7 +38,7 @@ public class LogHandler {
         if (resetOrAppendLogsFlag) {
             f.deleteDirectoryFromString("logs");
         }
-        logNumber = 0;
+        logID = 0;
     }
 
 	private void reconfigure() {
@@ -48,7 +50,7 @@ public class LogHandler {
 
 	public void logToMasterLog(String message) {
 		Logger masterLog = LogManager.getLogger("masterLog");
-    	masterLog.info(message);
+    	masterLog.info(message+"{}", " Log ID ");
 	}
 
 	public void logToClassLog(String message) {
@@ -62,24 +64,40 @@ public class LogHandler {
 		specialLog.info(MARKER, message);		
 	}
 
+	private String generateClassLogMessage(Object message) {
+		String messageString = message.toString();
+		String stringLogNumber = logID.toString();
+		String classLogMessage = messageString + " Log Number: " + stringLogNumber;
+		return classLogMessage;
+	}
+
+	private String generateMasterAndSpecialLogMessage(Object message) {
+		String messageString = message.toString();
+		String stringLogNumber = logID.toString();
+		String masterAndSpecialMessage = "[" + this.fullClass + "] " + message + " Log Number: " + stringLogNumber;
+		return masterAndSpecialMessage;
+	}
+
 	// Only passing one object argument into log assumes it is a normal log with no marker
 	// Logs to masterLog and classLog only
 	public void log(Object message) {
 		reconfigure();
-		String messageString = message.toString();
-		logToMasterLog(messageString);
+		String messageString = generateClassLogMessage(message);
+		String masterLogString = generateMasterAndSpecialLogMessage(message);
+		logToMasterLog(masterLogString);
 		logToClassLog(messageString);
-		logNumber = logNumber + 1;
+		logID = logID + 1;
 	}
 
 	// Logs to all of masterLog, classLog and specialLog
 	public void log(String marker, Object message) {
 		reconfigure();
-		String messageString = message.toString();
-		logToMasterLog(messageString);
-		logToClassLog(messageString);
-		logToSpecialLog(messageString, marker);
-		logNumber = logNumber + 1;
+		String logString = message.toString();
+		String masterAndSpecialLogString = generateMasterAndSpecialLogMessage(message);
+		logToMasterLog(masterAndSpecialLogString);
+		logToSpecialLog(masterAndSpecialLogString, marker);
+		logToClassLog(logString);
+		logID = logID + 1;
 	}
 
 
