@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
-    <Appenders>
-        <RandomAccessFile name="MasterLogToFile" fileName="logs/master.log">
+<Configuration status="WARN">
+	<Appenders>
+		<RandomAccessFile name="MasterLog" fileName="logs/master.log">
             <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+                <Pattern>%d %m%n</Pattern>
             </PatternLayout>
         </RandomAccessFile>
-        <RandomAccessFile name="DatabaseExceptionLogToFile" filename="logs/databaseExceptions.log"> 
-            <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        <RandomAccessFile name="ClassLog" fileName="logs/${sys:classLog}.log">
+        	<PatternLayout>
+                <Pattern>%d %m%n</Pattern>
             </PatternLayout>
         </RandomAccessFile>
-        <Routing name="RoutingAppender">
-            <Routes>
-                <pattern>$${marker:}</pattern>
-                <Route key="EXCEPTION" ref="DatabaseExceptionLogToFile"/>
-                <Route key="DEFAULT" ref="MasterLogToFile"/>
-            </Routes>
+        <RandomAccessFile name="ExceptionLog" fileName="logs/exceptions.log">
+        	<PatternLayout>
+                <Pattern>%d %m%n</Pattern>
+            </PatternLayout>
+        </RandomAccessFile>
+        <Routing name="SpecialLog">
+        	<Routes>
+        		<pattern>$${marker:}</pattern>
+        		<Route key="EXCEPTION" ref="ExceptionLog"/>
+        	</Routes>
         </Routing>
-    </Appenders>
-    <Loggers>      
-        <Logger name="com.josh" level="debug" additivity="false">
-            <AppenderRef ref="RoutingAppender"/>
-        </Logger>
-        <Root level="error">
-            <AppenderRef ref="MasterLogToFile"/>
-        </Root>
-    </Loggers>
-    <!-- <Properties>
-        <Property name="contextPath">DEFAULT</Property>
-    </Properties> -->
+	</Appenders> 
+	<Loggers>
+		<Logger name="masterLog" level="debug" additivity="false">
+			<AppenderRef ref="MasterLog"/>
+		</Logger>
+		<Logger name="classLog" level="debug" additivity="false">
+			<AppenderRef ref="ClassLog"/>
+		</Logger>
+		<Logger name="specialLog" level="debug" additivity="false">
+			<AppenderRef ref="SpecialLog"/>
+		</Logger>
+		<Root level="error">
+			<AppenderRef ref="MasterLog"/>
+		</Root>
+	</Loggers>
 </Configuration>

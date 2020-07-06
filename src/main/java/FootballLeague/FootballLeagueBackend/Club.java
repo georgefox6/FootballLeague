@@ -2,16 +2,15 @@ package FootballLeague.FootballLeagueBackend;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.ArrayList;  
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import FootballLeague.LogHandler.LogHandler;
 
 import static FootballLeague.FootballLeagueBackend.DatabaseConnection.*;
 
 public class Club {
 
-    public static Logger logger = LogManager.getLogger("com.josh");
+    public static LogHandler log = new LogHandler("FootballLeague.FootballLeagueBackend.Club");
 
     //The club class fields
     String clubCode;
@@ -91,7 +90,7 @@ public class Club {
             while(rs.next()){
                 clubs.add(new Club(rs.getString("clubCode"), rs.getString("clubName"), rs.getString("venue")));
             }
-            logger.info("Club Size : " + clubs.size());
+            log.log("Club Size : " + clubs.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

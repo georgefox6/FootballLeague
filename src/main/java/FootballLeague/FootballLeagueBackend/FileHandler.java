@@ -23,7 +23,7 @@ public class FileHandler {
 	}
 
 	public void copyBaseSaveGame(String sourceTitle, String destinationTitle, Boolean overwrite) throws IOException {
-		String sourcePath = "src/main/resources/BaseGames/" + sourceTitle + ".db";
+		String sourcePath = "src/main/resources/SaveGames/" + sourceTitle + ".db";
 		String destinationPath = "src/main/resources/SaveGames/" + destinationTitle + ".db";
 		if (overwrite) {
 			File f = new File(destinationPath);
@@ -58,19 +58,28 @@ public class FileHandler {
 		return saveGameTitles;
 	}
 
-	public ArrayList<String> getBaseGames() {
-		String saveGamesDirectoryPath = "src/main/resources/BaseGames/";
-		ArrayList<String> saveGameTitles = new ArrayList<>();
-		File[] saveGamesTitlesRaw = new File(saveGamesDirectoryPath).listFiles();
-		for (File file : saveGamesTitlesRaw) {
-			if (file.isFile()) {
-				if(file.getName().contains(".db") && !file.getName().contains("mainGame.db")){
-					saveGameTitles.add(file.getName().split("\\.")[0]);
-				}
-			}
-		}
-		return saveGameTitles;
+	public static boolean deleteDirectoryFromString(String fileString) {
+		File f = new File(fileString);
+		boolean deleteDirectoryOutcome = deleteDirectory(f);
+		return deleteDirectoryOutcome;
 	}
+
+	public static boolean deleteDirectory(File directory) {
+    if(directory.exists()){
+        File[] files = directory.listFiles();
+        if(null!=files){
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+        }
+    }
+    return(directory.delete());
+}
 
 	public static void main(String[] args) {
 	}

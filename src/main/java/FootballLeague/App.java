@@ -6,31 +6,28 @@ import FootballLeague.FootballLeagueFrontend.MainGame;
 import FootballLeague.FootballLeagueFrontend.MainMenu;
 import javafx.application.Application;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
+import FootballLeague.LogHandler.LogHandler;
+import FootballLeague.FootballLeagueBackend.FileHandler;
 
 public class App {
+
+    // set to true if you want to delete logs at the beginning of each session
+    // WARNING: setting true means all previous logs in the logs directory will be unrecoverable
+    private static final boolean RESET_NOT_APPEND_LOGS = true;
+
+    private static LogHandler log = new LogHandler("FootballLeague.App");
+
     public String getGreeting() {
         return "Hello world.";
     }
-
-    public static Logger logger = LogManager.getLogger("com.josh");
-    public static Marker DEFAULT = MarkerManager.getMarker("DEFAULT");
-    public static Marker EXCEPTION = MarkerManager.getMarker("EXCEPTION");
 
     public static void main(String[] args) {
 
         System.out.println(new App().getGreeting());
 
-        logger.info(DEFAULT, "App started.");
-        logger.debug(EXCEPTION, "exception");
-        logger.error("No key.");
+        log.initialize(RESET_NOT_APPEND_LOGS);
+        log.log("App launched.");
 
         Application.launch(GameMenu.class, null);
-
-
     }
 }
