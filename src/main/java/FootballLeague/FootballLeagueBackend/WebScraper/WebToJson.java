@@ -51,6 +51,7 @@ public class WebToJson {
             playerDetails.put("team", player.team);
             playerDetails.put("gamesPlayed", String.valueOf(player.gamesPlayed));
             playerDetails.put("goalsScored", String.valueOf(player.goalsScored));
+            playerDetails.put("assists", String.valueOf(player.assists));
             playerDetails.put("cleanSheets", String.valueOf(player.cleanSheets));
             playerDetails.put("goalsConceded", String.valueOf(player.goalsConceded));
             playerDetails.put("value", String.valueOf(player.value));
@@ -215,11 +216,10 @@ public class WebToJson {
                 name = ((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[8]/div/div/div[1]/div/div/h1")).asText();
             }
 
-            long value = 0L;
+            int value = 0;
             if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[2]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
                 value = formatValue(((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[2]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]")).asText().replace(".", ""));
-            }
-            if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
+            } else if (page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]") != null) {
                 value = formatValue(((HtmlElement) page.getFirstByXPath("//*[@id=\"main\"]/div[11]/div[1]/div[1]/div[2]/div[1]/div/div[4]/div[1]/div[1]/div/div[1]/div[2]/a[1]")).asText().replace(".", ""));
             }
 
@@ -233,17 +233,20 @@ public class WebToJson {
 
             int gamesPlayed = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[3]")).asText());
 
+            //Initialise the player stats
+            int cleanSheets = 0;
+            int goalsConceded = 0;
+            int goalsScored = 0;
+            int assists = 0;
+
             if (position.equals("Goalkeeper") && yw != null) {
-                int cleanSheets = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[5]")).asText());
-                int goalsConceded = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[4]")).asText());
-                player = new PlayerJsonScraper(name, dateOfBirth, age, position, nationality, team, gamesPlayed, cleanSheets, goalsConceded, value, playerUrl);
+                cleanSheets = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[5]")).asText());
+                goalsConceded = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[4]")).asText());
             } else if (yw != null) {
-                int goalsScored = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[4]")).asText());
-                int assists = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[5]")).asText());
-                player = new PlayerJsonScraper("", name, dateOfBirth, age, position, nationality, team, gamesPlayed, goalsScored, assists, value, playerUrl);
-            } else {
-                player = new PlayerJsonScraper(name, dateOfBirth, age, position, nationality, team, gamesPlayed, 0, 0, 0, 0, value, playerUrl);
+                goalsScored = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[4]")).asText());
+                assists = stringToInt(((HtmlElement) page.getFirstByXPath("//*[@id=\"" + yw + "\"]/table/tfoot/tr/td[5]")).asText());
             }
+            player = new PlayerJsonScraper(name, dateOfBirth, age, position, nationality, team, gamesPlayed, cleanSheets, goalsConceded, goalsScored, assists, value, playerUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -261,17 +264,23 @@ public class WebToJson {
     }
 
     //Formats the value variable to turn it into a long
-    public static long formatValue(String str){
+    public static int formatValue(String str){
+        System.out.println("str: " + str);
         str = str.substring(1);
         if(str.contains("m")){
             str = str.replace("m","");
-            return Long.parseLong(str) * 1000000 / 100;
+            return Integer.parseInt(str) * 10000;
         }
         if(str.contains("k")){
             str = str.replace("k","");
-            return Long.parseLong(str) * 1000;
+            return Integer.parseInt(str) * 1000;
         }
-        return Long.parseLong(str);
+        if(str.contains("Th")){
+            System.out.println("is th");
+            str = str.replace("Th","");
+            return Integer.parseInt(str) * 1000;
+        }
+        return Integer.parseInt(str);
     }
 
     //This method returns a task object which will write files to the JSON depending on the dbsize selected by the user

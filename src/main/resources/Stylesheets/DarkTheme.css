@@ -1,0 +1,23 @@
+.root{
+    -fx-background-color: #303030;
+}
+
+.label{
+    -fx-text-fill: #55ACEE;
+    -fx-font-size: 10pt;
+}
+
+.button{
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+    -fx-pref-width: 100px;
+}
+
+.button:hover{
+    -fx-background-color: white;
+    -fx-text-fill: #000000;
+}
+
+.delete-button {
+    -fx-pref-width: 30px;
+}

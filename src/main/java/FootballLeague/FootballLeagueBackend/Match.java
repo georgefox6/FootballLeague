@@ -1,5 +1,7 @@
 package FootballLeague.FootballLeagueBackend;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,9 +46,6 @@ public class Match {
         this.matchCode = homeTeamCode + "v" + awayTeamCode + date;
         this.homeTeamCode = homeTeamCode;
         this.awayTeamCode = awayTeamCode;
-        //TODO this is just used to set a default value to the tactic codes
-        this.homeTacticCode = "01";
-        this.awayTacticCode = "02";
         this.date = date;
     }
 
@@ -146,25 +145,42 @@ public class Match {
         Tactic homeTactic = Tactic.readTactic(this.homeTacticCode);
         Tactic awayTactic = Tactic.readTactic(this.awayTacticCode);
 
-        //                      HOME TEAM GOALS
-        //Generate amount of chances home team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
+        ///////////////////////////
+        //       Home Goals      //
+        ///////////////////////////
         Random rand = new Random();
-        double chancesCreated = Math.round(rand.nextInt(40) * (1 - awayTactic.getDefenceScore()));
-        //Generate conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
-        rand = new Random();
-        double conversionRate = homeTactic.getAttackScore() * (rand.nextDouble()/2);
-        //The final number of goals scored by the home team
+
+        //Generates the amount of chances the home team will created, this is based on the creativity score of the home team
+        //The average in the premier league is between 10 and 20 per game
+        double chancesCreated = homeTactic.getCreativeScore() * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
+
+        //Reduce the amount of chances the attacking team has based on the defense score of the opposing team
+        chancesCreated = chancesCreated - awayTactic.getDefenceScore();
+
+        //Generate the chance conversion rate home team will get (Dependant on the home team attack score) - Average in the premier league is 8% - 22%
+        double conversionRate = homeTactic.getAttackScore() * (3 + rand.nextInt(15))/300;
+        System.out.println("Conversion: " + round(conversionRate,2));
+
         int homeGoals = (int)Math.round(chancesCreated * conversionRate);
 
-        //                      AWAY TEAM GOALS
-        //Generate amount of chances away team will get (Dependant on the opponents defense) - Average in the premier league is 10 to 20 per game
+        ///////////////////////////
+        //      Away Goals       //
+        ///////////////////////////
+
         rand = new Random();
-        chancesCreated = Math.round(rand.nextInt(40) * (1 - homeTactic.getDefenceScore()));
-        //Generate conversion rate away team will get (Dependant on the away team attack score) - Average in the premier league is 8% - 22%
-        rand = new Random();
-        conversionRate = awayTactic.getAttackScore() * (rand.nextDouble()/2);
-        //The final number of goals scored by the away team
+
+        //Generates the amount of chances the away team will created, this is based on the creativity score of the home team
+        //The average in the premier league is between 10 and 20 per game
+        chancesCreated = awayTactic.getCreativeScore() * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
+
+        //Reduce the amount of chances the attacking team has based on the defense score of the opposing team
+        chancesCreated = chancesCreated - homeTactic.getDefenceScore();
+
+        //Generate the chance conversion rate away team will get (Dependant on the away team attack score) - Average in the premier league is 8% - 22%
+        conversionRate = awayTactic.getAttackScore() * (3 + rand.nextInt(15))/300;
+
         int awayGoals = (int)Math.round(chancesCreated * conversionRate);
+
         this.setScore(homeGoals + "-" + awayGoals);
 
         //Writes the match to the database
@@ -260,4 +276,15 @@ public class Match {
     public static int countMatch(){
         return countQuery("match", "matchCode");
     }
+
+    //This method is used round the doubles to a specified number of decimal places
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }
+
+

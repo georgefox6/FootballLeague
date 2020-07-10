@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FootballLeague.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/JavaFX11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.json" beforeDir="false" />
-    </list>
+    <list default="true" id="47bb0ebf-16de-4693-8c35-4320dc58cd04" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,14 +15,46 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="FootballLeague" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,12 +66,124 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\resources" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\out\production\FootballLeague\FootballLeague\FootballLeagueFrontend" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java" />
+      <recent name="C:\Users\Georg\Documents\Java Projects\FootballLeague\src\main\java\FootballLeague\FootballLeagueFrontend" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.FootballLeague [run]">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="FootballLeague.App" />
+      <module name="FootballLeague.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FootballLeague.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FootballLeague [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FootballLeague [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.FootballLeague [run]" />
+        <item itemvalue="Gradle.FootballLeague [jar]" />
+        <item itemvalue="Gradle.FootballLeague [build]" />
+        <item itemvalue="Gradle.FootballLeague [clean]" />
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -69,9 +199,53 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="481" y="222" key="SettingsEditor" timestamp="1588799058980">
+    <state x="721" y="449" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589487759319">
       <screen x="0" y="0" width="2000" height="1293" />
     </state>
-    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1588799058980" />
+    <state x="721" y="449" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2000.1293@0.0.2000.1293" timestamp="1589487759319" />
+    <state x="806" y="348" key="#com.intellij.ide.util.MemberChooser" timestamp="1589503174825">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="806" y="348" key="#com.intellij.ide.util.MemberChooser/0.0.2000.1293@0.0.2000.1293" timestamp="1589503174825" />
+    <state x="681" y="383" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1589906287658">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="681" y="383" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.2000.1293@0.0.2000.1293" timestamp="1589906287658" />
+    <state x="781" y="389" key="FileChooserDialogImpl" timestamp="1590179712649">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="781" y="389" key="FileChooserDialogImpl/0.0.2000.1293@0.0.2000.1293" timestamp="1590179712649" />
+    <state width="1957" height="260" key="GridCell.Tab.0.bottom" timestamp="1590251615016">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="260" key="GridCell.Tab.0.bottom/0.0.2000.1293@0.0.2000.1293" timestamp="1590251615016" />
+    <state width="1957" height="260" key="GridCell.Tab.0.center" timestamp="1590251615016">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="260" key="GridCell.Tab.0.center/0.0.2000.1293@0.0.2000.1293" timestamp="1590251615016" />
+    <state width="1957" height="260" key="GridCell.Tab.0.left" timestamp="1590251615016">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="260" key="GridCell.Tab.0.left/0.0.2000.1293@0.0.2000.1293" timestamp="1590251615016" />
+    <state width="1957" height="260" key="GridCell.Tab.0.right" timestamp="1590251615016">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state width="1957" height="260" key="GridCell.Tab.0.right/0.0.2000.1293@0.0.2000.1293" timestamp="1590251615016" />
+    <state x="631" y="500" key="Performance.Activity.Monitor" timestamp="1590179014455">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="631" y="500" key="Performance.Activity.Monitor/0.0.2000.1293@0.0.2000.1293" timestamp="1590179014455" />
+    <state x="481" y="222" key="SettingsEditor" timestamp="1590179832008">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="481" y="222" key="SettingsEditor/0.0.2000.1293@0.0.2000.1293" timestamp="1590179832008" />
+    <state x="657" y="304" key="run.anything.popup" timestamp="1589026579101">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="657" y="304" key="run.anything.popup/0.0.2000.1293@0.0.2000.1293" timestamp="1589026579101" />
+    <state x="663" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1590179044568">
+      <screen x="0" y="0" width="2000" height="1293" />
+    </state>
+    <state x="663" y="289" width="672" height="678" key="search.everywhere.popup/0.0.2000.1293@0.0.2000.1293" timestamp="1590179044568" />
   </component>
 </project>

@@ -8,6 +8,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static FootballLeague.FootballLeagueBackend.Club.writeClub;
 import static FootballLeague.FootballLeagueBackend.Player.writePlayer;
@@ -19,9 +21,9 @@ import static FootballLeague.FootballLeagueBackend.Venue.writeVenue;
 public class DatabasePopulator {
 
     public static void addDefaultTactics(){
-        writeTactic(new Tactic("01", "00", 0.8, 0.4, "442", "Attacking"));
-        writeTactic(new Tactic("02", "00", 0.6, 0.5, "433", "Park the bus"));
-        writeTactic(new Tactic("03", "00", 0.1, 0.1, "532", "Gengenpress"));
+        writeTactic(new Tactic("01", "00", 0.8, 0.4, 0.4, "442", "Attacking", ""));
+        writeTactic(new Tactic("02", "00", 0.6, 0.4,  0.5, "433", "Park the bus", ""));
+        writeTactic(new Tactic("03", "00", 0.1, 0.4,  0.1, "532", "Gengenpress", ""));
     }
 
     public static void jsonToDB(String jsonName, String dbName){
@@ -119,6 +121,84 @@ public class DatabasePopulator {
         //Get team
         String team = (String) playerObject.get("team");
 
+
+        String position = ((String) playerObject.get("position"));
+        String role = position;
+
+        if(position.contains("-")){
+            position = ((String) playerObject.get("position")).split("-", 2)[0].trim();
+            role = ((String) playerObject.get("position")).split("-", 2)[1].trim();
+
+        }
+
+
+
+        int value = Integer.parseInt((String) playerObject.get("value"));
+
+        //Games played
+        int gamesPlayed = Integer.parseInt((String) playerObject.get("gamesPlayed"));
+
+        //Get the attacking stat
+        double attackingStat = 0.0;
+        if(gamesPlayed != 0){
+            attackingStat = Double.parseDouble((String) playerObject.get("goalsScored"))/ gamesPlayed;
+        }
+
+        //Get the creativity stat
+        double creativityStat = 0.0;
+        if(gamesPlayed != 0){
+            creativityStat = Double.parseDouble((String) playerObject.get("assists"))/ gamesPlayed;
+        }
+
+        double defensiveStat = 0.0;
+        switch(role){
+            case"Centre-Forward":
+                defensiveStat = 0.02;
+                break;
+            case"Second Striker":
+                defensiveStat = 0.02;
+                break;
+            case"Left Winger":
+                defensiveStat = 0.05;
+                break;
+            case"Right Winger":
+                defensiveStat = 0.05;
+                break;
+            case"Attacking Midfield":
+                defensiveStat = 0.07;
+                break;
+            case"Central Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Right Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Left Midfield":
+                defensiveStat = 0.15;
+                break;
+            case"Defensive Midfield":
+                defensiveStat = 0.2;
+                break;
+            case"Right-Back":
+                defensiveStat = 0.25;
+                break;
+            case"Left-Back":
+                defensiveStat = 0.25;
+                break;
+            case"Centre-Back":
+                defensiveStat = 0.3;
+                break;
+            case"Goalkeeper":
+                defensiveStat = 0.4;
+                break;
+        }
+
+        //Used to reduce the stats for players who have played less than 5 games to reduce outliers
+        if(gamesPlayed < 5){
+            attackingStat = attackingStat/5;
+            creativityStat = creativityStat/5;
+        }
+
         //Remove "U23" from the team name
         if(team.contains("U23")){
             team = team.substring(0, team.length() - 4);
@@ -130,15 +210,28 @@ public class DatabasePopulator {
         try{
             teamCode = readAllTeams("WHERE teamName='" + team + "'").get(0).getTeamCode();
         } catch (Exception e){
+            System.out.println("+++++++++++++++++++++++: " + team);
             e.printStackTrace();
         }
 
         //Write the created player to the database
-        writePlayer(new Player(forename, surname, true, teamCode));
+        writePlayer(new Player(forename, surname, round(attackingStat, 2), round(creativityStat, 2), round(defensiveStat, 2), teamCode, position, role, value));
     }
 
     //This method is used to remove ' from the data as it was causing errors with the SQL
     public static String sanitiseData(String str){
+        if(str.length() < 1){
+            return str;
+        }
         return str.replace("'","");
+    }
+
+    //This method is used round the doubles to a specified number of decimal places
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

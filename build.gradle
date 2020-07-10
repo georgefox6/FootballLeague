@@ -18,8 +18,8 @@ plugins {
 }
 
 javafx {
-    version = "12"
-    modules = [ 'javafx.controls', 'javafx.fxml']
+    version = "14"
+    modules = ['javafx.controls', 'javafx.media']
 }
 
 repositories {
@@ -29,6 +29,9 @@ repositories {
 
     mavenCentral()
 }
+
+sourceSets.main.resources.srcDirs = [ "src/main/resources" ]
+sourceSets.main.resources.includes = [ "**/*.css", "**/*.png", "**/*.jpg" ]
 
 dependencies {
     // This dependency is used by the application.

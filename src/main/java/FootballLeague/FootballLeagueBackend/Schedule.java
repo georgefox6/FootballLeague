@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import FootballLeague.LogHandler.LogHandler;
 
 import static FootballLeague.FootballLeagueBackend.Match.writeMatch;
+import static FootballLeague.FootballLeagueBackend.Tactic.writeTactic;
 import static FootballLeague.FootballLeagueBackend.Team.readAllTeams;
+import static FootballLeague.FootballLeagueBackend.Team.writeTeam;
 
 public class Schedule {
 

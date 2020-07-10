@@ -1,0 +1,18 @@
+.root{
+    -fx-background-color: #CCD6DD;
+}
+
+.label{
+    -fx-text-fill: #55ACEE;
+    -fx-font-size: 10pt;
+}
+
+.button{
+    -fx-background-color: #292F33;
+    -fx-text-fill: #55ACEE;
+    -fx-pref-width: 100px;
+}
+
+.button:hover{
+    -fx-background-color: white;
+}
