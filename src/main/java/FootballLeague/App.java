@@ -29,5 +29,7 @@ public class App {
         log.log("App launched.");
 
         Application.launch(GameMenu.class, null);
+
+        // IF YOU SEE THIS DELETE IT
     }
 }
