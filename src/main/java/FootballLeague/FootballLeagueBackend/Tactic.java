@@ -20,8 +20,11 @@ public class Tactic {
     double attackScore;
     //Scale from 0 to 1 of how good the team is at defending
     double defenceScore;
+    //Scale from 0 to 1 of how creative the team is
+    double creativeScore;
     String formation;
     String playStyle;
+    public String name;
 
     static int codeIteration;
 
@@ -82,25 +85,29 @@ public class Tactic {
     }
 
     //Constructors
-    Tactic(){}
+    public Tactic(){}
 
-    public Tactic(String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String startingXICode, double attackScore, double defenceScore, double creativeScore, String formation, String playStyle, String name){
         this.tacticCode = (String.format("%03d", codeIteration) + "TAC").toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
         this.defenceScore = defenceScore;
+        this.creativeScore = creativeScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        this.name = name;
         codeIteration++;
     }
 
-    public Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, String formation, String playStyle){
+    public Tactic(String tacticCode, String startingXICode, double attackScore, double defenceScore, double creativeScore, String formation, String playStyle, String name){
         this.tacticCode = tacticCode.toUpperCase();
         this.startingXICode = startingXICode;
         this.attackScore = attackScore;
         this.defenceScore = defenceScore;
+        this.creativeScore = creativeScore;
         this.formation = formation;
         this.playStyle = playStyle;
+        this.name = name;
     }
 
     //This method is used to create a string of the player codes of the startingXI delimited by commas
@@ -129,7 +136,7 @@ public class Tactic {
         try {
             assert result != null;
             if(result.next()){
-                return new Tactic(tacticCode, result.getString("startingXICode"), result.getDouble("attackScore"), result.getDouble("defenceScore"), result.getString("formation"), result.getString("playStyle"));
+                return new Tactic(tacticCode, result.getString("startingXICode"), result.getDouble("attackScore"), result.getDouble("defenceScore"), result.getDouble("creativeScore"), result.getString("formation"), result.getString("playStyle"), result.getString("name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,7 +153,7 @@ public class Tactic {
             ResultSet rs = readAllQuery("tactic", clause);
             assert rs != null;
             while(rs.next()){
-                tactics.add(new Tactic(rs.getString("tacticCode"), rs.getString("startingXICode"), rs.getDouble("attackScore"), rs.getDouble("defenceScore"), rs.getString("formation"), rs.getString("playStyle")));
+                tactics.add(new Tactic(rs.getString("tacticCode"), rs.getString("startingXICode"), rs.getDouble("attackScore"), rs.getDouble("defenceScore"), rs.getDouble("creativeScore"), rs.getString("formation"), rs.getString("playStyle"), rs.getString("name")));
             }
             log.log("Tactic Size : " + tactics.size());
         } catch (SQLException e) {

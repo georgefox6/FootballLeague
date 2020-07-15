@@ -3,7 +3,6 @@ package FootballLeague;/*
  */
 import FootballLeague.FootballLeagueFrontend.GameMenu;
 import FootballLeague.FootballLeagueFrontend.MainGame;
-import FootballLeague.FootballLeagueFrontend.MainMenu;
 import javafx.application.Application;
 
 import FootballLeague.LogHandler.LogHandler;
@@ -28,6 +27,6 @@ public class App {
         log.initialize(RESET_NOT_APPEND_LOGS);
         log.log("App launched.");
 
-        Application.launch(GameMenu.class, null);
+        Application.launch(GameMenu.class);
     }
 }

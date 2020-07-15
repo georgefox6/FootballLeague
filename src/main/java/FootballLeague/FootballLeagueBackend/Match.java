@@ -152,7 +152,7 @@ public class Match {
 
         //Generates the amount of chances the home team will created, this is based on the creativity score of the home team
         //The average in the premier league is between 10 and 20 per game
-        double chancesCreated = homeTactic.getCreativeScore() * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
+        double chancesCreated = homeTactic.creativeScore * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
 
         //Reduce the amount of chances the attacking team has based on the defense score of the opposing team
         chancesCreated = chancesCreated - awayTactic.getDefenceScore();
@@ -171,7 +171,7 @@ public class Match {
 
         //Generates the amount of chances the away team will created, this is based on the creativity score of the home team
         //The average in the premier league is between 10 and 20 per game
-        chancesCreated = awayTactic.getCreativeScore() * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
+        chancesCreated = awayTactic.creativeScore * (2 + rand.nextInt(10)) + rand.nextInt(10) + 5;
 
         //Reduce the amount of chances the attacking team has based on the defense score of the opposing team
         chancesCreated = chancesCreated - homeTactic.getDefenceScore();

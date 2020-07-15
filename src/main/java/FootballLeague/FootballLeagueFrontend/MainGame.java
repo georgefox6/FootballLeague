@@ -443,7 +443,7 @@ public class MainGame extends Stage {
                 //Write the tactic to the database
                 writeTactic(tactic);
                 //Pop out to say tactic saved
-                AlertBox.display("Tactic Saved", "Your tactic " + tactic.getName() + " has been saved!");
+                AlertBox.display("Tactic Saved", "Your tactic " + tactic.name + " has been saved!");
             }
         });
     }
